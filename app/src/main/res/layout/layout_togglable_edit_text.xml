@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/togglable_edit_text_layout_label_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true">
+
+        <EditText
+            android:id="@+id/togglable_edit_text_layout_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="phone"
+            android:textSize="@dimen/text_size"
+            android:maxLines="1"/>
+        <!-- android:hint="@string/label_phone" -->
+
+    </android.support.design.widget.TextInputLayout>
+
+    <com.joanzapata.iconify.widget.IconTextView
+        android:id="@+id/togglable_edit_text_layout_marquee_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:paddingBottom="@dimen/icon_text_view_bottom_margin"
+        android:textSize="@dimen/text_size"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:freezesText="true"
+        android:singleLine="true"
+        tools:ignore="RtlHardcoded,RtlSymmetry"/>
+    <!-- android:paddingLeft="@dimen/icon_text_view_left_padding" -->
+
+</merge>
