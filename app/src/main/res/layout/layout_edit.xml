@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.TextInputLayout
+<com.guilhermesgb.shiftableedittext.ShiftableChildEditView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/shiftable_edit_text_layout_label_wrapper"
     android:layout_width="match_parent"
@@ -13,4 +13,4 @@
         android:textSize="@dimen/shiftable_edit_text_default_text_size"
         android:maxLines="1"/>
 
-</android.support.design.widget.TextInputLayout>
+</com.guilhermesgb.shiftableedittext.ShiftableChildEditView>

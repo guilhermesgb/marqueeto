@@ -2,7 +2,6 @@ package com.guilhermesgb.shiftableedittext;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.design.widget.TextInputLayout;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
@@ -11,7 +10,6 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.Iconify;
@@ -37,13 +35,13 @@ public class ShiftableEditText extends FrameLayout {
     private int mode;
 
     final class EditView {
-        @Bind(R.id.shiftable_edit_text_layout_label_wrapper) TextInputLayout textInputLayout;
+        @Bind(R.id.shiftable_edit_text_layout_label_wrapper) ShiftableChildEditView textInputLayout;
         @Bind(R.id.shiftable_edit_text_layout_edit_text) EditText editText;
     }
     final EditView mEditView;
 
     final class MarqueeView {
-        @Bind(R.id.shiftable_edit_text_layout_marquee_text) TextView textView;
+        @Bind(R.id.shiftable_edit_text_layout_marquee_text) ShiftableChildMarqueeView textView;
     }
     final MarqueeView mMarqueeView;
 
@@ -63,11 +61,13 @@ public class ShiftableEditText extends FrameLayout {
         mEditView = new EditView();
         ButterKnife.bind(mEditView, editViewSource);
         addView(mEditView.textInputLayout);
+//        addView(mEditView.textInputLayout, new ViewGroup.LayoutParams(600, 200));
 
         View marqueeViewSource = LayoutInflater.from(context).inflate(R.layout.layout_marquee, this, false);
         mMarqueeView = new MarqueeView();
         ButterKnife.bind(mMarqueeView, marqueeViewSource);
         addView(mMarqueeView.textView);
+//        addView(mMarqueeView.textView, new ViewGroup.LayoutParams(600, 200));
 
         init(context.obtainStyledAttributes(attrs, R.styleable.ShiftableEditText));
     }
@@ -98,31 +98,31 @@ public class ShiftableEditText extends FrameLayout {
         }
         else {
             iconDrawable = new IconDrawable(getContext(), iconKey)
-                .color(iconColor).sizeRes(R.dimen.shiftable_edit_text_default_icon_size_big);
+                    .color(iconColor).sizeRes(R.dimen.shiftable_edit_text_default_icon_size_big);
             iconCharacter = "   " + String.format(getResources()
-                .getString(R.string.shiftable_edit_text_layout_icon_definition_template),
+                            .getString(R.string.shiftable_edit_text_layout_icon_definition_template),
                     iconKey, String.format("#%06X", (0xFFFFFF & iconColor)),
                     "@dimen/shiftable_edit_text_default_icon_size_small");
         }
 
-            final int labelColor = styledAttributes
-                    .getColor(R.styleable.ShiftableEditText_labelColor, accentColor);
+        final int labelColor = styledAttributes
+                .getColor(R.styleable.ShiftableEditText_labelColor, accentColor);
 
         mode = styledAttributes.getInt(R.styleable.ShiftableEditText_mode, MODE_MARQUEE);
 
         final int inputType = styledAttributes.getInt(R.styleable.ShiftableEditText_android_inputType,
                 EditorInfo.TYPE_CLASS_TEXT);
 
-            mEditView.editText.setCompoundDrawablesWithIntrinsicBounds(null, null, iconDrawable, null);
+        mEditView.editText.setCompoundDrawablesWithIntrinsicBounds(null, null, iconDrawable, null);
         mEditView.editText.setText(text);
-            mEditView.editText.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
+        mEditView.editText.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
         mEditView.editText.setTextColor(textColor);
         mEditView.editText.setHintTextColor(hintColor);
         mEditView.editText.setHighlightColor(labelColor);
         mEditView.editText.setInputType(inputType);
         mMarqueeView.textView.setSelected(true);
-            mMarqueeView.textView.setText((text == null ? "" : text) + iconCharacter);
-            mMarqueeView.textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
+        mMarqueeView.textView.setText((text == null ? "" : text) + iconCharacter);
+        mMarqueeView.textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
         mMarqueeView.textView.setTextColor(textColor);
         mEditView.textInputLayout.setHint(hint);
         mEditView.textInputLayout.setVisibility(getVisibility());
