@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.TextInputLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/shiftable_edit_text_layout_label_wrapper"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/shiftable_edit_text_layout_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:textSize="@dimen/shiftable_edit_text_default_text_size"
+        android:maxLines="1"/>
+
+</android.support.design.widget.TextInputLayout>

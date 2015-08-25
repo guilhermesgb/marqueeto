@@ -3,19 +3,20 @@
 
     <declare-styleable name="ShiftableEditText">
 
-        <attr name="text" format="string"/>
-        <attr name="text_size" format="dimension"/>
-        <attr name="text_color" format="color"/>
-        <attr name="hint" format="string"/>
-        <attr name="hint_color" format="color"/>
-        <attr name="accent_color" format="color"/>
-        <attr name="icon_color" format="color"/>
-        <attr name="icon_key" format="string"/>
-        <attr name="label_color" format="color"/>
+        <attr name="android:text"/>
+        <attr name="android:textSize"/>
+        <attr name="android:textColor"/>
+        <attr name="android:hint"/>
+        <attr name="android:textColorHint"/>
+        <attr name="accentColor" format="color"/>
+        <attr name="iconColor" format="color"/>
+        <attr name="iconKey" format="string"/>
+        <attr name="labelColor" format="color"/>
         <attr name="mode" format="enum">
             <enum name="edit" value="0"/>
             <enum name="marquee" value="1"/>
         </attr>
+        <attr name="android:inputType"/>
 
     </declare-styleable>
 

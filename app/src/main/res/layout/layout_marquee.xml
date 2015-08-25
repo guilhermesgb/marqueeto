@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.joanzapata.iconify.widget.IconTextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/shiftable_edit_text_layout_marquee_text"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:textSize="@dimen/shiftable_edit_text_default_text_size"
+    android:ellipsize="marquee"
+    android:marqueeRepeatLimit="marquee_forever"
+    android:scrollHorizontally="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:freezesText="true"
+    android:singleLine="true"
+    tools:ignore="RtlHardcoded,RtlSymmetry"/>
