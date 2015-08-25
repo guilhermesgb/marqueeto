@@ -37,37 +37,38 @@ public class ShiftableEditText extends RelativeLayout {
 
     public ShiftableEditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        context.setTheme(R.style.Theme_AppCompat_Light_NoActionBar);
         Iconify.with(new MaterialModule());
-        LayoutInflater.from(context).inflate(R.layout.layout_togglable_edit_text, this, true);
+        LayoutInflater.from(context).inflate(R.layout.layout_shiftable_edit_text, this, true);
         ButterKnife.bind(this, this);
         init(context.obtainStyledAttributes(attrs, R.styleable.ShiftableEditText));
     }
 
     private void init(TypedArray styledAttributes) {
-
         String text = styledAttributes.getString(R.styleable.ShiftableEditText_text);
-        int textColor = styledAttributes.getColor(R.styleable.ShiftableEditText_text_color,
+        final int textColor = styledAttributes.getColor(R.styleable.ShiftableEditText_text_color,
                 getResources().getColor(android.R.color.black));
-        int textSize = styledAttributes.getColor(R.styleable.ShiftableEditText_text_size,
+        final int textSize = styledAttributes.getColor(R.styleable.ShiftableEditText_text_size,
                 (int) getResources().getDimension(R.dimen.togglable_edit_text_text_size));
-        String hint = styledAttributes.getString(R.styleable.ShiftableEditText_hint);
-        int hintColor = styledAttributes.getColor(R.styleable.ShiftableEditText_hint_color,
+        final String hint = styledAttributes.getString(R.styleable.ShiftableEditText_hint);
+        final int hintColor = styledAttributes.getColor(R.styleable.ShiftableEditText_hint_color,
                 getResources().getColor(android.R.color.black));
-        int accentColor = styledAttributes.getColor(R.styleable.ShiftableEditText_accent_color,
+        final int accentColor = styledAttributes.getColor(R.styleable.ShiftableEditText_accent_color,
                 getResources().getColor(android.R.color.black));
-        int iconColor = styledAttributes
+        final int iconColor = styledAttributes
                 .getColor(R.styleable.ShiftableEditText_icon_color, accentColor);
         String iconKey = styledAttributes.getString(R.styleable.ShiftableEditText_icon_key);
         if (iconKey == null) {
             iconKey = getResources().getString(R.string.togglable_edit_text_layout_icon_key_default);
         }
-        int labelColor = styledAttributes
+        final int labelColor = styledAttributes
                 .getColor(R.styleable.ShiftableEditText_label_color, accentColor);
         mode = styledAttributes.getInt(R.styleable.ShiftableEditText_mode, MODE_MARQUEE);
-        IconDrawable iconDrawable = new IconDrawable(getContext(), iconKey).colorRes(iconColor);
+        final IconDrawable iconDrawable = new IconDrawable(getContext(), iconKey).color(iconColor)
+                .sizeRes(R.dimen.togglable_edit_text_icon_size_big);
         final CharSequence iconCharacter = String.format(getResources()
                         .getString(R.string.togglable_edit_text_layout_icon_definition_template), iconKey,
-                iconColor, getResources().getDimension(R.dimen.togglable_edit_text_icon_size_small));
+                String.format("#%06X", (0xFFFFFF & iconColor)), "@dimen/togglable_edit_text_icon_size_small");
         mEditMode.setCompoundDrawablesWithIntrinsicBounds(null, null, iconDrawable, null);
         mEditMode.setText(text);
         mEditMode.setTextSize(textSize);

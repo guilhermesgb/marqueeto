@@ -6,5 +6,8 @@
     <dimen name="togglable_edit_text_icon_text_view_left_padding">4dp</dimen>
     <dimen name="togglable_edit_text_icon_size_big">30dp</dimen>
     <dimen name="togglable_edit_text_icon_size_small">18dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
 
 </resources>
