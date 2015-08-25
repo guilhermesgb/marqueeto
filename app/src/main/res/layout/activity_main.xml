@@ -9,10 +9,27 @@
     <com.guilhermesgb.shiftableedittext.ShiftableEditText
         android:id="@+id/shiftable_edit_text"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_orange_light"
+        android:layout_centerInParent="true"
         android:hint="Phone"
         android:inputType="text"
         shiftable:mode="edit"
         shiftable:iconKey="md-local-phone"/>
+
+    <android.support.design.widget.TextInputLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_dark">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textSize="@dimen/shiftable_edit_text_default_text_size"
+            android:maxLines="1"/>
+
+    </android.support.design.widget.TextInputLayout>
 
 </RelativeLayout>

@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.joanzapata.iconify.IconDrawable;
@@ -20,14 +20,20 @@ import com.joanzapata.iconify.fonts.MaterialModule;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class ShiftableEditText extends RelativeLayout {
+public class ShiftableEditText extends FrameLayout {
 
-    static {
-        Iconify.with(new MaterialModule());
-    }
-
+    private static final String TAG = "ShiftableEditText";
     private static final int MODE_EDIT = 0;
     private static final int MODE_MARQUEE = 1;
+
+    static {
+        try {
+            Iconify.with(new MaterialModule());
+        }
+        catch (IllegalArgumentException exception) {
+            Log.d(TAG, "Iconify modules already set.");
+        }
+    }
     private int mode;
 
     final class EditView {
@@ -99,27 +105,24 @@ public class ShiftableEditText extends RelativeLayout {
                     "@dimen/shiftable_edit_text_default_icon_size_small");
         }
 
-        final int labelColor = styledAttributes
-                .getColor(R.styleable.ShiftableEditText_labelColor, accentColor);
+            final int labelColor = styledAttributes
+                    .getColor(R.styleable.ShiftableEditText_labelColor, accentColor);
 
         mode = styledAttributes.getInt(R.styleable.ShiftableEditText_mode, MODE_MARQUEE);
 
         final int inputType = styledAttributes.getInt(R.styleable.ShiftableEditText_android_inputType,
                 EditorInfo.TYPE_CLASS_TEXT);
 
-        mEditView.editText.setCompoundDrawablesWithIntrinsicBounds(null, null, iconDrawable, null);
+            mEditView.editText.setCompoundDrawablesWithIntrinsicBounds(null, null, iconDrawable, null);
         mEditView.editText.setText(text);
-        Log.wtf("TAG", "FONT SIZE: " + textSize);
-        mEditView.editText.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
-        Log.wtf("TAG", "GET SIZE ET: " + mEditView.editText.getTextSize());
+            mEditView.editText.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
         mEditView.editText.setTextColor(textColor);
         mEditView.editText.setHintTextColor(hintColor);
         mEditView.editText.setHighlightColor(labelColor);
         mEditView.editText.setInputType(inputType);
         mMarqueeView.textView.setSelected(true);
-        mMarqueeView.textView.setText((text == null ? "" : text) + iconCharacter);
-        mMarqueeView.textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
-        Log.wtf("TAG", "GET SIZE ET: " + mMarqueeView.textView.getTextSize());
+            mMarqueeView.textView.setText((text == null ? "" : text) + iconCharacter);
+            mMarqueeView.textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
         mMarqueeView.textView.setTextColor(textColor);
         mEditView.textInputLayout.setHint(hint);
         mEditView.textInputLayout.setVisibility(getVisibility());
