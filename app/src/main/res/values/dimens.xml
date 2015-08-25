@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="text_size">14sp</dimen>
-    <dimen name="icon_text_view_bottom_margin">16dp</dimen>
-    <dimen name="icon_text_view_left_padding">4dp</dimen>
-    <dimen name="venue_property_icon_size">30dp</dimen>
-    <dimen name="venue_property_icon_size_small">18dp</dimen>
+    <dimen name="togglable_edit_text_text_size">14sp</dimen>
+    <dimen name="togglable_edit_text_icon_text_view_bottom_margin">16dp</dimen>
+    <dimen name="togglable_edit_text_icon_text_view_left_padding">4dp</dimen>
+    <dimen name="togglable_edit_text_icon_size_big">30dp</dimen>
+    <dimen name="togglable_edit_text_icon_size_small">18dp</dimen>
 
 </resources>

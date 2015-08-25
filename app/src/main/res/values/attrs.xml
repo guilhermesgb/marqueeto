@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="TogglableEditTextLayout">
+    <declare-styleable name="ShiftableEditText">
+
         <attr name="text" format="string"/>
         <attr name="text_size" format="dimension"/>
         <attr name="text_color" format="color"/>
         <attr name="hint" format="string"/>
+        <attr name="hint_color" format="color"/>
         <attr name="accent_color" format="color"/>
         <attr name="icon_color" format="color"/>
         <attr name="icon_key" format="string"/>
         <attr name="label_color" format="color"/>
+        <attr name="mode" format="enum">
+            <enum name="edit" value="0"/>
+            <enum name="marquee" value="1"/>
+        </attr>
+
     </declare-styleable>
 
 </resources>

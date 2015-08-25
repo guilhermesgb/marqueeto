@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="phone"
-            android:textSize="@dimen/text_size"
+            android:textSize="@dimen/togglable_edit_text_text_size"
             android:maxLines="1"/>
         <!-- android:hint="@string/label_phone" -->
 
@@ -27,8 +27,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
-        android:paddingBottom="@dimen/icon_text_view_bottom_margin"
-        android:textSize="@dimen/text_size"
+        android:paddingBottom="@dimen/togglable_edit_text_icon_text_view_bottom_margin"
+        android:textSize="@dimen/togglable_edit_text_text_size"
         android:ellipsize="marquee"
         android:marqueeRepeatLimit="marquee_forever"
         android:scrollHorizontally="true"

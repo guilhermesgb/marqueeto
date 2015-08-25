@@ -2,7 +2,7 @@
 <resources>
 
     <string name="togglable_edit_text_layout_icon_key_default">md-local-phone</string>
-    <string name="togglable_edit_text_layout_icon_definition_template">
+    <string name="togglable_edit_text_layout_icon_definition_template" formatted="false">
         {%s %s %s}
     </string>
 
