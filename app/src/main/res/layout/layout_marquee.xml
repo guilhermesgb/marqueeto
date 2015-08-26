@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.guilhermesgb.shiftableedittext.ShiftableChildMarqueeView
+<com.joanzapata.iconify.widget.IconTextView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/shiftable_edit_text_layout_marquee_text"

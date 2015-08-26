@@ -2,6 +2,7 @@ package com.guilhermesgb.shiftableedittext;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.design.widget.TextInputLayout;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
@@ -14,6 +15,7 @@ import android.widget.FrameLayout;
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.MaterialModule;
+import com.joanzapata.iconify.widget.IconTextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -35,13 +37,13 @@ public class ShiftableEditText extends FrameLayout {
     private int mode;
 
     final class EditView {
-        @Bind(R.id.shiftable_edit_text_layout_label_wrapper) ShiftableChildEditView textInputLayout;
+        @Bind(R.id.shiftable_edit_text_layout_label_wrapper) TextInputLayout textInputLayout;
         @Bind(R.id.shiftable_edit_text_layout_edit_text) EditText editText;
     }
     final EditView mEditView;
 
     final class MarqueeView {
-        @Bind(R.id.shiftable_edit_text_layout_marquee_text) ShiftableChildMarqueeView textView;
+        @Bind(R.id.shiftable_edit_text_layout_marquee_text) IconTextView textView;
     }
     final MarqueeView mMarqueeView;
 
