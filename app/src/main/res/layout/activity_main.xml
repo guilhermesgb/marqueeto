@@ -37,6 +37,8 @@
         android:hint="Website"
         shiftable:iconKey="md-language"
         shiftable:mode="edit"
+        shiftable:baseColor="@android:color/holo_red_light"
+        shiftable:highlightColor="@android:color/holo_red_dark"
         tools:ignore="HardcodedText"/>
 
     <com.guilhermesgb.shiftableedittext.ShiftableEditText
