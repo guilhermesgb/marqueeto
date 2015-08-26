@@ -2,8 +2,10 @@
 <resources>
 
     <dimen name="shiftable_edit_text_default_text_size">16sp</dimen>
-    <dimen name="shiftable_edit_text_icon_text_view_left_padding">4dp</dimen> -->
     <dimen name="shiftable_edit_text_default_icon_size_big">30dp</dimen>
     <dimen name="shiftable_edit_text_default_icon_size_small">18dp</dimen>
+    <dimen name="shiftable_edit_text_icon_text_view_left_padding">4dp</dimen>
+    <dimen name="shiftable_edit_text_icon_text_view_bottom_padding">15dp</dimen>
+    <dimen name="shiftable_edit_text_icon_text_view_min_height">65dp</dimen>
 
 </resources>

@@ -7,29 +7,47 @@
     tools:context="com.guilhermesgb.shiftableedittext.view.MainActivity">
 
     <com.guilhermesgb.shiftableedittext.ShiftableEditText
-        android:id="@+id/shiftable_edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/holo_orange_light"
-        android:layout_centerInParent="true"
-        android:hint="Phone"
-        android:inputType="text"
-        shiftable:mode="edit"
-        shiftable:iconKey="md-local-phone"/>
-
-    <android.support.design.widget.TextInputLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/phone_edit_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/holo_blue_dark">
+        android:layout_alignParentTop="true"
+        android:inputType="phone"
+        android:hint="Phone"
+        shiftable:iconKey="md-local-phone"
+        shiftable:mode="edit"
+        tools:ignore="HardcodedText"/>
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:textSize="@dimen/shiftable_edit_text_default_text_size"
-            android:maxLines="1"/>
+    <com.guilhermesgb.shiftableedittext.ShiftableEditText
+        android:id="@+id/email_edit_text"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/phone_edit_text"
+        android:inputType="textEmailAddress"
+        android:hint="Email"
+        shiftable:iconKey="md-local-post-office"
+        shiftable:mode="edit"
+        tools:ignore="HardcodedText"/>
 
-    </android.support.design.widget.TextInputLayout>
+    <com.guilhermesgb.shiftableedittext.ShiftableEditText
+        android:id="@+id/website_edit_text"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/email_edit_text"
+        android:inputType="textUri"
+        android:hint="Website"
+        shiftable:iconKey="md-language"
+        shiftable:mode="edit"
+        tools:ignore="HardcodedText"/>
+
+    <com.guilhermesgb.shiftableedittext.ShiftableEditText
+        android:id="@+id/address_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/website_edit_text"
+        android:inputType="textPostalAddress"
+        android:hint="Address"
+        shiftable:iconKey="md-location-on"
+        shiftable:mode="edit"
+        tools:ignore="HardcodedText"/>
 
 </RelativeLayout>

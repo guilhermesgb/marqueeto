@@ -8,6 +8,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -37,13 +38,25 @@ public class ShiftableEditText extends FrameLayout {
     private int mode;
 
     final class EditView {
+
         @Bind(R.id.shiftable_edit_text_layout_label_wrapper) TextInputLayout textInputLayout;
         @Bind(R.id.shiftable_edit_text_layout_edit_text) EditText editText;
+
+        public EditView(View source) {
+            ButterKnife.bind(this, source);
+        }
+
     }
     final EditView mEditView;
 
     final class MarqueeView {
+
         @Bind(R.id.shiftable_edit_text_layout_marquee_text) IconTextView textView;
+
+        public MarqueeView(View source) {
+            ButterKnife.bind(this, source);
+        }
+
     }
     final MarqueeView mMarqueeView;
 
@@ -60,16 +73,13 @@ public class ShiftableEditText extends FrameLayout {
         context.setTheme(R.style.Theme_AppCompat_Light_NoActionBar);
 
         View editViewSource = LayoutInflater.from(context).inflate(R.layout.layout_edit, this, false);
-        mEditView = new EditView();
-        ButterKnife.bind(mEditView, editViewSource);
+        mEditView = new EditView(editViewSource);
         addView(mEditView.textInputLayout);
-//        addView(mEditView.textInputLayout, new ViewGroup.LayoutParams(600, 200));
 
         View marqueeViewSource = LayoutInflater.from(context).inflate(R.layout.layout_marquee, this, false);
-        mMarqueeView = new MarqueeView();
-        ButterKnife.bind(mMarqueeView, marqueeViewSource);
-        addView(mMarqueeView.textView);
-//        addView(mMarqueeView.textView, new ViewGroup.LayoutParams(600, 200));
+        mMarqueeView = new MarqueeView(marqueeViewSource);
+        addView(mMarqueeView.textView, new ViewGroup
+                .LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 
         init(context.obtainStyledAttributes(attrs, R.styleable.ShiftableEditText));
     }
@@ -153,7 +163,7 @@ public class ShiftableEditText extends FrameLayout {
         final View.OnFocusChangeListener existingListener = mEditView.editText.getOnFocusChangeListener();
         if (!(existingListener instanceof DisableEditModeOnFocusChangeListener)) {
             mEditView.editText.setOnFocusChangeListener(
-                    new DisableEditModeOnFocusChangeListener(iconKey, existingListener)
+                    new DisableEditModeOnFocusChangeListener(iconCharacter, existingListener)
             );
         }
     }
