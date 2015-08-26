@@ -38,7 +38,7 @@ public class ShiftableEditText extends FrameLayout {
             Log.d(TAG, "Iconify modules already set.");
         }
     }
-    private int mode;
+    private int mMode;
 
     final class EditView {
 
@@ -123,7 +123,7 @@ public class ShiftableEditText extends FrameLayout {
         final int labelColor = styledAttributes
                 .getColor(R.styleable.ShiftableEditText_labelColor, accentColor);
 
-        mode = styledAttributes.getInt(R.styleable.ShiftableEditText_mode, MODE_MARQUEE);
+        mMode = styledAttributes.getInt(R.styleable.ShiftableEditText_mode, MODE_MARQUEE);
 
         final int inputType = styledAttributes.getInt(R.styleable.ShiftableEditText_android_inputType,
                 EditorInfo.TYPE_CLASS_TEXT);
@@ -141,10 +141,10 @@ public class ShiftableEditText extends FrameLayout {
         mMarqueeView.textView.setTextColor(textColor);
         mEditView.textInputLayout.setHint(hint);
         mEditView.textInputLayout.setVisibility(getVisibility());
-        if (mode == MODE_MARQUEE) {
+        if (mMode == MODE_MARQUEE) {
             disableVenueContactPropertyEditMode(iconCharacter);
         }
-        else if (mode == MODE_EDIT) {
+        else if (mMode == MODE_EDIT) {
             enableVenueContactPropertyEditMode();
         }
         final GestureDetectorCompat detector = new GestureDetectorCompat(getContext(),
@@ -216,25 +216,26 @@ public class ShiftableEditText extends FrameLayout {
 
     }
 
-    private boolean enableVenueContactPropertyEditMode() {
-        mode = MODE_EDIT;
+    private void enableVenueContactPropertyEditMode() {
+        mMode = MODE_EDIT;
         mEditView.editText.setVisibility(View.VISIBLE);
         mEditView.editText.setEnabled(true);
         mMarqueeView.textView.setVisibility(View.INVISIBLE);
-        return true;
     }
 
-    private boolean disableVenueContactPropertyEditMode(final CharSequence iconCharacter) {
+    private void disableVenueContactPropertyEditMode(final CharSequence iconCharacter) {
         if (mEditView.editText.getText().toString().trim().isEmpty()) {
-            return false;
+            if (mMode == MODE_MARQUEE) {
+                enableVenueContactPropertyEditMode();
+            }
+            return;
         }
-        mode = MODE_MARQUEE;
+        mMode = MODE_MARQUEE;
         mEditView.editText.setVisibility(View.INVISIBLE);
         mEditView.editText.setEnabled(false);
         mMarqueeView.textView.setVisibility(View.VISIBLE);
         mMarqueeView.textView.setSelected(true);
         mMarqueeView.textView.setText(mEditView.editText.getText().toString() + iconCharacter);
-        return true;
     }
 
 }
