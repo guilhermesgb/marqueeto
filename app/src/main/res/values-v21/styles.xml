@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ShiftableEditTextTheme" parent="ShiftableEditTextBaseTheme">
+        <item name="baseColor">?android:colorPrimary</item>
+        <item name="highlightColor">?android:colorAccent</item>
+        <item name="android:colorControlNormal">?baseColor</item>
+        <item name="android:colorControlActivated">?highlightColor</item>
+    </style>
+
+</resources>

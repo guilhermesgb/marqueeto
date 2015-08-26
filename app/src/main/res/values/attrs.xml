@@ -7,8 +7,8 @@
         <attr name="android:textSize"/>
         <attr name="android:textColor"/>
         <attr name="android:hint"/>
-        <attr name="android:textColorHint"/>
-        <attr name="accentColor" format="color"/>
+        <attr name="baseColor" format="color"/>
+        <attr name="highlightColor" format="color"/>
         <attr name="iconColor" format="color"/>
         <attr name="iconKey" format="string"/>
         <attr name="labelColor" format="color"/>

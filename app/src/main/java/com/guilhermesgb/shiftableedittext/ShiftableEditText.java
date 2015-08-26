@@ -73,7 +73,7 @@ public class ShiftableEditText extends FrameLayout {
 
     public ShiftableEditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        context.setTheme(R.style.Theme_AppCompat_Light_NoActionBar);
+        context.setTheme(R.style.ShiftableEditTextTheme);
 
         View editViewSource = LayoutInflater.from(context).inflate(R.layout.layout_edit, this, false);
         mEditView = new EditView(editViewSource);
@@ -96,14 +96,15 @@ public class ShiftableEditText extends FrameLayout {
                 getResources().getDimension(R.dimen.shiftable_edit_text_default_text_size));
 
         final String hint = styledAttributes.getString(R.styleable.ShiftableEditText_android_hint);
-        final int hintColor = styledAttributes.getColor(R.styleable.ShiftableEditText_android_textColorHint,
+
+        final int baseColor = styledAttributes.getColor(R.styleable.ShiftableEditText_baseColor,
                 getResources().getColor(android.R.color.black));
 
-        final int accentColor = styledAttributes.getColor(R.styleable.ShiftableEditText_accentColor,
+        final int highlightColor = styledAttributes.getColor(R.styleable.ShiftableEditText_highlightColor,
                 getResources().getColor(android.R.color.black));
 
         final int iconColor = styledAttributes
-                .getColor(R.styleable.ShiftableEditText_iconColor, accentColor);
+                .getColor(R.styleable.ShiftableEditText_iconColor, baseColor);
         String iconKey = styledAttributes.getString(R.styleable.ShiftableEditText_iconKey);
         final IconDrawable iconDrawable;
         final CharSequence iconCharacter;
@@ -121,7 +122,7 @@ public class ShiftableEditText extends FrameLayout {
         }
 
         final int labelColor = styledAttributes
-                .getColor(R.styleable.ShiftableEditText_labelColor, accentColor);
+                .getColor(R.styleable.ShiftableEditText_labelColor, highlightColor);
 
         mMode = styledAttributes.getInt(R.styleable.ShiftableEditText_mode, MODE_MARQUEE);
 
@@ -132,7 +133,6 @@ public class ShiftableEditText extends FrameLayout {
         mEditView.editText.setText(text);
         mEditView.editText.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
         mEditView.editText.setTextColor(textColor);
-        mEditView.editText.setHintTextColor(hintColor);
         mEditView.editText.setHighlightColor(labelColor);
         mEditView.editText.setInputType(inputType);
         mMarqueeView.textView.setSelected(true);

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ShiftableEditTextBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:textSize">@dimen/shiftable_edit_text_default_text_size</item>
+        <item name="iconColor">?baseColor</item>
+        <item name="android:textColorHint">?baseColor</item>
+        <item name="labelColor">?highlightColor</item>
+        <item name="android:inputType">text</item>
+        <item name="mode">marquee</item>
+    </style>
+
+    <style name="ShiftableEditTextTheme" parent="ShiftableEditTextBaseTheme">
+        <item name="baseColor">?colorPrimary</item>
+        <item name="highlightColor">?colorAccent</item>
+        <item name="colorControlNormal">?baseColor</item>
+        <item name="colorControlActivated">?highlightColor</item>
+    </style>
+
+    <style name="TextAppearance.Design.Hint" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:textColor">?attr/labelColor</item>
+    </style>
+    <style name="Widget.Design.TextInputLayout" parent="android:Widget">
+        <item name="hintTextAppearance">@style/TextAppearance.Design.Hint</item>
+    </style>
+
+</resources>
