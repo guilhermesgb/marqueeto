@@ -8,7 +8,6 @@
     android:minHeight="@dimen/shiftable_edit_text_icon_text_view_min_height"
     android:paddingLeft="@dimen/shiftable_edit_text_icon_text_view_left_padding"
     android:paddingBottom="@dimen/shiftable_edit_text_icon_text_view_bottom_padding"
-    android:textSize="@dimen/shiftable_edit_text_default_text_size"
     android:ellipsize="marquee"
     android:marqueeRepeatLimit="marquee_forever"
     android:scrollHorizontally="true"
@@ -16,5 +15,6 @@
     android:focusableInTouchMode="true"
     android:freezesText="true"
     android:singleLine="true"
+    android:maxLines="1"
     android:gravity="bottom|left"
     tools:ignore="RtlHardcoded,RtlSymmetry"/>

@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
-        android:textSize="@dimen/shiftable_edit_text_default_text_size"
+        android:singleLine="true"
         android:maxLines="1"/>
 
 </android.support.design.widget.TextInputLayout>

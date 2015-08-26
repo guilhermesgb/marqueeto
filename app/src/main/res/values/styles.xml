@@ -6,8 +6,6 @@
         <item name="iconColor">?baseColor</item>
         <item name="android:textColorHint">?baseColor</item>
         <item name="labelColor">?highlightColor</item>
-        <item name="android:inputType">text</item>
-        <item name="mode">marquee</item>
     </style>
 
     <style name="ShiftableEditTextTheme" parent="ShiftableEditTextBaseTheme">
