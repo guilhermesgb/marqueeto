@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="ShiftableEditTextBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="ShiftableEditTextBaseTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:textSize">@dimen/shiftable_edit_text_default_text_size</item>
         <item name="iconColor">?baseColor</item>
         <item name="android:textColorHint">?baseColor</item>
