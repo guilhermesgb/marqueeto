@@ -3,10 +3,13 @@ package com.guilhermesgb.shiftableedittext;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.view.GestureDetectorCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -23,7 +26,7 @@ import butterknife.ButterKnife;
 
 public class ShiftableEditText extends FrameLayout {
 
-    private static final String TAG = "ShiftableEditText";
+    private static final String TAG = ShiftableEditText.class.getSimpleName();
     private static final int MODE_EDIT = 0;
     private static final int MODE_MARQUEE = 1;
 
@@ -144,19 +147,43 @@ public class ShiftableEditText extends FrameLayout {
         else if (mode == MODE_EDIT) {
             enableVenueContactPropertyEditMode();
         }
-        mMarqueeView.textView.setOnLongClickListener(new View.OnLongClickListener() {
+        final GestureDetectorCompat detector = new GestureDetectorCompat(getContext(),
+                new GestureDetector.OnGestureListener() {
 
             @Override
-            public boolean onLongClick(View view) {
-                return enableVenueContactPropertyEditMode();
+            public boolean onDown(MotionEvent e) {
+                return true;
+            }
+
+            @Override
+            public void onShowPress(MotionEvent e) {}
+
+            @Override
+            public boolean onSingleTapUp(MotionEvent e) {
+                return false;
+            }
+
+            @Override
+            public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+                return false;
+            }
+
+            @Override
+            public void onLongPress(MotionEvent e) {
+                enableVenueContactPropertyEditMode();
+            }
+
+            @Override
+            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+                return false;
             }
 
         });
-        mEditView.editText.setOnLongClickListener(new View.OnLongClickListener() {
+        mMarqueeView.textView.setOnTouchListener(new OnTouchListener() {
 
             @Override
-            public boolean onLongClick(View view) {
-                return disableVenueContactPropertyEditMode(iconCharacter);
+            public boolean onTouch(View view, MotionEvent event) {
+                return detector.onTouchEvent(event);
             }
 
         });
