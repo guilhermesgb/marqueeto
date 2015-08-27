@@ -27,7 +27,6 @@
         android:hint="Email"
         shiftable:iconKey="md-local-post-office"
         shiftable:mode="marquee"
-        shiftable:shiftableEditTextStyle="@style/ShiftableEditTextCustom"
         tools:ignore="HardcodedText"/>
 
     <com.guilhermesgb.shiftableedittext.ShiftableEditText
@@ -51,7 +50,6 @@
         android:hint="Address"
         shiftable:iconKey="md-location-on"
         shiftable:mode="edit"
-        shiftable:shiftableEditTextStyle="@style/ShiftableEditTextCustom"
         tools:ignore="HardcodedText"/>
 
     <com.guilhermesgb.shiftableedittext.ShiftableEditText
@@ -96,7 +94,6 @@
             android:hint="Name"
             shiftable:iconKey="md-face"
             shiftable:mode="marquee"
-            shiftable:shiftableEditTextStyle="@style/ShiftableEditTextCustom"
             android:text="Guilherme"
             tools:ignore="HardcodedText"/>
 

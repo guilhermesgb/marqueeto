@@ -133,11 +133,12 @@ public class ShiftableEditText extends FrameLayout {
         mInputType = customAttributes.getInt(R.styleable.ShiftableEditText_android_inputType,
                 EditorInfo.TYPE_CLASS_TEXT);
         int shiftableEditStyle = customAttributes
-                .getResourceId(R.styleable.ShiftableEditText_shiftableEditTextStyle,
-                        R.style.ShiftableEditTextDefault);
+                .getResourceId(R.styleable.ShiftableEditText_shiftableEditTextStyle, -1);
         customAttributes.recycle();
         final Resources.Theme theme = context.getTheme();
-        theme.applyStyle(shiftableEditStyle, true);
+        if (shiftableEditStyle != -1) {
+            theme.applyStyle(shiftableEditStyle, true);
+        }
         final TypedArray themeAttributes = theme.obtainStyledAttributes(attrs, new int[]{
             R.attr.baseColor, R.attr.highlightColor, R.attr.iconColor, R.attr.labelColor
         }, R.attr.colorPrimary, 0);

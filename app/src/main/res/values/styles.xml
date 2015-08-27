@@ -3,13 +3,14 @@
 
     <style name="ShiftableEditTextBaseTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:textSize">@dimen/shiftable_edit_text_default_text_size</item>
+        <item name="iconColor">?baseColor</item>
         <item name="android:textColorHint">?baseColor</item>
-        <!--<item name="shiftableEditTextStyle">@style/ShiftableEditTextDefault</item>-->
+        <item name="labelColor">?highlightColor</item>
     </style>
 
     <style name="ShiftableEditTextTheme" parent="ShiftableEditTextBaseTheme">
-        <!--<item name="baseColor">?colorPrimary</item>
-        <item name="highlightColor">?colorAccent</item>-->
+        <item name="baseColor">?colorPrimary</item>
+        <item name="highlightColor">?colorAccent</item>
         <item name="colorControlNormal">?baseColor</item>
         <item name="colorControlActivated">?highlightColor</item>
     </style>
@@ -21,17 +22,9 @@
         <item name="hintTextAppearance">@style/TextAppearance.Design.Hint</item>
     </style>
 
-    <style name="ShiftableEditTextDefault">
-        <item name="baseColor">?colorPrimary</item>
-        <item name="highlightColor">?colorAccent</item>
-        <item name="iconColor">?baseColor</item>
-        <item name="labelColor">?highlightColor</item>
-    </style>
-
     <style name="ShiftableEditTextCustom">
         <item name="baseColor">@android:color/holo_red_light</item>
         <item name="highlightColor">@android:color/holo_red_dark</item>
-        <!--<item name="labelColor">?highlightColor</item> apparently pretty important-->
     </style>
 
 </resources>
