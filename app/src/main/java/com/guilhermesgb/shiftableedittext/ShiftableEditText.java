@@ -87,9 +87,9 @@ public class ShiftableEditText extends FrameLayout {
 
     public ShiftableEditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        TypedArray styledAttributes = context.obtainStyledAttributes(attrs, R.styleable.ShiftableEditText);
         context.setTheme(R.style.ShiftableEditTextTheme);
-        overrideThemeWithStyledAttributes(styledAttributes, context.getTheme());
+        TypedArray customAttributes = context.obtainStyledAttributes(attrs, R.styleable.ShiftableEditText);
+        overrideThemeWithCustomAttributes(customAttributes, context);
         View editViewSource = LayoutInflater.from(context).inflate(R.layout.layout_edit, this, false);
         mEditView = new EditView(editViewSource);
         addView(mEditView.textInputLayout);
@@ -97,28 +97,25 @@ public class ShiftableEditText extends FrameLayout {
         mMarqueeView = new MarqueeView(marqueeViewSource);
         addView(mMarqueeView.textView, new ViewGroup
                 .LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-        init();
+        initEditAndMarqueeViews();
     }
 
-    private void overrideThemeWithStyledAttributes(TypedArray styledAttributes, Resources.Theme theme) {
-        mText = styledAttributes.getString(R.styleable.ShiftableEditText_android_text);
-        mTextColor = styledAttributes.getColor(R.styleable.ShiftableEditText_android_textColor,
+    private void overrideThemeWithCustomAttributes(TypedArray customAttributes, Context context) {
+        mText = customAttributes.getString(R.styleable.ShiftableEditText_android_text);
+        mTextColor = customAttributes.getColor(R.styleable.ShiftableEditText_android_textColor,
                 getResources().getColor(android.R.color.black));
-        mTextSize = styledAttributes.getDimension(R.styleable.ShiftableEditText_android_textSize,
+        mTextSize = customAttributes.getDimension(R.styleable.ShiftableEditText_android_textSize,
                 getResources().getDimension(R.dimen.shiftable_edit_text_default_text_size));
-
-        mHint = styledAttributes.getString(R.styleable.ShiftableEditText_android_hint);
-
-        mBaseColor = styledAttributes.getColor(R.styleable.ShiftableEditText_baseColor,
+        mHint = customAttributes.getString(R.styleable.ShiftableEditText_android_hint);
+        mBaseColor = customAttributes.getColor(R.styleable.ShiftableEditText_baseColor,
                 getResources().getColor(android.R.color.black));
-        theme.applyStyle(R.attr.baseColor, true);
-
-        mHighlightColor = styledAttributes.getColor(R.styleable.ShiftableEditText_highlightColor,
+        Log.wtf(TAG, "************");
+        Log.wtf(TAG, "What the... defined base: " + String.format("#%06X", (0xFFFFFF & mBaseColor)));
+        mHighlightColor = customAttributes.getColor(R.styleable.ShiftableEditText_highlightColor,
                 getResources().getColor(android.R.color.black));
-
-        mIconColor = styledAttributes
-                .getColor(R.styleable.ShiftableEditText_iconColor, mBaseColor);
-        mIconKey = styledAttributes.getString(R.styleable.ShiftableEditText_iconKey);
+        Log.wtf(TAG, "What the... defined highlight: " + String.format("#%06X", (0xFFFFFF & mHighlightColor)));
+        mIconColor = customAttributes.getColor(R.styleable.ShiftableEditText_iconColor, mBaseColor);
+        mIconKey = customAttributes.getString(R.styleable.ShiftableEditText_iconKey);
         if (mIconKey == null) {
             mIconDrawable = null;
             mIconCharacter = "";
@@ -131,17 +128,25 @@ public class ShiftableEditText extends FrameLayout {
                     mIconKey, String.format("#%06X", (0xFFFFFF & mIconColor)),
                     "@dimen/shiftable_edit_text_default_icon_size_small");
         }
-
-        mLabelColor = styledAttributes
-                .getColor(R.styleable.ShiftableEditText_labelColor, mHighlightColor);
-
-        mMode = styledAttributes.getInt(R.styleable.ShiftableEditText_mode, MODE_MARQUEE);
-
-        mInputType = styledAttributes.getInt(R.styleable.ShiftableEditText_android_inputType,
+        mLabelColor = customAttributes.getColor(R.styleable.ShiftableEditText_labelColor, mHighlightColor);
+        mMode = customAttributes.getInt(R.styleable.ShiftableEditText_mode, MODE_MARQUEE);
+        mInputType = customAttributes.getInt(R.styleable.ShiftableEditText_android_inputType,
                 EditorInfo.TYPE_CLASS_TEXT);
+        Resources.Theme theme = context.getTheme();
+        TypedArray themeAttributes = theme.obtainStyledAttributes(new int[] {
+                R.attr.baseColor, R.attr.highlightColor, R.attr.iconColor, R.attr.labelColor
+        });
+        TypedValue themeBaseColor = new TypedValue();
+        themeAttributes.getValue(themeAttributes.getIndex(0), themeBaseColor);
+        Log.wtf(TAG, "What the... theme base: " + String.format("#%06X", (0xFFFFFF & themeBaseColor.data)));
+        TypedValue themeHighlightColor = new TypedValue();
+        themeAttributes.getValue(themeAttributes.getIndex(3), themeHighlightColor);
+        Log.wtf(TAG, "What the... theme highlight: " + String.format("#%06X", (0xFFFFFF & themeHighlightColor.data)));
+        customAttributes.recycle();
+        themeAttributes.recycle();
     }
 
-    private void init() {
+    private void initEditAndMarqueeViews() {
         mEditView.editText.setCompoundDrawablesWithIntrinsicBounds(null, null, mIconDrawable, null);
         mEditView.editText.setText(mText);
         mEditView.editText.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextSize);
