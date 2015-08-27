@@ -67,10 +67,6 @@ public class ShiftableEditText extends FrameLayout {
     private int mTextColor;
     private float mTextSize;
     private String mHint;
-    private int mBaseColor;
-    private int mHighlightColor;
-    private int mIconColor;
-    private String mIconKey;
     private IconDrawable mIconDrawable;
     private CharSequence mIconCharacter;
     private int mLabelColor;
@@ -117,6 +113,7 @@ public class ShiftableEditText extends FrameLayout {
         mTextSize = customAttributes.getDimension(R.styleable.ShiftableEditText_android_textSize,
                 getResources().getDimension(R.dimen.shiftable_edit_text_default_text_size));
         mHint = customAttributes.getString(R.styleable.ShiftableEditText_android_hint);
+        int mBaseColor, mHighlightColor, mIconColor;
         if (themeAttributes.getValue(themeAttributes.getIndex(0), typedValue)) {
             mBaseColor = typedValue.data;
         }
@@ -135,7 +132,7 @@ public class ShiftableEditText extends FrameLayout {
         else {
             mIconColor = mBaseColor;
         }
-        mIconKey = customAttributes.getString(R.styleable.ShiftableEditText_iconKey);
+        String mIconKey = customAttributes.getString(R.styleable.ShiftableEditText_iconKey);
         if (mIconKey == null) {
             mIconDrawable = null;
             mIconCharacter = "";
@@ -175,10 +172,10 @@ public class ShiftableEditText extends FrameLayout {
         mEditView.textInputLayout.setHint(mHint);
         mEditView.textInputLayout.setVisibility(getVisibility());
         if (mMode == MODE_MARQUEE) {
-            disableVenueContactPropertyEditMode(mIconCharacter);
+            enableMarqueeMode(mIconCharacter);
         }
         else if (mMode == MODE_EDIT) {
-            enableVenueContactPropertyEditMode();
+            enableEditMode();
         }
         final GestureDetectorCompat detector = new GestureDetectorCompat(getContext(),
                 new GestureDetector.OnGestureListener() {
@@ -203,7 +200,7 @@ public class ShiftableEditText extends FrameLayout {
 
             @Override
             public void onLongPress(MotionEvent e) {
-                enableVenueContactPropertyEditMode();
+                enableEditMode();
             }
 
             @Override
@@ -243,23 +240,23 @@ public class ShiftableEditText extends FrameLayout {
         public void onFocusChange(View view, boolean hasFocus) {
             previousListener.onFocusChange(view, hasFocus);
             if (!hasFocus) {
-                disableVenueContactPropertyEditMode(iconCharacter);
+                enableMarqueeMode(iconCharacter);
             }
         }
 
     }
 
-    private void enableVenueContactPropertyEditMode() {
+    private void enableEditMode() {
         mMode = MODE_EDIT;
         mEditView.editText.setVisibility(View.VISIBLE);
         mEditView.editText.setEnabled(true);
         mMarqueeView.textView.setVisibility(View.INVISIBLE);
     }
 
-    private void disableVenueContactPropertyEditMode(final CharSequence iconCharacter) {
+    private void enableMarqueeMode(final CharSequence iconCharacter) {
         if (mEditView.editText.getText().toString().trim().isEmpty()) {
             if (mMode == MODE_MARQUEE) {
-                enableVenueContactPropertyEditMode();
+                enableEditMode();
             }
             return;
         }
