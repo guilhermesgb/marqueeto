@@ -2,10 +2,17 @@
 <resources>
 
     <style name="ShiftableEditTextTheme" parent="ShiftableEditTextBaseTheme">
-        <item name="baseColor">?android:colorPrimary</item>
-        <item name="highlightColor">?android:colorAccent</item>
+        <!--<item name="baseColor">?android:colorPrimary</item>
+        <item name="highlightColor">?android:colorAccent</item>-->
         <item name="android:colorControlNormal">?baseColor</item>
         <item name="android:colorControlActivated">?highlightColor</item>
+    </style>
+
+    <style name="ShiftableEditTextDefault">
+        <item name="baseColor">?android:colorPrimary</item>
+        <item name="highlightColor">?android:colorAccent</item>
+        <item name="iconColor">?baseColor</item>
+        <item name="labelColor">?highlightColor</item>
     </style>
 
 </resources>

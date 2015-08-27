@@ -87,9 +87,7 @@ public class ShiftableEditText extends FrameLayout {
 
     public ShiftableEditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        context.setTheme(R.style.ShiftableEditTextTheme);
-        TypedArray customAttributes = context.obtainStyledAttributes(attrs, R.styleable.ShiftableEditText);
-        overrideThemeWithCustomAttributes(customAttributes, context);
+        overrideThemeWithCustomAttributes(context, attrs);
         View editViewSource = LayoutInflater.from(context).inflate(R.layout.layout_edit, this, false);
         mEditView = new EditView(editViewSource);
         addView(mEditView.textInputLayout);
@@ -100,21 +98,22 @@ public class ShiftableEditText extends FrameLayout {
         initEditAndMarqueeViews();
     }
 
-    private void overrideThemeWithCustomAttributes(TypedArray customAttributes, Context context) {
+    private void overrideThemeWithCustomAttributes(Context context, AttributeSet attrs) {
+        context.setTheme(R.style.ShiftableEditTextTheme);
+        TypedArray customAttributes = context.obtainStyledAttributes(attrs, R.styleable.ShiftableEditText);
         mText = customAttributes.getString(R.styleable.ShiftableEditText_android_text);
         mTextColor = customAttributes.getColor(R.styleable.ShiftableEditText_android_textColor,
                 getResources().getColor(android.R.color.black));
         mTextSize = customAttributes.getDimension(R.styleable.ShiftableEditText_android_textSize,
                 getResources().getDimension(R.dimen.shiftable_edit_text_default_text_size));
         mHint = customAttributes.getString(R.styleable.ShiftableEditText_android_hint);
-        mBaseColor = customAttributes.getColor(R.styleable.ShiftableEditText_baseColor,
-                getResources().getColor(android.R.color.black));
+        mBaseColor = customAttributes.getColor(R.styleable.ShiftableEditText_baseColor, -1);
         Log.wtf(TAG, "************");
         Log.wtf(TAG, "What the... defined base: " + String.format("#%06X", (0xFFFFFF & mBaseColor)));
-        mHighlightColor = customAttributes.getColor(R.styleable.ShiftableEditText_highlightColor,
-                getResources().getColor(android.R.color.black));
+        mHighlightColor = customAttributes.getColor(R.styleable.ShiftableEditText_highlightColor, -1);
         Log.wtf(TAG, "What the... defined highlight: " + String.format("#%06X", (0xFFFFFF & mHighlightColor)));
         mIconColor = customAttributes.getColor(R.styleable.ShiftableEditText_iconColor, mBaseColor);
+        Log.wtf(TAG, "What the... defined icon: " + String.format("#%06X", (0xFFFFFF & mIconColor)));
         mIconKey = customAttributes.getString(R.styleable.ShiftableEditText_iconKey);
         if (mIconKey == null) {
             mIconDrawable = null;
@@ -129,20 +128,45 @@ public class ShiftableEditText extends FrameLayout {
                     "@dimen/shiftable_edit_text_default_icon_size_small");
         }
         mLabelColor = customAttributes.getColor(R.styleable.ShiftableEditText_labelColor, mHighlightColor);
+        Log.wtf(TAG, "What the... defined label: " + String.format("#%06X", (0xFFFFFF & mLabelColor)));
         mMode = customAttributes.getInt(R.styleable.ShiftableEditText_mode, MODE_MARQUEE);
         mInputType = customAttributes.getInt(R.styleable.ShiftableEditText_android_inputType,
                 EditorInfo.TYPE_CLASS_TEXT);
-        Resources.Theme theme = context.getTheme();
-        TypedArray themeAttributes = theme.obtainStyledAttributes(new int[] {
-                R.attr.baseColor, R.attr.highlightColor, R.attr.iconColor, R.attr.labelColor
-        });
+        int shiftableEditStyle = customAttributes
+                .getResourceId(R.styleable.ShiftableEditText_shiftableEditTextStyle,
+                        R.style.ShiftableEditTextDefault);
+        customAttributes.recycle();
+        final Resources.Theme theme = context.getTheme();
+        theme.applyStyle(shiftableEditStyle, true);
+        final TypedArray themeAttributes = theme.obtainStyledAttributes(attrs, new int[]{
+            R.attr.baseColor, R.attr.highlightColor, R.attr.iconColor, R.attr.labelColor
+        }, R.attr.colorPrimary, 0);
         TypedValue themeBaseColor = new TypedValue();
         themeAttributes.getValue(themeAttributes.getIndex(0), themeBaseColor);
         Log.wtf(TAG, "What the... theme base: " + String.format("#%06X", (0xFFFFFF & themeBaseColor.data)));
+        if (mBaseColor == -1) {
+            mBaseColor = themeBaseColor.data;
+        }
+        theme.resolveAttribute(R.attr.baseColor, themeBaseColor, true);
+        Log.wtf(TAG, ">>> Again... theme base: " + String.format("#%06X", (0xFFFFFF & themeBaseColor.data)));
         TypedValue themeHighlightColor = new TypedValue();
-        themeAttributes.getValue(themeAttributes.getIndex(3), themeHighlightColor);
+        themeAttributes.getValue(themeAttributes.getIndex(1), themeHighlightColor);
         Log.wtf(TAG, "What the... theme highlight: " + String.format("#%06X", (0xFFFFFF & themeHighlightColor.data)));
-        customAttributes.recycle();
+        if (mHighlightColor == -1) {
+            mHighlightColor = themeHighlightColor.data;
+        }
+        TypedValue themeIconColor = new TypedValue();
+        themeAttributes.getValue(themeAttributes.getIndex(2), themeIconColor);
+        Log.wtf(TAG, "What the... theme icon: " + String.format("#%06X", (0xFFFFFF & themeIconColor.data)));
+        if (mIconColor == -1) {
+            mIconColor = themeIconColor.data;
+        }
+        TypedValue themeLabelColor = new TypedValue();
+        themeAttributes.getValue(themeAttributes.getIndex(3), themeLabelColor);
+        Log.wtf(TAG, "What the... theme label: " + String.format("#%06X", (0xFFFFFF & themeLabelColor.data)));
+        if (mLabelColor == -1) {
+            mLabelColor = themeLabelColor.data;
+        }
         themeAttributes.recycle();
     }
 
