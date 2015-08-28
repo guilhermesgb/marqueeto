@@ -110,8 +110,16 @@ public class ShiftableEditText extends FrameLayout {
         mText = customAttributes.getString(R.styleable.ShiftableEditText_android_text);
         mTextColor = customAttributes.getColor(R.styleable.ShiftableEditText_android_textColor,
                 getResources().getColor(android.R.color.black));
+        float maxSize = getResources().getDimension(R.dimen.shiftable_edit_text_max_text_size);
+        float maxSizeConverted = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, maxSize,
+                getResources().getDisplayMetrics());
         mTextSize = customAttributes.getDimension(R.styleable.ShiftableEditText_android_textSize,
                 getResources().getDimension(R.dimen.shiftable_edit_text_default_text_size));
+        float textSizeConverted = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, mTextSize,
+                getResources().getDisplayMetrics());
+        if (textSizeConverted > maxSizeConverted) {
+            mTextSize = maxSize;
+        }
         mHint = customAttributes.getString(R.styleable.ShiftableEditText_android_hint);
         int mBaseColor, mHighlightColor, mIconColor;
         if (themeAttributes.getValue(themeAttributes.getIndex(0), typedValue)) {

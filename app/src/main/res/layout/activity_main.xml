@@ -39,6 +39,9 @@
         shiftable:iconKey="md-language"
         shiftable:mode="edit"
         shiftable:shiftableEditTextStyle="@style/ShiftableEditTextCustom"
+        android:textSize="22sp"
+        android:textColor="@android:color/white"
+        android:padding="20dp"
         tools:ignore="HardcodedText"/>
 
     <com.guilhermesgb.shiftableedittext.ShiftableEditText
@@ -50,6 +53,8 @@
         android:hint="Address"
         shiftable:iconKey="md-location-on"
         shiftable:mode="edit"
+        android:textSize="14sp"
+        android:textColor="@android:color/white"
         tools:ignore="HardcodedText"/>
 
     <com.guilhermesgb.shiftableedittext.ShiftableEditText

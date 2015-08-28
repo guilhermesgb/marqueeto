@@ -6,6 +6,7 @@
         <item name="iconColor">?baseColor</item>
         <item name="android:textColorHint">?baseColor</item>
         <item name="labelColor">?highlightColor</item>
+        <item name="android:editTextStyle">@style/Widget.AppCompat.EditText</item> <!--FIXME THIS ALONE CHANGES THE UNDERBAR TO CORRECT ONE, BUT IT REMAINS BLACK-->
     </style>
 
     <style name="ShiftableEditTextTheme" parent="ShiftableEditTextBaseTheme">
@@ -20,6 +21,10 @@
     </style>
     <style name="Widget.Design.TextInputLayout" parent="android:Widget">
         <item name="hintTextAppearance">@style/TextAppearance.Design.Hint</item>
+    </style>
+
+    <style name="ShiftableEditTextEditViewStyle">
+        <!--<item name="android:background">?attr/editTextBackground</item> FIXME THIS CHANGES THE UNDERBAR TO CORRECT ONE, BUT IT REMAINS BLACK-->
     </style>
 
     <style name="ShiftableEditTextCustom">

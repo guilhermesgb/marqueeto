@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <dimen name="shiftable_edit_text_max_text_size">16sp</dimen>
     <dimen name="shiftable_edit_text_default_text_size">16sp</dimen>
     <dimen name="shiftable_edit_text_default_icon_size_big">30dp</dimen>
     <dimen name="shiftable_edit_text_default_icon_size_small">18dp</dimen>

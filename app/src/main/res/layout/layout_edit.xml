@@ -11,6 +11,8 @@
         android:layout_height="wrap_content"
         android:inputType="text"
         android:singleLine="true"
-        android:maxLines="1"/>
+        android:maxLines="1"
+        android:theme="@style/Theme.AppCompat.NoActionBar"/>
+    <!--style="@style/ShiftableEditTextEditViewStyle" FIXME THIS CHANGES THE UNDERBAR TO CORRECT ONE, BUT IT REMAINS BLACK-->
 
 </android.support.design.widget.TextInputLayout>
