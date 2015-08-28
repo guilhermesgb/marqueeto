@@ -98,10 +98,10 @@ public class LabelledMarqueeEditText extends FrameLayout {
         context.setTheme(R.style.LabelledMarqueeEditTextTheme);
         final Resources.Theme theme = context.getTheme();
         TypedArray customAttributes = context.obtainStyledAttributes(attrs, R.styleable.LabelledMarqueeEditText);
-        int labelled_marqueeEditStyle = customAttributes
+        int labelledMarqueeEditStyle = customAttributes
                 .getResourceId(R.styleable.LabelledMarqueeEditText_labelledMarqueeEditTextStyle, -1);
-        if (labelled_marqueeEditStyle != -1) {
-            theme.applyStyle(labelled_marqueeEditStyle, true);
+        if (labelledMarqueeEditStyle != -1) {
+            theme.applyStyle(labelledMarqueeEditStyle, true);
         }
         final TypedArray themeAttributes = theme.obtainStyledAttributes(attrs, new int[]{
                 R.attr.baseColor, R.attr.highlightColor, R.attr.iconColor, R.attr.labelColor
