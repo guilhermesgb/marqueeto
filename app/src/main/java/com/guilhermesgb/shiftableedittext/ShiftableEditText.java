@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.view.GestureDetectorCompat;
+import android.support.v7.widget.AppCompatEditText;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
@@ -14,7 +15,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 
 import com.joanzapata.iconify.IconDrawable;
@@ -43,7 +43,7 @@ public class ShiftableEditText extends FrameLayout {
     final class EditView {
 
         @Bind(R.id.shiftable_edit_text_layout_label_wrapper) TextInputLayout textInputLayout;
-        @Bind(R.id.shiftable_edit_text_layout_edit_text) EditText editText;
+        @Bind(R.id.shiftable_edit_text_layout_edit_text) AppCompatEditText editText;
 
         public EditView(View source) {
             ButterKnife.bind(this, source);

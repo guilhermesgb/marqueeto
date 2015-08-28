@@ -5,14 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
+    <android.support.v7.widget.AppCompatEditText
         android:id="@+id/shiftable_edit_text_layout_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
         android:singleLine="true"
-        android:maxLines="1"
-        android:theme="@style/Theme.AppCompat.NoActionBar"/>
-    <!--style="@style/ShiftableEditTextEditViewStyle" FIXME THIS CHANGES THE UNDERBAR TO CORRECT ONE, BUT IT REMAINS BLACK-->
+        android:maxLines="1"/>
 
 </android.support.design.widget.TextInputLayout>
