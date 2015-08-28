@@ -1,9 +1,9 @@
-package com.guilhermesgb.shiftableedittext.view;
+package com.guilhermesgb.marqueeto.view;
 
 import android.app.Activity;
 import android.os.Bundle;
 
-import com.guilhermesgb.shiftableedittext.R;
+import com.guilhermesgb.marqueeto.R;
 
 public class MainActivity extends Activity {
 

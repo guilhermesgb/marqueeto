@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="ShiftableEditText">
+    <declare-styleable name="LabelledMarqueeEditText">
 
         <attr name="android:text"/>
         <attr name="android:textSize"/>
@@ -17,7 +17,7 @@
             <enum name="marquee" value="1"/>
         </attr>
         <attr name="android:inputType"/>
-        <attr name="shiftableEditTextStyle" format="reference"/>
+        <attr name="labelledMarqueeEditTextStyle" format="reference"/>
 
     </declare-styleable>
 

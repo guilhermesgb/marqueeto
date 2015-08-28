@@ -1,4 +1,4 @@
-package com.guilhermesgb.shiftableedittext;
+package com.guilhermesgb.marqueeto;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -25,9 +25,9 @@ import com.joanzapata.iconify.widget.IconTextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class ShiftableEditText extends FrameLayout {
+public class LabelledMarqueeEditText extends FrameLayout {
 
-    private static final String TAG = ShiftableEditText.class.getSimpleName();
+    private static final String TAG = LabelledMarqueeEditText.class.getSimpleName();
     private static final int MODE_EDIT = 0;
     private static final int MODE_MARQUEE = 1;
 
@@ -42,8 +42,8 @@ public class ShiftableEditText extends FrameLayout {
 
     final class EditView {
 
-        @Bind(R.id.shiftable_edit_text_layout_label_wrapper) TextInputLayout textInputLayout;
-        @Bind(R.id.shiftable_edit_text_layout_edit_text) AppCompatEditText editText;
+        @Bind(R.id.labelled_marquee_edit_text_layout_label_wrapper) TextInputLayout textInputLayout;
+        @Bind(R.id.labelled_marquee_edit_text_layout_edit_text) AppCompatEditText editText;
 
         public EditView(View source) {
             ButterKnife.bind(this, source);
@@ -54,7 +54,7 @@ public class ShiftableEditText extends FrameLayout {
 
     final class MarqueeView {
 
-        @Bind(R.id.shiftable_edit_text_layout_marquee_text) IconTextView textView;
+        @Bind(R.id.labelled_marquee_edit_text_layout_marquee_text) IconTextView textView;
 
         public MarqueeView(View source) {
             ButterKnife.bind(this, source);
@@ -73,15 +73,15 @@ public class ShiftableEditText extends FrameLayout {
     private int mMode;
     private int mInputType;
 
-    public ShiftableEditText(Context context) {
+    public LabelledMarqueeEditText(Context context) {
         this(context, null);
     }
 
-    public ShiftableEditText(Context context, AttributeSet attrs) {
+    public LabelledMarqueeEditText(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public ShiftableEditText(Context context, AttributeSet attrs, int defStyle) {
+    public LabelledMarqueeEditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         overrideThemeWithCustomAttributes(context, attrs);
         View editViewSource = LayoutInflater.from(context).inflate(R.layout.layout_edit, this, false);
@@ -95,32 +95,32 @@ public class ShiftableEditText extends FrameLayout {
     }
 
     private void overrideThemeWithCustomAttributes(Context context, AttributeSet attrs) {
-        context.setTheme(R.style.ShiftableEditTextTheme);
+        context.setTheme(R.style.LabelledMarqueeEditTextTheme);
         final Resources.Theme theme = context.getTheme();
-        TypedArray customAttributes = context.obtainStyledAttributes(attrs, R.styleable.ShiftableEditText);
-        int shiftableEditStyle = customAttributes
-                .getResourceId(R.styleable.ShiftableEditText_shiftableEditTextStyle, -1);
-        if (shiftableEditStyle != -1) {
-            theme.applyStyle(shiftableEditStyle, true);
+        TypedArray customAttributes = context.obtainStyledAttributes(attrs, R.styleable.LabelledMarqueeEditText);
+        int labelled_marqueeEditStyle = customAttributes
+                .getResourceId(R.styleable.LabelledMarqueeEditText_labelledMarqueeEditTextStyle, -1);
+        if (labelled_marqueeEditStyle != -1) {
+            theme.applyStyle(labelled_marqueeEditStyle, true);
         }
         final TypedArray themeAttributes = theme.obtainStyledAttributes(attrs, new int[]{
                 R.attr.baseColor, R.attr.highlightColor, R.attr.iconColor, R.attr.labelColor
         }, R.attr.colorPrimary, 0);
         TypedValue typedValue = new TypedValue();
-        mText = customAttributes.getString(R.styleable.ShiftableEditText_android_text);
-        mTextColor = customAttributes.getColor(R.styleable.ShiftableEditText_android_textColor,
+        mText = customAttributes.getString(R.styleable.LabelledMarqueeEditText_android_text);
+        mTextColor = customAttributes.getColor(R.styleable.LabelledMarqueeEditText_android_textColor,
                 getResources().getColor(android.R.color.black));
-        float maxSize = getResources().getDimension(R.dimen.shiftable_edit_text_max_text_size);
+        float maxSize = getResources().getDimension(R.dimen.labelled_marquee_edit_text_max_text_size);
         float maxSizeConverted = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, maxSize,
                 getResources().getDisplayMetrics());
-        mTextSize = customAttributes.getDimension(R.styleable.ShiftableEditText_android_textSize,
-                getResources().getDimension(R.dimen.shiftable_edit_text_default_text_size));
+        mTextSize = customAttributes.getDimension(R.styleable.LabelledMarqueeEditText_android_textSize,
+                getResources().getDimension(R.dimen.labelled_marquee_edit_text_default_text_size));
         float textSizeConverted = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, mTextSize,
                 getResources().getDisplayMetrics());
         if (textSizeConverted > maxSizeConverted) {
             mTextSize = maxSize;
         }
-        mHint = customAttributes.getString(R.styleable.ShiftableEditText_android_hint);
+        mHint = customAttributes.getString(R.styleable.LabelledMarqueeEditText_android_hint);
         int mBaseColor, mHighlightColor, mIconColor;
         if (themeAttributes.getValue(themeAttributes.getIndex(0), typedValue)) {
             mBaseColor = typedValue.data;
@@ -140,18 +140,18 @@ public class ShiftableEditText extends FrameLayout {
         else {
             mIconColor = mBaseColor;
         }
-        String mIconKey = customAttributes.getString(R.styleable.ShiftableEditText_iconKey);
+        String mIconKey = customAttributes.getString(R.styleable.LabelledMarqueeEditText_iconKey);
         if (mIconKey == null) {
             mIconDrawable = null;
             mIconCharacter = "";
         }
         else {
             mIconDrawable = new IconDrawable(getContext(), mIconKey)
-                    .color(mIconColor).sizeRes(R.dimen.shiftable_edit_text_default_icon_size_big);
+                    .color(mIconColor).sizeRes(R.dimen.labelled_marquee_edit_text_default_icon_size_big);
             mIconCharacter = "   " + String.format(getResources()
-                            .getString(R.string.shiftable_edit_text_layout_icon_definition_template),
+                            .getString(R.string.labelled_marquee_edit_text_layout_icon_definition_template),
                     mIconKey, String.format("#%06X", (0xFFFFFF & mIconColor)),
-                    "@dimen/shiftable_edit_text_default_icon_size_small");
+                    "@dimen/labelled_marquee_edit_text_default_icon_size_small");
         }
         if (themeAttributes.getValue(themeAttributes.getIndex(3), typedValue)) {
             mLabelColor = typedValue.data;
@@ -160,8 +160,8 @@ public class ShiftableEditText extends FrameLayout {
             mLabelColor = mHighlightColor;
         }
         themeAttributes.recycle();
-        mMode = customAttributes.getInt(R.styleable.ShiftableEditText_mode, MODE_MARQUEE);
-        mInputType = customAttributes.getInt(R.styleable.ShiftableEditText_android_inputType,
+        mMode = customAttributes.getInt(R.styleable.LabelledMarqueeEditText_mode, MODE_MARQUEE);
+        mInputType = customAttributes.getInt(R.styleable.LabelledMarqueeEditText_android_inputType,
                 EditorInfo.TYPE_CLASS_TEXT);
         customAttributes.recycle();
     }

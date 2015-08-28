@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="shiftable_edit_text_layout_icon_definition_template" formatted="false">
+    <string name="labelled_marquee_edit_text_layout_icon_definition_template" formatted="false">
         {%s %s %s}
     </string>
 

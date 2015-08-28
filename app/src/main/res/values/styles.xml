@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="ShiftableEditTextBaseTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:textSize">@dimen/shiftable_edit_text_default_text_size</item>
+    <style name="LabelledMarqueeEditTextBaseTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:textSize">@dimen/labelled_marquee_edit_text_default_text_size</item>
         <item name="iconColor">?baseColor</item>
         <item name="android:textColorHint">?baseColor</item>
         <item name="labelColor">?highlightColor</item>
         <item name="android:editTextStyle">@style/Widget.AppCompat.EditText</item>
     </style>
 
-    <style name="ShiftableEditTextTheme" parent="ShiftableEditTextBaseTheme">
+    <style name="LabelledMarqueeEditTextTheme" parent="LabelledMarqueeEditTextBaseTheme">
         <item name="baseColor">?colorPrimary</item>
         <item name="highlightColor">?colorAccent</item>
         <item name="colorControlNormal">?baseColor</item>
@@ -23,7 +23,7 @@
         <item name="hintTextAppearance">@style/TextAppearance.Design.Hint</item>
     </style>
 
-    <style name="ShiftableEditTextCustom">
+    <style name="LabelledMarqueeEditTextCustom">
         <item name="baseColor">@android:color/holo_red_light</item>
         <item name="highlightColor">@android:color/holo_red_dark</item>
     </style>

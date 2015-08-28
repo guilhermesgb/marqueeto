@@ -1,86 +1,86 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:shiftable="http://schemas.android.com/apk/res-auto"
+    xmlns:labelled_marquee="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.guilhermesgb.shiftableedittext.view.MainActivity">
+    tools:context="com.guilhermesgb.marqueeto.view.MainActivity">
 
-    <com.guilhermesgb.shiftableedittext.ShiftableEditText
+    <com.guilhermesgb.marqueeto.LabelledMarqueeEditText
         android:id="@+id/phone_edit_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:inputType="phone"
         android:hint="Phone"
-        shiftable:iconKey="md-local-phone"
-        shiftable:mode="edit"
-        shiftable:shiftableEditTextStyle="@style/ShiftableEditTextCustom"
+        labelled_marquee:iconKey="md-local-phone"
+        labelled_marquee:mode="edit"
+        labelled_marquee:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustom"
         tools:ignore="HardcodedText"/>
 
-    <com.guilhermesgb.shiftableedittext.ShiftableEditText
+    <com.guilhermesgb.marqueeto.LabelledMarqueeEditText
         android:id="@+id/email_edit_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/phone_edit_text"
         android:inputType="textEmailAddress"
         android:hint="Email"
-        shiftable:iconKey="md-local-post-office"
-        shiftable:mode="marquee"
+        labelled_marquee:iconKey="md-local-post-office"
+        labelled_marquee:mode="marquee"
         tools:ignore="HardcodedText"/>
 
-    <com.guilhermesgb.shiftableedittext.ShiftableEditText
+    <com.guilhermesgb.marqueeto.LabelledMarqueeEditText
         android:id="@+id/website_edit_text"
         android:layout_width="225dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/email_edit_text"
         android:inputType="textUri"
         android:hint="Website"
-        shiftable:iconKey="md-language"
-        shiftable:mode="edit"
-        shiftable:shiftableEditTextStyle="@style/ShiftableEditTextCustom"
+        labelled_marquee:iconKey="md-language"
+        labelled_marquee:mode="edit"
+        labelled_marquee:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustom"
         android:textSize="22sp"
         android:textColor="@android:color/white"
         android:padding="20dp"
         tools:ignore="HardcodedText"/>
 
-    <com.guilhermesgb.shiftableedittext.ShiftableEditText
+    <com.guilhermesgb.marqueeto.LabelledMarqueeEditText
         android:id="@+id/address_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/website_edit_text"
         android:inputType="textPostalAddress"
         android:hint="Address"
-        shiftable:iconKey="md-location-on"
-        shiftable:mode="edit"
+        labelled_marquee:iconKey="md-location-on"
+        labelled_marquee:mode="edit"
         android:textSize="14sp"
         android:textColor="@android:color/white"
         tools:ignore="HardcodedText"/>
 
-    <com.guilhermesgb.shiftableedittext.ShiftableEditText
+    <com.guilhermesgb.marqueeto.LabelledMarqueeEditText
         android:id="@+id/username_edit_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/address_edit_text"
         android:inputType="text"
         android:hint="Username"
-        shiftable:iconKey="md-account-box"
-        shiftable:mode="marquee"
+        labelled_marquee:iconKey="md-account-box"
+        labelled_marquee:mode="marquee"
         android:text="guilhermesgb"
-        shiftable:shiftableEditTextStyle="@style/ShiftableEditTextCustom"
+        labelled_marquee:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustom"
         tools:ignore="HardcodedText"/>
 
-    <com.guilhermesgb.shiftableedittext.ShiftableEditText
+    <com.guilhermesgb.marqueeto.LabelledMarqueeEditText
         android:id="@+id/work_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/username_edit_text"
         android:inputType="text"
         android:hint="Work"
-        shiftable:iconKey="md-work"
-        shiftable:mode="marquee"
+        labelled_marquee:iconKey="md-work"
+        labelled_marquee:mode="marquee"
         android:text="Embedded Laboratory"
-        shiftable:shiftableEditTextStyle="@style/ShiftableEditTextCustom"
+        labelled_marquee:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustom"
         tools:ignore="HardcodedText"/>
 
     <LinearLayout
@@ -90,42 +90,42 @@
         android:layout_below="@id/work_edit_text"
         android:orientation="horizontal">
 
-        <com.guilhermesgb.shiftableedittext.ShiftableEditText
+        <com.guilhermesgb.marqueeto.LabelledMarqueeEditText
             android:id="@+id/name_edit_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:inputType="text"
             android:hint="Name"
-            shiftable:iconKey="md-face"
-            shiftable:mode="marquee"
+            labelled_marquee:iconKey="md-face"
+            labelled_marquee:mode="marquee"
             android:text="Guilherme"
             tools:ignore="HardcodedText"/>
 
-        <com.guilhermesgb.shiftableedittext.ShiftableEditText
+        <com.guilhermesgb.marqueeto.LabelledMarqueeEditText
             android:id="@+id/home_edit_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:inputType="text"
             android:hint="Home"
-            shiftable:iconKey="md-home"
-            shiftable:mode="marquee"
-            shiftable:shiftableEditTextStyle="@style/ShiftableEditTextCustom"
+            labelled_marquee:iconKey="md-home"
+            labelled_marquee:mode="marquee"
+            labelled_marquee:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustom"
             android:text="Campina Grande"
             tools:ignore="HardcodedText"/>
 
     </LinearLayout>
 
-    <com.guilhermesgb.shiftableedittext.ShiftableEditText
+    <com.guilhermesgb.marqueeto.LabelledMarqueeEditText
         android:id="@+id/identity_number_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/name_home_layout"
         android:inputType="number"
         android:hint="Identity Number"
-        shiftable:iconKey="md-perm-identity"
-        shiftable:mode="marquee"
+        labelled_marquee:iconKey="md-perm-identity"
+        labelled_marquee:mode="marquee"
         tools:ignore="HardcodedText"/>
 
 </RelativeLayout>

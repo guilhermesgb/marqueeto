@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="ShiftableEditTextTheme" parent="ShiftableEditTextBaseTheme">
+    <style name="LabelledMarqueeEditTextTheme" parent="LabelledMarqueeEditTextBaseTheme">
         <item name="baseColor">?android:colorPrimary</item>
         <item name="highlightColor">?android:colorAccent</item>
         <item name="android:colorControlNormal">?baseColor</item>
