@@ -28,4 +28,9 @@
         <item name="highlightColor">@android:color/holo_red_dark</item>
     </style>
 
+    <style name="LabelledMarqueeEditTextCustom2">
+        <item name="baseColor">@android:color/holo_green_dark</item>
+        <item name="highlightColor">@android:color/holo_purple</item>
+    </style>
+
 </resources>

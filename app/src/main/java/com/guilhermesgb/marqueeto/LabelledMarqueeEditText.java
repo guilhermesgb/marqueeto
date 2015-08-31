@@ -28,8 +28,11 @@ import butterknife.ButterKnife;
 public class LabelledMarqueeEditText extends FrameLayout {
 
     private static final String TAG = LabelledMarqueeEditText.class.getSimpleName();
-    private static final int MODE_EDIT = 0;
-    private static final int MODE_MARQUEE = 1;
+    public static final int MODE_EDIT = 0;
+    public static final int MODE_MARQUEE = 1;
+
+    private Context mContext;
+    private AttributeSet mAttrs;
 
     static {
         try {
@@ -50,7 +53,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
         }
 
     }
-    final EditView mEditView;
+    private EditView mEditView;
 
     final class MarqueeView {
 
@@ -61,7 +64,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
         }
 
     }
-    final MarqueeView mMarqueeView;
+    private MarqueeView mMarqueeView;
 
     private String mText;
     private int mTextColor;
@@ -69,6 +72,10 @@ public class LabelledMarqueeEditText extends FrameLayout {
     private String mHint;
     private IconDrawable mIconDrawable;
     private CharSequence mIconCharacter;
+    private int mBaseColor;
+    private int mHighlightColor;
+    private int mIconColor;
+    private String mIconKey;
     private int mLabelColor;
     private int mMode;
     private int mInputType;
@@ -83,45 +90,37 @@ public class LabelledMarqueeEditText extends FrameLayout {
 
     public LabelledMarqueeEditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        overrideThemeWithCustomAttributes(context, attrs);
-        View editViewSource = LayoutInflater.from(context).inflate(R.layout.layout_edit, this, false);
-        mEditView = new EditView(editViewSource);
-        addView(mEditView.textInputLayout);
-        View marqueeViewSource = LayoutInflater.from(context).inflate(R.layout.layout_marquee, this, false);
-        mMarqueeView = new MarqueeView(marqueeViewSource);
-        addView(mMarqueeView.textView, new ViewGroup
-                .LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        mContext = context;
+        mAttrs = attrs;
+        mContext.setTheme(R.style.LabelledMarqueeEditTextTheme);
+        TypedArray customAttributes = context.obtainStyledAttributes(mAttrs,
+                R.styleable.LabelledMarqueeEditText);
+        int customLabelledMarqueeEditTextStyle = customAttributes
+                .getResourceId(R.styleable.LabelledMarqueeEditText_labelledMarqueeEditTextStyle, -1);
+        Resources.Theme theme = overrideThemeWithCustomStyle(mContext, customLabelledMarqueeEditTextStyle);
+        final TypedArray themeAttributes = theme.obtainStyledAttributes(mAttrs, new int[]{
+                R.attr.baseColor, R.attr.highlightColor, R.attr.iconColor, R.attr.labelColor
+        }, R.attr.colorPrimary, 0);
+        retrieveAttributesValues(customAttributes, themeAttributes);
+        buildEditAndMarqueeViews();
         initEditAndMarqueeViews();
     }
 
-    private void overrideThemeWithCustomAttributes(Context context, AttributeSet attrs) {
-        context.setTheme(R.style.LabelledMarqueeEditTextTheme);
+    private Resources.Theme overrideThemeWithCustomStyle(Context context, int customAttributesStyle) {
         final Resources.Theme theme = context.getTheme();
-        TypedArray customAttributes = context.obtainStyledAttributes(attrs, R.styleable.LabelledMarqueeEditText);
-        int labelledMarqueeEditStyle = customAttributes
-                .getResourceId(R.styleable.LabelledMarqueeEditText_labelledMarqueeEditTextStyle, -1);
-        if (labelledMarqueeEditStyle != -1) {
-            theme.applyStyle(labelledMarqueeEditStyle, true);
+        if (customAttributesStyle != -1) {
+            theme.applyStyle(customAttributesStyle, true);
         }
-        final TypedArray themeAttributes = theme.obtainStyledAttributes(attrs, new int[]{
-                R.attr.baseColor, R.attr.highlightColor, R.attr.iconColor, R.attr.labelColor
-        }, R.attr.colorPrimary, 0);
+        return theme;
+    }
+
+    private void retrieveAttributesValues(TypedArray customAttributes, TypedArray themeAttributes) {
+        retrieveThemeAttributeValues(themeAttributes);
+        retrieveCustomAttributeValues(customAttributes);
+    }
+
+    private void retrieveThemeAttributeValues(TypedArray themeAttributes) {
         TypedValue typedValue = new TypedValue();
-        mText = customAttributes.getString(R.styleable.LabelledMarqueeEditText_android_text);
-        mTextColor = customAttributes.getColor(R.styleable.LabelledMarqueeEditText_android_textColor,
-                getResources().getColor(android.R.color.black));
-        float maxSize = getResources().getDimension(R.dimen.labelled_marquee_edit_text_max_text_size);
-        float maxSizeConverted = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, maxSize,
-                getResources().getDisplayMetrics());
-        mTextSize = customAttributes.getDimension(R.styleable.LabelledMarqueeEditText_android_textSize,
-                getResources().getDimension(R.dimen.labelled_marquee_edit_text_default_text_size));
-        float textSizeConverted = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, mTextSize,
-                getResources().getDisplayMetrics());
-        if (textSizeConverted > maxSizeConverted) {
-            mTextSize = maxSize;
-        }
-        mHint = customAttributes.getString(R.styleable.LabelledMarqueeEditText_android_hint);
-        int mBaseColor, mHighlightColor, mIconColor;
         if (themeAttributes.getValue(themeAttributes.getIndex(0), typedValue)) {
             mBaseColor = typedValue.data;
         }
@@ -140,7 +139,31 @@ public class LabelledMarqueeEditText extends FrameLayout {
         else {
             mIconColor = mBaseColor;
         }
-        String mIconKey = customAttributes.getString(R.styleable.LabelledMarqueeEditText_iconKey);
+        if (themeAttributes.getValue(themeAttributes.getIndex(3), typedValue)) {
+            mLabelColor = typedValue.data;
+        }
+        else {
+            mLabelColor = mHighlightColor;
+        }
+        themeAttributes.recycle();
+    }
+
+    private void retrieveCustomAttributeValues(TypedArray customAttributes) {
+        mText = customAttributes.getString(R.styleable.LabelledMarqueeEditText_android_text);
+        mTextColor = customAttributes.getColor(R.styleable.LabelledMarqueeEditText_android_textColor,
+                getResources().getColor(android.R.color.black));
+        float maxSize = getResources().getDimension(R.dimen.labelled_marquee_edit_text_max_text_size);
+        float maxSizeConverted = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, maxSize,
+                getResources().getDisplayMetrics());
+        mTextSize = customAttributes.getDimension(R.styleable.LabelledMarqueeEditText_android_textSize,
+                getResources().getDimension(R.dimen.labelled_marquee_edit_text_default_text_size));
+        float textSizeConverted = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, mTextSize,
+                getResources().getDisplayMetrics());
+        if (textSizeConverted > maxSizeConverted) {
+            mTextSize = maxSize;
+        }
+        mHint = customAttributes.getString(R.styleable.LabelledMarqueeEditText_android_hint);
+        mIconKey = customAttributes.getString(R.styleable.LabelledMarqueeEditText_iconKey);
         if (mIconKey == null) {
             mIconDrawable = null;
             mIconCharacter = "";
@@ -153,17 +176,20 @@ public class LabelledMarqueeEditText extends FrameLayout {
                     mIconKey, String.format("#%06X", (0xFFFFFF & mIconColor)),
                     "@dimen/labelled_marquee_edit_text_default_icon_size_small");
         }
-        if (themeAttributes.getValue(themeAttributes.getIndex(3), typedValue)) {
-            mLabelColor = typedValue.data;
-        }
-        else {
-            mLabelColor = mHighlightColor;
-        }
-        themeAttributes.recycle();
         mMode = customAttributes.getInt(R.styleable.LabelledMarqueeEditText_mode, MODE_MARQUEE);
         mInputType = customAttributes.getInt(R.styleable.LabelledMarqueeEditText_android_inputType,
                 EditorInfo.TYPE_CLASS_TEXT);
         customAttributes.recycle();
+    }
+
+    private void buildEditAndMarqueeViews() {
+        View editViewSource = LayoutInflater.from(mContext).inflate(R.layout.layout_edit, this, false);
+        mEditView = new EditView(editViewSource);
+        addView(mEditView.textInputLayout);
+        View marqueeViewSource = LayoutInflater.from(mContext).inflate(R.layout.layout_marquee, this, false);
+        mMarqueeView = new MarqueeView(marqueeViewSource);
+        addView(mMarqueeView.textView, new ViewGroup
+                .LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
     }
 
     private void initEditAndMarqueeViews() {
@@ -228,27 +254,24 @@ public class LabelledMarqueeEditText extends FrameLayout {
         final View.OnFocusChangeListener existingListener = mEditView.editText.getOnFocusChangeListener();
         if (!(existingListener instanceof DisableEditModeOnFocusChangeListener)) {
             mEditView.editText.setOnFocusChangeListener(
-                    new DisableEditModeOnFocusChangeListener(mIconCharacter, existingListener)
+                    new DisableEditModeOnFocusChangeListener(existingListener)
             );
         }
     }
 
     class DisableEditModeOnFocusChangeListener implements View.OnFocusChangeListener {
 
-        private final CharSequence iconCharacter;
         private final View.OnFocusChangeListener previousListener;
 
-        public DisableEditModeOnFocusChangeListener(final CharSequence iconCharacter,
-                                                    final View.OnFocusChangeListener previousListener) {
+        public DisableEditModeOnFocusChangeListener(final View.OnFocusChangeListener previousListener) {
             this.previousListener = previousListener;
-            this.iconCharacter = iconCharacter;
         }
 
         @Override
         public void onFocusChange(View view, boolean hasFocus) {
             previousListener.onFocusChange(view, hasFocus);
             if (!hasFocus) {
-                enableMarqueeMode(iconCharacter);
+                enableMarqueeMode(mIconCharacter);
             }
         }
 
@@ -273,7 +296,124 @@ public class LabelledMarqueeEditText extends FrameLayout {
         mEditView.editText.setEnabled(false);
         mMarqueeView.textView.setVisibility(View.VISIBLE);
         mMarqueeView.textView.setSelected(true);
-        mMarqueeView.textView.setText(mEditView.editText.getText().toString() + iconCharacter);
+        mText = mEditView.editText.getText().toString();
+        mMarqueeView.textView.setText(mText + iconCharacter);
+    }
+
+    public String getText() {
+        return mText;
+    }
+
+    public void setText(String text) {
+        mText = text;
+        reloadEditAndMarqueeViews();
+    }
+
+    public int getTextColor() {
+        return mTextColor;
+    }
+
+    public void setTextColor(int color) {
+        mTextColor = getResources().getColor(color);
+        reloadEditAndMarqueeViews();
+    }
+
+    public String getHint() {
+        return mHint;
+    }
+
+    public void setHint(String hint) {
+        mHint = hint;
+        reloadEditAndMarqueeViews();
+    }
+
+    public int getBaseColor() {
+        return mBaseColor;
+    }
+
+    public int getHighlightColor() {
+        return mHighlightColor;
+    }
+
+    public int getIconColor() {
+        return mIconColor;
+    }
+
+    public String getIcon() {
+        return mIconKey;
+    }
+
+    public IconDrawable getIconDrawable() {
+        return mIconDrawable;
+    }
+
+    public CharSequence getIconCharacter() {
+        return mIconCharacter;
+    }
+
+    public void setIcon(String iconKey) {
+        mIconKey = iconKey;
+        if (mIconKey == null) {
+            mIconDrawable = null;
+            mIconCharacter = "";
+        } else {
+            mIconDrawable = new IconDrawable(getContext(), mIconKey)
+                    .color(mIconColor).sizeRes(R.dimen.labelled_marquee_edit_text_default_icon_size_big);
+            mIconCharacter = "   " + String.format(getResources()
+                            .getString(R.string.labelled_marquee_edit_text_layout_icon_definition_template),
+                    mIconKey, String.format("#%06X", (0xFFFFFF & mIconColor)),
+                    "@dimen/labelled_marquee_edit_text_default_icon_size_small");
+        }
+        reloadEditAndMarqueeViews();
+    }
+
+    public int getLabelColor() {
+        return mLabelColor;
+    }
+
+    public int getMode() {
+        return mMode;
+    }
+
+    public void setMode(int mode) throws IllegalArgumentException {
+        switch (mode) {
+            case MODE_EDIT:
+                mMode = MODE_EDIT;
+                break;
+            case MODE_MARQUEE:
+                mMode = MODE_MARQUEE;
+                break;
+            default:
+                throw new IllegalArgumentException(String
+                        .format("LabelledMarqueeEditText doesn't support this mode (%d).", mode));
+        }
+        reloadEditAndMarqueeViews();
+    }
+
+    public int getInputType() {
+        return mInputType;
+    }
+
+    public void setInputType(int inputType) {
+        mInputType = inputType;
+        reloadEditAndMarqueeViews();
+    }
+
+    public void setCustomStyle(int customStyle) {
+        Resources.Theme theme = overrideThemeWithCustomStyle(mContext, customStyle);
+        final TypedArray themeAttributes = theme.obtainStyledAttributes(mAttrs, new int[]{
+                R.attr.baseColor, R.attr.highlightColor, R.attr.iconColor, R.attr.labelColor
+        }, R.attr.colorPrimary, 0);
+        retrieveThemeAttributeValues(themeAttributes);
+        removeAllViews();
+        buildEditAndMarqueeViews();
+        reloadEditAndMarqueeViews();
+    }
+
+    public void reloadEditAndMarqueeViews() {
+        initEditAndMarqueeViews();
+        invalidate();
+        requestLayout();
     }
 
 }
