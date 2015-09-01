@@ -269,10 +269,26 @@ public class LabelledMarqueeEditText extends FrameLayout {
         public void onFocusChange(View view, boolean hasFocus) {
             previousListener.onFocusChange(view, hasFocus);
             if (!hasFocus) {
+                tintIconWithIconColor();
                 enableMarqueeMode(mIconCharacter);
+                invalidate();
+                requestLayout();
+            }
+            else {
+                tintIconWithHighlightColorIfApplicable();
             }
         }
 
+    }
+
+    private void tintIconWithIconColor() {
+        setIconColorTemporarily(mIconColor);
+    }
+
+    private void tintIconWithHighlightColorIfApplicable() {
+        if (mIconColor != mHighlightColor) {
+            setIconColorTemporarily(mHighlightColor);
+        }
     }
 
     private void enableEditMode() {
@@ -337,6 +353,14 @@ public class LabelledMarqueeEditText extends FrameLayout {
         return mIconColor;
     }
 
+    private void setIconColorTemporarily(int color) {
+        final int oldIconColor = mIconColor;
+        mIconColor = color;
+        setIcon(mIconKey, false);
+        mEditView.editText.setCompoundDrawablesWithIntrinsicBounds(null, null, mIconDrawable, null);
+        mIconColor = oldIconColor;
+    }
+
     public String getIcon() {
         return mIconKey;
     }
@@ -350,6 +374,10 @@ public class LabelledMarqueeEditText extends FrameLayout {
     }
 
     public void setIcon(String iconKey) {
+        setIcon(iconKey, true);
+    }
+
+    private void setIcon(String iconKey, boolean shouldReload) {
         mIconKey = iconKey;
         if (mIconKey == null) {
             mIconDrawable = null;
@@ -362,7 +390,9 @@ public class LabelledMarqueeEditText extends FrameLayout {
                     mIconKey, String.format("#%06X", (0xFFFFFF & mIconColor)),
                     "@dimen/labelled_marquee_edit_text_default_icon_size_small");
         }
-        reloadEditAndMarqueeViews();
+        if (shouldReload) {
+            reloadEditAndMarqueeViews();
+        }
     }
 
     public int getLabelColor() {
