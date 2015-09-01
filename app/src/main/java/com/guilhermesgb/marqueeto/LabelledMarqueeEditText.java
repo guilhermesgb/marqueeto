@@ -22,6 +22,8 @@ import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.MaterialModule;
 import com.joanzapata.iconify.widget.IconTextView;
 
+import java.lang.ref.WeakReference;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -252,30 +254,42 @@ public class LabelledMarqueeEditText extends FrameLayout {
         final View.OnFocusChangeListener existingListener = mEditView.editText.getOnFocusChangeListener();
         if (!(existingListener instanceof DisableEditModeOnFocusChangeListener)) {
             mEditView.editText.setOnFocusChangeListener(
-                    new DisableEditModeOnFocusChangeListener(existingListener)
+                    DisableEditModeOnFocusChangeListener.newInstance(this, existingListener)
             );
         }
     }
 
-    class DisableEditModeOnFocusChangeListener implements View.OnFocusChangeListener {
+    private static final class DisableEditModeOnFocusChangeListener implements View.OnFocusChangeListener {
 
-        private final View.OnFocusChangeListener previousListener;
+        private final WeakReference<LabelledMarqueeEditText> labelledMarqueeEditTextWeakReference;
+        private final View.OnFocusChangeListener previousOnFocusChangeListener;
 
-        public DisableEditModeOnFocusChangeListener(final View.OnFocusChangeListener previousListener) {
-            this.previousListener = previousListener;
+        public static DisableEditModeOnFocusChangeListener newInstance(final LabelledMarqueeEditText target,
+                                                                       final View.OnFocusChangeListener listener) {
+            WeakReference<LabelledMarqueeEditText> reference = new WeakReference<>(target);
+            return new DisableEditModeOnFocusChangeListener(reference, listener);
+        }
+
+        private DisableEditModeOnFocusChangeListener(final WeakReference<LabelledMarqueeEditText> reference,
+                                                     final View.OnFocusChangeListener listener) {
+            labelledMarqueeEditTextWeakReference = reference;
+            previousOnFocusChangeListener = listener;
         }
 
         @Override
         public void onFocusChange(View view, boolean hasFocus) {
-            previousListener.onFocusChange(view, hasFocus);
-            if (!hasFocus) {
-                tintIconWithIconColor();
-                enableMarqueeMode(mIconCharacter);
-                invalidate();
-                requestLayout();
-            }
-            else {
-                tintIconWithHighlightColorIfApplicable();
+            previousOnFocusChangeListener.onFocusChange(view, hasFocus);
+            LabelledMarqueeEditText labelledMarqueeEditText = labelledMarqueeEditTextWeakReference.get();
+            if (labelledMarqueeEditText != null) {
+                if (!hasFocus) {
+                    labelledMarqueeEditText.tintIconWithIconColor();
+                    labelledMarqueeEditText.enableMarqueeMode(labelledMarqueeEditText.getIconCharacter());
+                    labelledMarqueeEditText.invalidate();
+                    labelledMarqueeEditText.requestLayout();
+                }
+                else {
+                    labelledMarqueeEditText.tintIconWithHighlightColorIfApplicable();
+                }
             }
         }
 
