@@ -3,7 +3,11 @@ package com.guilhermesgb.marqueeto;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.widget.AppCompatEditText;
 import android.util.AttributeSet;
@@ -16,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.Iconify;
@@ -23,6 +28,7 @@ import com.joanzapata.iconify.fonts.MaterialModule;
 import com.joanzapata.iconify.widget.IconTextView;
 
 import java.lang.ref.WeakReference;
+import java.lang.reflect.Field;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -71,15 +77,22 @@ public class LabelledMarqueeEditText extends FrameLayout {
     private int mTextColor;
     private float mTextSize;
     private String mHint;
-    private IconDrawable mIconDrawable;
-    private CharSequence mIconCharacter;
     private int mBaseColor;
     private int mHighlightColor;
     private int mIconColor;
     private String mIconKey;
+    private IconDrawable mIconDrawable;
+    private CharSequence mIconCharacter;
     private int mLabelColor;
     private int mMode;
     private int mInputType;
+
+    private boolean mTextChanged = true;
+    private boolean mTextColorChanged = true;
+    private boolean mHintChanged = true;
+    private boolean mIconChanged = true;
+    private boolean mInputTypeChanged = true;
+    private boolean mStyleColorsChanged = true;
 
     public LabelledMarqueeEditText(Context context) {
         this(context, null);
@@ -193,17 +206,29 @@ public class LabelledMarqueeEditText extends FrameLayout {
     }
 
     private void initEditAndMarqueeViews() {
-        mEditView.editText.setCompoundDrawablesWithIntrinsicBounds(null, null, mIconDrawable, null);
-        mEditView.editText.setText(mText);
-        mEditView.editText.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextSize);
-        mEditView.editText.setTextColor(mTextColor);
-        mEditView.editText.setHighlightColor(mLabelColor);
-        mEditView.editText.setInputType(mInputType);
+        if (mTextChanged || mIconChanged || mStyleColorsChanged) {
+            mEditView.editText.setCompoundDrawablesWithIntrinsicBounds(null, null, mIconDrawable, null);
+            setText();
+            setTextSize();
+            setLabelColor();
+            setCursorDrawableColor();
+            mTextChanged = false;
+            mIconChanged = false;
+            mStyleColorsChanged = false;
+        }
+        if (mTextColorChanged) {
+            setTextColor();
+            mTextColorChanged = false;
+        }
+        if (mHintChanged) {
+            setHint();
+            mHintChanged = false;
+        }
+        if (mInputTypeChanged) {
+            setInputType();
+            mInputTypeChanged = false;
+        }
         mMarqueeView.textView.setSelected(true);
-        mMarqueeView.textView.setText((mText == null ? "" : mText) + mIconCharacter);
-        mMarqueeView.textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextSize);
-        mMarqueeView.textView.setTextColor(mTextColor);
-        mEditView.textInputLayout.setHint(mHint);
         mEditView.textInputLayout.setVisibility(getVisibility());
         if (mMode == MODE_MARQUEE) {
             enableMarqueeMode(mIconCharacter);
@@ -259,6 +284,63 @@ public class LabelledMarqueeEditText extends FrameLayout {
         }
     }
 
+    private void setText() {
+        mEditView.editText.setText(mText);
+        mMarqueeView.textView.setText((mText == null ? "" : mText) + mIconCharacter);
+    }
+
+    private void setTextSize() {
+        mEditView.editText.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextSize);
+        mMarqueeView.textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextSize);
+    }
+
+    private void setTextColor() {
+        mEditView.editText.setTextColor(mTextColor);
+        mMarqueeView.textView.setTextColor(mTextColor);
+    }
+
+    private void setHint() {
+        mEditView.textInputLayout.setHint(mHint);
+    }
+
+    private void setLabelColor() {
+        mEditView.editText.setHighlightColor(mLabelColor);
+    }
+
+    private void setCursorDrawableColor() {
+        try {
+            Field fCursorDrawableRes = TextView.class.getDeclaredField("mCursorDrawableRes");
+            fCursorDrawableRes.setAccessible(true);
+            int mCursorDrawableRes = fCursorDrawableRes.getInt(mEditView.editText);
+            final Drawable[] drawables = new Drawable[2];
+            drawables[0] = ContextCompat.getDrawable(mEditView.editText.getContext(), mCursorDrawableRes);
+            drawables[1] = ContextCompat.getDrawable(mEditView.editText.getContext(), mCursorDrawableRes);
+            drawables[0].setColorFilter(mHighlightColor, PorterDuff.Mode.SRC_IN);
+            drawables[1].setColorFilter(mHighlightColor, PorterDuff.Mode.SRC_IN);
+            try {
+                Field fEditor = TextView.class.getDeclaredField("mEditor");
+                fEditor.setAccessible(true);
+                Object editor = fEditor.get(mEditView.editText);
+                Field fCursorDrawable = editor.getClass().getDeclaredField("mCursorDrawable");
+                fCursorDrawable.setAccessible(true);
+                fCursorDrawable.set(editor, drawables);
+            }
+            catch (Throwable ignored) {
+                Field fCursorDrawable = TextView.class.getDeclaredField("mCursorDrawable");
+                fCursorDrawable.setAccessible(true);
+                fCursorDrawable.set(mEditView.editText, drawables);
+            }
+        }
+        catch (Throwable ignored) {
+            Log.d(TAG, "Could not override EditText's cursor drawable color via reflection: "
+                    + ignored.getMessage());
+        }
+    }
+
+    private void setInputType() {
+        mEditView.editText.setInputType(mInputType);
+    }
+
     private static final class DisableEditModeOnFocusChangeListener implements View.OnFocusChangeListener {
 
         private final WeakReference<LabelledMarqueeEditText> labelledMarqueeEditTextWeakReference;
@@ -289,6 +371,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
                 }
                 else {
                     labelledMarqueeEditText.tintIconWithHighlightColorIfApplicable();
+                    labelledMarqueeEditText.tintSelectorDrawableWithHighlightColor();
                 }
             }
         }
@@ -303,6 +386,35 @@ public class LabelledMarqueeEditText extends FrameLayout {
         if (mIconColor != mHighlightColor) {
             setIconColorTemporarily(mHighlightColor);
         }
+    }
+
+    private void setIconColorTemporarily(int color) {
+        final int oldIconColor = mIconColor;
+        mIconColor = color;
+        setIcon(mIconKey, false);
+        mEditView.editText.setCompoundDrawablesWithIntrinsicBounds(null, null, mIconDrawable, null);
+        mIconColor = oldIconColor;
+    }
+
+    private void tintSelectorDrawableWithHighlightColor() {
+        setSelectorDrawableColorTemporarily(mHighlightColor);
+    }
+
+    private void setSelectorDrawableColorTemporarily(int color) {
+        Drawable middleHandle = ContextCompat.getDrawable(mEditView.editText.getContext(),
+                R.drawable.text_select_handle_middle_material);
+        Drawable middleHandleWrapper = DrawableCompat.wrap(middleHandle);
+        DrawableCompat.setTint(middleHandleWrapper, color);
+
+        Drawable leftHandle = ContextCompat.getDrawable(mEditView.editText.getContext(),
+                R.drawable.text_select_handle_left_material);
+        Drawable leftHandleWrapper = DrawableCompat.wrap(leftHandle);
+        DrawableCompat.setTint(leftHandleWrapper, color);
+
+        Drawable rightHandle = ContextCompat.getDrawable(mEditView.editText.getContext(),
+                R.drawable.text_select_handle_right_material);
+        Drawable rightHandleWrapper = DrawableCompat.wrap(rightHandle);
+        DrawableCompat.setTint(rightHandleWrapper, color);
     }
 
     private void enableEditMode() {
@@ -334,6 +446,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
 
     public void setText(String text) {
         mText = text;
+        mTextChanged = true;
         reloadEditAndMarqueeViews();
     }
 
@@ -343,6 +456,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
 
     public void setTextColor(int color) {
         mTextColor = getResources().getColor(color);
+        mTextColorChanged = true;
         reloadEditAndMarqueeViews();
     }
 
@@ -352,6 +466,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
 
     public void setHint(String hint) {
         mHint = hint;
+        mHintChanged = true;
         reloadEditAndMarqueeViews();
     }
 
@@ -365,14 +480,6 @@ public class LabelledMarqueeEditText extends FrameLayout {
 
     public int getIconColor() {
         return mIconColor;
-    }
-
-    private void setIconColorTemporarily(int color) {
-        final int oldIconColor = mIconColor;
-        mIconColor = color;
-        setIcon(mIconKey, false);
-        mEditView.editText.setCompoundDrawablesWithIntrinsicBounds(null, null, mIconDrawable, null);
-        mIconColor = oldIconColor;
     }
 
     public String getIcon() {
@@ -404,6 +511,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
                     mIconKey, String.format("#%06X", (0xFFFFFF & mIconColor)),
                     "@dimen/labelled_marquee_edit_text_default_icon_size_small");
         }
+        mIconChanged = true;
         if (shouldReload) {
             reloadEditAndMarqueeViews();
         }
@@ -438,6 +546,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
 
     public void setInputType(int inputType) {
         mInputType = inputType;
+        mInputTypeChanged = true;
         reloadEditAndMarqueeViews();
     }
 
@@ -450,6 +559,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
         retrieveThemeAttributeValues(themeAttributes);
         removeAllViews();
         buildEditAndMarqueeViews(context);
+        mStyleColorsChanged = true;
         reloadEditAndMarqueeViews();
     }
 

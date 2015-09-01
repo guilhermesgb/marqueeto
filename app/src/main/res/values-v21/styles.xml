@@ -6,6 +6,7 @@
         <item name="highlightColor">?android:colorAccent</item>
         <item name="android:colorControlNormal">?baseColor</item>
         <item name="android:colorControlActivated">?highlightColor</item>
+        <item name="android:colorControlHighlight">?highlightColor</item>
     </style>
 
 </resources>

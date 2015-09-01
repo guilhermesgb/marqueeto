@@ -5,8 +5,12 @@
         <item name="android:textSize">@dimen/labelled_marquee_edit_text_default_text_size</item>
         <item name="iconColor">?baseColor</item>
         <item name="android:textColorHint">?baseColor</item>
+        <item name="android:textColorHighlight">?highlightColor</item>
         <item name="labelColor">?highlightColor</item>
         <item name="android:editTextStyle">@style/Widget.AppCompat.EditText</item>
+        <item name="android:textSelectHandle">@drawable/text_select_handle_middle_material</item>
+        <item name="android:textSelectHandleLeft">@drawable/text_select_handle_left_material</item>
+        <item name="android:textSelectHandleRight">@drawable/text_select_handle_right_material</item>
     </style>
 
     <style name="LabelledMarqueeEditTextTheme" parent="LabelledMarqueeEditTextBaseTheme">
@@ -14,6 +18,7 @@
         <item name="highlightColor">?colorAccent</item>
         <item name="colorControlNormal">?baseColor</item>
         <item name="colorControlActivated">?highlightColor</item>
+        <item name="colorControlHighlight">?highlightColor</item>
     </style>
 
     <style name="TextAppearance.Design.Hint" parent="TextAppearance.AppCompat.Caption">
