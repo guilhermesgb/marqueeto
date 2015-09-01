@@ -31,7 +31,6 @@ public class LabelledMarqueeEditText extends FrameLayout {
     public static final int MODE_EDIT = 0;
     public static final int MODE_MARQUEE = 1;
 
-    private Context mContext;
     private AttributeSet mAttrs;
 
     static {
@@ -90,19 +89,18 @@ public class LabelledMarqueeEditText extends FrameLayout {
 
     public LabelledMarqueeEditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        mContext = context;
         mAttrs = attrs;
-        mContext.setTheme(R.style.LabelledMarqueeEditTextTheme);
+        context.setTheme(R.style.LabelledMarqueeEditTextTheme);
         TypedArray customAttributes = context.obtainStyledAttributes(mAttrs,
                 R.styleable.LabelledMarqueeEditText);
         int customLabelledMarqueeEditTextStyle = customAttributes
                 .getResourceId(R.styleable.LabelledMarqueeEditText_labelledMarqueeEditTextStyle, -1);
-        Resources.Theme theme = overrideThemeWithCustomStyle(mContext, customLabelledMarqueeEditTextStyle);
+        Resources.Theme theme = overrideThemeWithCustomStyle(context, customLabelledMarqueeEditTextStyle);
         final TypedArray themeAttributes = theme.obtainStyledAttributes(mAttrs, new int[]{
                 R.attr.baseColor, R.attr.highlightColor, R.attr.iconColor, R.attr.labelColor
         }, R.attr.colorPrimary, 0);
         retrieveAttributesValues(customAttributes, themeAttributes);
-        buildEditAndMarqueeViews();
+        buildEditAndMarqueeViews(context);
         initEditAndMarqueeViews();
     }
 
@@ -182,11 +180,11 @@ public class LabelledMarqueeEditText extends FrameLayout {
         customAttributes.recycle();
     }
 
-    private void buildEditAndMarqueeViews() {
-        View editViewSource = LayoutInflater.from(mContext).inflate(R.layout.layout_edit, this, false);
+    private void buildEditAndMarqueeViews(Context context) {
+        View editViewSource = LayoutInflater.from(context).inflate(R.layout.layout_edit, this, false);
         mEditView = new EditView(editViewSource);
         addView(mEditView.textInputLayout);
-        View marqueeViewSource = LayoutInflater.from(mContext).inflate(R.layout.layout_marquee, this, false);
+        View marqueeViewSource = LayoutInflater.from(context).inflate(R.layout.layout_marquee, this, false);
         mMarqueeView = new MarqueeView(marqueeViewSource);
         addView(mMarqueeView.textView, new ViewGroup
                 .LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
@@ -400,13 +398,14 @@ public class LabelledMarqueeEditText extends FrameLayout {
     }
 
     public void setCustomStyle(int customStyle) {
-        Resources.Theme theme = overrideThemeWithCustomStyle(mContext, customStyle);
+        Context context = getContext();
+        Resources.Theme theme = overrideThemeWithCustomStyle(context, customStyle);
         final TypedArray themeAttributes = theme.obtainStyledAttributes(mAttrs, new int[]{
                 R.attr.baseColor, R.attr.highlightColor, R.attr.iconColor, R.attr.labelColor
         }, R.attr.colorPrimary, 0);
         retrieveThemeAttributeValues(themeAttributes);
         removeAllViews();
-        buildEditAndMarqueeViews();
+        buildEditAndMarqueeViews(context);
         reloadEditAndMarqueeViews();
     }
 
