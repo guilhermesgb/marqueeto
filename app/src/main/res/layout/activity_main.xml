@@ -76,7 +76,7 @@
 
         <com.guilhermesgb.marqueeto.LabelledMarqueeEditText
             android:id="@+id/work_edit_text"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/username_edit_text"
             android:inputType="text"
@@ -114,9 +114,8 @@
                 android:inputType="text"
                 android:hint="Home"
                 labelled_marquee:iconKey="md-home"
-                labelled_marquee:mode="marquee"
+                labelled_marquee:mode="edit"
                 labelled_marquee:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustom"
-                android:text="Campina Grande"
                 tools:ignore="HardcodedText"/>
 
         </LinearLayout>

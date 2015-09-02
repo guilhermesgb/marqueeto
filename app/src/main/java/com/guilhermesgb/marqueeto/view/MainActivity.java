@@ -20,7 +20,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         inputField.setCustomStyle(R.style.LabelledMarqueeEditTextCustom2);
-        inputField.setText(null);
+        inputField.setText("");
         inputField.setHint("Endereço Eletrônico");
         inputField.setIcon("md-explore");
         inputField.setInputType(InputType.TYPE_CLASS_TEXT);

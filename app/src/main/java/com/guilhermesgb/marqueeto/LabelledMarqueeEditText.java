@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -29,6 +30,7 @@ import com.joanzapata.iconify.widget.IconTextView;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -38,6 +40,8 @@ public class LabelledMarqueeEditText extends FrameLayout {
     private static final String TAG = LabelledMarqueeEditText.class.getSimpleName();
     public static final int MODE_EDIT = 0;
     public static final int MODE_MARQUEE = 1;
+
+    private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);
 
     private AttributeSet mAttrs;
 
@@ -84,7 +88,8 @@ public class LabelledMarqueeEditText extends FrameLayout {
     private IconDrawable mIconDrawable;
     private CharSequence mIconCharacter;
     private int mLabelColor;
-    private int mMode;
+    private int mPreferredMode;
+    private int mCurrentMode;
     private int mInputType;
 
     private boolean mTextChanged = true;
@@ -189,7 +194,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
                     mIconKey, String.format("#%06X", (0xFFFFFF & mIconColor)),
                     "@dimen/labelled_marquee_edit_text_default_icon_size_small");
         }
-        mMode = customAttributes.getInt(R.styleable.LabelledMarqueeEditText_mode, MODE_MARQUEE);
+        mPreferredMode = customAttributes.getInt(R.styleable.LabelledMarqueeEditText_mode, MODE_MARQUEE);
         mInputType = customAttributes.getInt(R.styleable.LabelledMarqueeEditText_android_inputType,
                 EditorInfo.TYPE_CLASS_TEXT);
         customAttributes.recycle();
@@ -198,11 +203,29 @@ public class LabelledMarqueeEditText extends FrameLayout {
     private void buildEditAndMarqueeViews(Context context) {
         View editViewSource = LayoutInflater.from(context).inflate(R.layout.layout_edit, this, false);
         mEditView = new EditView(editViewSource);
+        mEditView.editText.setId(doGenerateViewId());
         addView(mEditView.textInputLayout);
         View marqueeViewSource = LayoutInflater.from(context).inflate(R.layout.layout_marquee, this, false);
         mMarqueeView = new MarqueeView(marqueeViewSource);
+        mMarqueeView.textView.setId(doGenerateViewId());
         addView(mMarqueeView.textView, new ViewGroup
                 .LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+    }
+
+    private static synchronized int doGenerateViewId() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            for (;;) {
+                final int result = sNextGeneratedId.get();
+                int newValue = result + 1;
+                if (newValue > 0x00FFFFFF) newValue = 1;
+                if (sNextGeneratedId.compareAndSet(result, newValue)) {
+                    return result;
+                }
+            }
+        }
+        else {
+            return View.generateViewId();
+        }
     }
 
     private void initEditAndMarqueeViews() {
@@ -230,10 +253,10 @@ public class LabelledMarqueeEditText extends FrameLayout {
         }
         mMarqueeView.textView.setSelected(true);
         mEditView.textInputLayout.setVisibility(getVisibility());
-        if (mMode == MODE_MARQUEE) {
+        if (mPreferredMode == MODE_MARQUEE) {
             enableMarqueeMode(mIconCharacter);
         }
-        else if (mMode == MODE_EDIT) {
+        else if (mPreferredMode == MODE_EDIT) {
             enableEditMode();
         }
         final GestureDetectorCompat detector = new GestureDetectorCompat(getContext(),
@@ -418,7 +441,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
     }
 
     private void enableEditMode() {
-        mMode = MODE_EDIT;
+        mCurrentMode = MODE_EDIT;
         mEditView.editText.setVisibility(View.VISIBLE);
         mEditView.editText.setEnabled(true);
         mMarqueeView.textView.setVisibility(View.INVISIBLE);
@@ -426,12 +449,12 @@ public class LabelledMarqueeEditText extends FrameLayout {
 
     private void enableMarqueeMode(final CharSequence iconCharacter) {
         if (mEditView.editText.getText().toString().trim().isEmpty()) {
-            if (mMode == MODE_MARQUEE) {
+            if (mPreferredMode == MODE_MARQUEE) {
                 enableEditMode();
             }
             return;
         }
-        mMode = MODE_MARQUEE;
+        mCurrentMode = MODE_MARQUEE;
         mEditView.editText.setVisibility(View.INVISIBLE);
         mEditView.editText.setEnabled(false);
         mMarqueeView.textView.setVisibility(View.VISIBLE);
@@ -521,23 +544,27 @@ public class LabelledMarqueeEditText extends FrameLayout {
         return mLabelColor;
     }
 
-    public int getMode() {
-        return mMode;
+    public int getPreferredMode() {
+        return mPreferredMode;
     }
 
     public void setMode(int mode) throws IllegalArgumentException {
         switch (mode) {
             case MODE_EDIT:
-                mMode = MODE_EDIT;
+                mPreferredMode = MODE_EDIT;
                 break;
             case MODE_MARQUEE:
-                mMode = MODE_MARQUEE;
+                mPreferredMode = MODE_MARQUEE;
                 break;
             default:
                 throw new IllegalArgumentException(String
                         .format("LabelledMarqueeEditText doesn't support this mode (%d).", mode));
         }
         reloadEditAndMarqueeViews();
+    }
+
+    public int getCurrentMode() {
+        return mCurrentMode;
     }
 
     public int getInputType() {
