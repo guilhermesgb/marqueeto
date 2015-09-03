@@ -12,6 +12,9 @@
         <attr name="iconColor" format="color"/>
         <attr name="iconKey" format="string"/>
         <attr name="labelColor" format="color"/>
+        <attr name="errorColor" format="color"/>
+        <attr name="error" format="string"/>
+        <attr name="errorEnabled"/>
         <attr name="mode" format="enum">
             <enum name="edit" value="0"/>
             <enum name="marquee" value="1"/>

@@ -7,6 +7,7 @@
         <item name="android:textColorHint">?baseColor</item>
         <item name="android:textColorHighlight">?highlightColor</item>
         <item name="labelColor">?highlightColor</item>
+        <item name="errorColor">?highlightColor</item>
         <item name="android:editTextStyle">@style/Widget.AppCompat.EditText</item>
         <item name="android:textSelectHandle">@drawable/text_select_handle_middle_material</item>
         <item name="android:textSelectHandleLeft">@drawable/text_select_handle_left_material</item>
@@ -24,8 +25,12 @@
     <style name="TextAppearance.Design.Hint" parent="TextAppearance.AppCompat.Caption">
         <item name="android:textColor">?attr/labelColor</item>
     </style>
+    <style name="TextAppearance.Design.Error" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:textColor">?attr/errorColor</item>
+    </style>
     <style name="Widget.Design.TextInputLayout" parent="android:Widget">
         <item name="hintTextAppearance">@style/TextAppearance.Design.Hint</item>
+        <item name="errorTextAppearance">@style/TextAppearance.Design.Error</item>
     </style>
 
     <style name="LabelledMarqueeEditTextCustom">
