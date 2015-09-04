@@ -23,6 +23,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.andexert.library.RippleView;
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.MaterialModule;
@@ -76,6 +77,17 @@ public class LabelledMarqueeEditText extends FrameLayout {
 
     }
     private MarqueeView mMarqueeView;
+
+    final class BackgroundRippleView {
+
+        @Bind(R.id.labelled_marquee_edit_text_layout_ripple) RippleView rippleView;
+
+        public BackgroundRippleView(View source) {
+            ButterKnife.bind(this, source);
+        }
+
+    }
+    private BackgroundRippleView mRippleView;
 
     private String mText;
     private int mTextColor;
@@ -222,6 +234,10 @@ public class LabelledMarqueeEditText extends FrameLayout {
     }
 
     private void buildEditAndMarqueeViews(Context context) {
+        View rippleViewSource = LayoutInflater.from(context).inflate(R.layout.layout_ripple, this, false);
+        mRippleView = new BackgroundRippleView(rippleViewSource);
+        mRippleView.rippleView.setId(doGenerateViewId());
+        addView(mRippleView.rippleView);
         View editViewSource = LayoutInflater.from(context).inflate(R.layout.layout_edit, this, false);
         mEditView = new EditView(editViewSource);
         mEditView.editText.setId(doGenerateViewId());
@@ -428,6 +444,9 @@ public class LabelledMarqueeEditText extends FrameLayout {
                 else {
                     labelledMarqueeEditText.tintIconWithHighlightColorIfApplicable();
                     labelledMarqueeEditText.tintSelectorDrawableWithHighlightColor();
+                    int x = labelledMarqueeEditText.mRippleView.rippleView.getWidth();
+                    int y = labelledMarqueeEditText.mRippleView.rippleView.getHeight() / 2;
+                    labelledMarqueeEditText.mRippleView.rippleView.animateRipple(x, y);
                 }
             }
         }
