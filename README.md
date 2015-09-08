@@ -60,4 +60,5 @@ This documentation will be greatly enhanced shortly.
 
 Special Thanks:
 
-[Iconify](https://github.com/JoanZapata/android-iconify)
+* [Iconify](https://github.com/JoanZapata/android-iconify)
+* [RippleEffect](https://github.com/traex/RippleEffect)
