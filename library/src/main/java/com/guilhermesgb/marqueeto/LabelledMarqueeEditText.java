@@ -6,6 +6,7 @@ import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Handler;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -19,6 +20,9 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.AnimationSet;
 import android.view.inputmethod.EditorInfo;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -140,7 +144,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
         }, R.attr.colorPrimary, 0);
         retrieveAttributesValues(customAttributes, themeAttributes);
         buildEditAndMarqueeViews(context);
-        initEditAndMarqueeViews();
+        initEditAndMarqueeViews(true);
     }
 
     private Resources.Theme overrideThemeWithCustomStyle(Context context, int customAttributesStyle) {
@@ -266,7 +270,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
         }
     }
 
-    private void initEditAndMarqueeViews() {
+    private void initEditAndMarqueeViews(boolean firstLoad) {
         if (mTextChanged || mIconChanged || mStyleColorsChanged) {
             mEditView.editText.setCompoundDrawablesWithIntrinsicBounds(null, null, mIconDrawable, null);
             setText();
@@ -296,7 +300,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
         mMarqueeView.textView.setSelected(true);
         mEditView.textInputLayout.setVisibility(getVisibility());
         if (mPreferredMode == MODE_MARQUEE) {
-            enableMarqueeMode(mIconCharacter);
+            enableMarqueeMode(mIconCharacter, firstLoad);
         }
         else if (mPreferredMode == MODE_EDIT) {
             enableEditMode();
@@ -438,7 +442,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
             if (labelledMarqueeEditText != null) {
                 if (!hasFocus) {
                     labelledMarqueeEditText.tintIconWithIconColor();
-                    labelledMarqueeEditText.enableMarqueeMode(labelledMarqueeEditText.getIconCharacter());
+                    labelledMarqueeEditText.enableMarqueeMode(labelledMarqueeEditText.getIconCharacter(), false);
                     labelledMarqueeEditText.invalidate();
                     labelledMarqueeEditText.requestLayout();
                     labelledMarqueeEditText.mRippleView.rippleView
@@ -514,12 +518,15 @@ public class LabelledMarqueeEditText extends FrameLayout {
         mRippleView.rippleView.animateRipple(x, y);
     }
 
-    private void enableMarqueeMode(final CharSequence iconCharacter) {
+    private void enableMarqueeMode(final CharSequence iconCharacter, boolean firstLoad) {
         if (mEditView.editText.getText().toString().trim().isEmpty()) {
             if (mPreferredMode == MODE_MARQUEE) {
                 enableEditMode();
             }
             return;
+        }
+        if (firstLoad) {
+            fadeLabelInIfTextNotEmpty();
         }
         mCurrentMode = MODE_MARQUEE;
         mEditView.editText.setVisibility(View.INVISIBLE);
@@ -528,6 +535,30 @@ public class LabelledMarqueeEditText extends FrameLayout {
         mMarqueeView.textView.setSelected(true);
         mText = mEditView.editText.getText().toString();
         mMarqueeView.textView.setText(mText + iconCharacter);
+    }
+
+    private void fadeLabelInIfTextNotEmpty() {
+        if (!isEmpty(true)) {
+            mEditView.textInputLayout.setVisibility(View.INVISIBLE);
+            int duration = 500;
+            final AnimationSet fadeIn = new AnimationSet(true);
+            {
+                fadeIn.setDuration(duration);
+                fadeIn.setInterpolator(new AccelerateInterpolator());
+                fadeIn.addAnimation(new AlphaAnimation(0, 1));
+            }
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mEditView.textInputLayout.setVisibility(View.VISIBLE);
+                    mEditView.textInputLayout.startAnimation(fadeIn);
+                }
+            }, duration);
+        }
+    }
+
+    public boolean isEmpty(boolean trim) {
+        return (trim ? mText.trim().isEmpty() : mText.isEmpty());
     }
 
     public String getText() {
@@ -696,7 +727,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
     }
 
     public void reloadEditAndMarqueeViews() {
-        initEditAndMarqueeViews();
+        initEditAndMarqueeViews(false);
         invalidate();
         requestLayout();
     }
