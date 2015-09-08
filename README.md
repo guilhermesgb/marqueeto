@@ -62,3 +62,4 @@ Special Thanks:
 
 * [Iconify](https://github.com/JoanZapata/android-iconify)
 * [RippleEffect](https://github.com/traex/RippleEffect)
+* [Design Support Library](http://android-developers.blogspot.com.br/2015/05/android-design-support-library.html)
