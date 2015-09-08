@@ -1,11 +1,10 @@
-package com.guilhermesgb.marqueeto.view;
+package com.guilhermesgb.marqueeto.sample;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.InputType;
 
 import com.guilhermesgb.marqueeto.LabelledMarqueeEditText;
-import com.guilhermesgb.marqueeto.R;
 
 public class MainActivity extends Activity {
 

@@ -1,1 +1,1 @@
-include ':app', ':RippleEffect'
+include ':library', ':RippleEffect', ':sample'

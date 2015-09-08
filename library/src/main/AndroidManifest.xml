@@ -24,19 +24,4 @@
         android:minSdkVersion="14"
         android:targetSdkVersion="22"/>
 
-    <application
-        android:allowBackup="false"
-        android:icon="@android:color/black">
-
-        <activity
-            android:name=".view.MainActivity"
-            android:label="MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-    </application>
-
 </manifest>
