@@ -33,9 +33,6 @@ import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-
 public class LabelledMarqueeEditText extends FrameLayout {
 
     private static final String TAG = LabelledMarqueeEditText.class.getSimpleName();
@@ -57,11 +54,14 @@ public class LabelledMarqueeEditText extends FrameLayout {
 
     final class EditView {
 
-        @Bind(R.id.labelled_marquee_edit_text_layout_label_wrapper) TextInputLayout textInputLayout;
-        @Bind(R.id.labelled_marquee_edit_text_layout_edit_text) AppCompatEditText editText;
+        TextInputLayout textInputLayout;
+        AppCompatEditText editText;
 
         public EditView(View source) {
-            ButterKnife.bind(this, source);
+            textInputLayout = (TextInputLayout) source
+                    .findViewById(R.id.labelled_marquee_edit_text_layout_label_wrapper);
+            editText = (AppCompatEditText) source
+                    .findViewById(R.id.labelled_marquee_edit_text_layout_edit_text);
         }
 
     }
@@ -69,10 +69,11 @@ public class LabelledMarqueeEditText extends FrameLayout {
 
     final class MarqueeView {
 
-        @Bind(R.id.labelled_marquee_edit_text_layout_marquee_text) IconTextView textView;
+        IconTextView textView;
 
         public MarqueeView(View source) {
-            ButterKnife.bind(this, source);
+            textView = (IconTextView) source
+                    .findViewById(R.id.labelled_marquee_edit_text_layout_marquee_text);
         }
 
     }
@@ -80,10 +81,10 @@ public class LabelledMarqueeEditText extends FrameLayout {
 
     final class BackgroundRippleView {
 
-        @Bind(R.id.labelled_marquee_edit_text_layout_ripple) RippleView rippleView;
+        RippleView rippleView;
 
         public BackgroundRippleView(View source) {
-            ButterKnife.bind(this, source);
+            rippleView = (RippleView) source.findViewById(R.id.labelled_marquee_edit_text_layout_ripple);
         }
 
     }

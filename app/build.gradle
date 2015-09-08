@@ -1,12 +1,9 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
 
-    defaultConfig {
-        applicationId "com.guilhermesgb.marqueeto"
-    }
     buildTypes {
         release {
             minifyEnabled false
@@ -21,6 +18,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.1'
     compile 'com.android.support:design:22.2.1'
     compile 'com.joanzapata.iconify:android-iconify-material:2.0.7'
-    compile 'com.jakewharton:butterknife:7.0.1'
     compile project(':RippleEffect')
 }
