@@ -440,12 +440,21 @@ public class LabelledMarqueeEditText extends FrameLayout {
                     labelledMarqueeEditText.enableMarqueeMode(labelledMarqueeEditText.getIconCharacter());
                     labelledMarqueeEditText.invalidate();
                     labelledMarqueeEditText.requestLayout();
+                    labelledMarqueeEditText.mRippleView.rippleView
+                            .setRippleColor(labelledMarqueeEditText.mBaseColor);
                 }
                 else {
                     labelledMarqueeEditText.tintIconWithHighlightColorIfApplicable();
                     labelledMarqueeEditText.tintSelectorDrawableWithHighlightColor();
-                    int x = labelledMarqueeEditText.mRippleView.rippleView.getWidth();
-                    int y = labelledMarqueeEditText.mRippleView.rippleView.getHeight() / 2;
+                    labelledMarqueeEditText.mRippleView.rippleView.clearAnimation();
+                    labelledMarqueeEditText.mRippleView.rippleView
+                            .setRippleColor(labelledMarqueeEditText.mHighlightColor);
+                    int x = labelledMarqueeEditText.mRippleView.rippleView.getWidth() -
+                            (labelledMarqueeEditText.mEditView.editText.getCompoundPaddingRight() / 2);
+                    int y = labelledMarqueeEditText.mRippleView.rippleView.getHeight() -
+                            (labelledMarqueeEditText.mEditView.editText.getBaseline() +
+                            (labelledMarqueeEditText.mEditView.editText
+                                    .getCompoundDrawables()[2].getIntrinsicHeight() / 2));
                     labelledMarqueeEditText.mRippleView.rippleView.animateRipple(x, y);
                 }
             }
@@ -497,6 +506,11 @@ public class LabelledMarqueeEditText extends FrameLayout {
         mEditView.editText.setVisibility(View.VISIBLE);
         mEditView.editText.setEnabled(true);
         mMarqueeView.textView.setVisibility(View.INVISIBLE);
+        mRippleView.rippleView.clearAnimation();
+        int x = mRippleView.rippleView.getWidth() - (mEditView.editText.getCompoundPaddingRight() / 2);
+        int y = mRippleView.rippleView.getHeight() - (mEditView.editText.getBaseline() +
+                (mEditView.editText.getCompoundDrawables()[2].getIntrinsicHeight() / 2));
+        mRippleView.rippleView.animateRipple(x, y);
     }
 
     private void enableMarqueeMode(final CharSequence iconCharacter) {
