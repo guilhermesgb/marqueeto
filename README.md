@@ -90,7 +90,7 @@ just as you would normally; Additionally you can use:
 
   * `<item name="baseColor"/>`\* to set the base color to be applied to the widget's overall appearance;
   * `<item name="highlightColor"/>`\* to set the color to be applied to the widget while it is highlighted (selected);
-  * `<item name="highlightColor"/>` to set the icon's color. If undefined, it will be equal to `baseColor`;
+  * `<item name="iconColor"/>` to set the icon's color. If undefined, it will be equal to `baseColor`;
   * `<item name="labelColor"/>` to set the floating label's color. If undefined, it will be equal to `highlightColor`.
   
   \* You must provide this attribute in your custom style, otherwise it will be set to `android:color/black`.
