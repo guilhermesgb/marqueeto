@@ -2,26 +2,24 @@ package com.guilhermesgb.marqueeto.sample;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.text.InputType;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 
-import com.guilhermesgb.marqueeto.LabelledMarqueeEditText;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class MainActivity extends Activity {
 
-    LabelledMarqueeEditText inputField;
+    @Bind(R.id.tabLayout) TabLayout mTabLayout;
+    @Bind(R.id.viewPager) ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        inputField = (LabelledMarqueeEditText) findViewById(R.id.website_edit_text);
-        inputField.setCustomStyle(R.style.LabelledMarqueeEditTextCustom2);
-        inputField.setText("");
-        inputField.setHint("Endereço Eletrônico");
-        inputField.setIcon("md-explore");
-        inputField.setInputType(InputType.TYPE_CLASS_TEXT);
-        inputField.setTextColor(android.R.color.holo_orange_dark);
-        inputField.setMode(LabelledMarqueeEditText.MODE_MARQUEE);
+        ButterKnife.bind(this);
+        mViewPager.setAdapter(new ExamplesViewPagerAdapter());
+        mTabLayout.setupWithViewPager(mViewPager);
     }
 
 }

@@ -1,136 +1,38 @@
-<ScrollView
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:labelled_marquee="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.guilhermesgb.marqueeto.view.MainActivity">
+    android:layout_height="match_parent">
 
-    <RelativeLayout
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:fitsSystemWindows="true">
 
-        <com.guilhermesgb.marqueeto.LabelledMarqueeEditText
-            android:id="@+id/phone_edit_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:inputType="phone"
-            android:hint="Phone"
-            labelled_marquee:iconKey="md-local-phone"
-            labelled_marquee:mode="edit"
-            labelled_marquee:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustom"
-            tools:ignore="HardcodedText"/>
-
-        <com.guilhermesgb.marqueeto.LabelledMarqueeEditText
-            android:id="@+id/email_edit_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/phone_edit_text"
-            android:inputType="textEmailAddress"
-            android:hint="Email"
-            labelled_marquee:iconKey="md-local-post-office"
-            labelled_marquee:mode="marquee"
-            tools:ignore="HardcodedText"/>
-
-        <com.guilhermesgb.marqueeto.LabelledMarqueeEditText
-            android:id="@+id/website_edit_text"
-            android:layout_width="225dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/email_edit_text"
-            android:inputType="textUri"
-            android:hint="Website"
-            labelled_marquee:iconKey="md-language"
-            labelled_marquee:mode="edit"
-            labelled_marquee:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustom"
-            android:textSize="22sp"
-            android:textColor="@android:color/white"
-            android:padding="20dp"
-            tools:ignore="HardcodedText"/>
-
-        <com.guilhermesgb.marqueeto.LabelledMarqueeEditText
-            android:id="@+id/address_edit_text"
+        <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/website_edit_text"
-            android:inputType="textPostalAddress"
-            android:hint="Address"
-            labelled_marquee:iconKey="md-location-on"
-            labelled_marquee:mode="edit"
-            android:textSize="14sp"
-            android:textColor="@android:color/white"
-            tools:ignore="HardcodedText"/>
+            android:layout_height="match_parent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:contentScrim="?attr/colorPrimary">
 
-        <com.guilhermesgb.marqueeto.LabelledMarqueeEditText
-            android:id="@+id/username_edit_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/address_edit_text"
-            android:inputType="text"
-            android:hint="Username"
-            labelled_marquee:iconKey="md-account-box"
-            labelled_marquee:mode="marquee"
-            android:text="guilhermesgb"
-            labelled_marquee:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustom"
-            tools:ignore="HardcodedText"/>
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabLayout"
+                app:tabGravity="fill"
+                app:tabMode="scrollable"
+                app:tabIndicatorHeight="4dp"
+                android:layout_gravity="bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <com.guilhermesgb.marqueeto.LabelledMarqueeEditText
-            android:id="@+id/work_edit_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/username_edit_text"
-            android:inputType="text"
-            android:hint="Work"
-            labelled_marquee:iconKey="md-work"
-            labelled_marquee:mode="marquee"
-            android:text="Embedded Laboratory"
-            labelled_marquee:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustom"
-            tools:ignore="HardcodedText"/>
+        </android.support.design.widget.CollapsingToolbarLayout>
 
-        <LinearLayout
-            android:id="@+id/name_home_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/work_edit_text"
-            android:orientation="horizontal">
+    </android.support.design.widget.AppBarLayout>
 
-            <com.guilhermesgb.marqueeto.LabelledMarqueeEditText
-                android:id="@+id/name_edit_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:inputType="text"
-                android:hint="Name"
-                labelled_marquee:iconKey="md-face"
-                labelled_marquee:mode="marquee"
-                android:text="Guilherme"
-                tools:ignore="HardcodedText"/>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-            <com.guilhermesgb.marqueeto.LabelledMarqueeEditText
-                android:id="@+id/home_edit_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:inputType="text"
-                android:hint="Home"
-                labelled_marquee:iconKey="md-home"
-                labelled_marquee:mode="edit"
-                labelled_marquee:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustom"
-                tools:ignore="HardcodedText"/>
-
-        </LinearLayout>
-
-        <com.guilhermesgb.marqueeto.LabelledMarqueeEditText
-            android:id="@+id/identity_number_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/name_home_layout"
-            android:inputType="number"
-            android:hint="Identity Number"
-            labelled_marquee:iconKey="md-perm-identity"
-            labelled_marquee:mode="marquee"
-            tools:ignore="HardcodedText"/>
-
-    </RelativeLayout>
-
-</ScrollView>
+</android.support.design.widget.CoordinatorLayout>
