@@ -2,6 +2,12 @@
 
 EditTexts with floating labels and marquee ellipsize.
 
+### Download via Gradle\*
+
+    compile 'com.github.guilhermesgb:marqueeto:1.0.0'
+
+\* Not yet available, you'll have to clone this repo and include `marqueeto` as a dependency module.
+
 ## LabelledMarqueeEditText
 
 This widget is an enhanced `EditText` (already with `TextInputLayout` support) which provides two modes:
@@ -90,7 +96,7 @@ Note that it is using a custom style referenced through `@style/MyCustomStyle` f
 ## License
 
 ```
-Copyright 2015 Joan Zapata
+Copyright 2015 Guilherme Baptista
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
