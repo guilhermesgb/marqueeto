@@ -16,11 +16,20 @@ compile 'com.github.guilhermesgb:marqueeto:1.0.0'
 
 This widget is an enhanced `EditText` (already with `TextInputLayout` support) which provides two modes:
 
+* **read mode**: displays a **nice marquee effect** if the text is longer than what can fit within the widget's bounds
+
+![marqueeto read mode](https://github.com/guilhermesgb/marqueeto/blob/master/read mode.png)
+![marqueeto read mode](https://github.com/guilhermesgb/marqueeto/blob/master/read mode with marquee.png)
+\* read mode with a marquee effect, when necessary
+
 * **write mode**: just like the normal `EditText`, with a floating label
 
-* **read mode**: with a **nice marquee effect** if the text is longer than what can fit within the widget's bounds
+![marqueeto transition](https://github.com/guilhermesgb/marqueeto/blob/master/transition from read to write mode.png) ![marqueeto write mode](https://github.com/guilhermesgb/marqueeto/blob/master/write mode.png)
+\* widget transitioning into write mode
 
-### How to use
+Visually, you can tell the current mode the widget is at by the presence or absence of the bottom bar, and also from the size of the accompanying icon, which is a bit larger while in write mode.
+
+### How to use in your projects
 
 To use `LabelledMarqueeEditText` in your layouts, all you need to do is declare usage of this widget:
 
