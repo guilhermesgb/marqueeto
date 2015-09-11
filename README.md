@@ -2,6 +2,8 @@
 
 EditTexts with floating labels and marquee ellipsize.
 
+![marqueeto GIF](https://github.com/guilhermesgb/marqueeto/blob/master/demo.gif)
+
 ### Download via Gradle
 
 Just add the following line to the dependencies section of your `build.gradle`:
