@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: "com.jfrog.bintray"
 
-version = "1.0.0"
+version = "1.1.0"
 
 android {
     compileSdkVersion 22
@@ -12,7 +12,8 @@ android {
         minSdkVersion 14
         targetSdkVersion 22
         versionCode 1
-        versionName "1.0.0"
+        versionName "1.1.0"
+        project.archivesBaseName = 'marqueeto'
     }
     buildTypes {
         release {
