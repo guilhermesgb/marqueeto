@@ -22,7 +22,7 @@ This widget is an enhanced `EditText` (already with `TextInputLayout` support) w
 ![marqueeto read mode](https://github.com/guilhermesgb/marqueeto/blob/master/read mode with marquee.png)
 \* read mode with a marquee effect, when necessary
 
-* **write mode**: just like the normal `EditText`, with a floating label
+* **write mode**: just like the normal `EditText` with `TextInputLayout` support (a.k.a. with a floating label)
 
 ![marqueeto transition](https://github.com/guilhermesgb/marqueeto/blob/master/transition from read to write mode.png) ![marqueeto write mode](https://github.com/guilhermesgb/marqueeto/blob/master/write mode.png)
 \* widget transitioning into write mode
