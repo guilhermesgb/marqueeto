@@ -2,13 +2,13 @@
 
 EditTexts with floating labels and marquee ellipsize.
 
-### Download via Gradle\*
+### Download via Gradle
+
+Just add the following line to the dependencies section of your `build.gradle`:
 
 ``` gradle
 compile 'com.github.guilhermesgb:marqueeto:1.0.0'
 ```
-
-\* Not yet available, you'll have to clone this repo and include `marqueeto` as a dependency module.
 
 ## LabelledMarqueeEditText
 
