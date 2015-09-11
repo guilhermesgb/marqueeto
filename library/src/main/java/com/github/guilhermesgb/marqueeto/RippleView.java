@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package com.andexert.library;
+package com.github.guilhermesgb.marqueeto;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -112,7 +112,7 @@ public class RippleView extends RelativeLayout {
             return;
 
         final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.RippleView);
-        rippleColor = typedArray.getColor(R.styleable.RippleView_rv_color, getResources().getColor(R.color.rippelColor));
+        rippleColor = typedArray.getColor(R.styleable.RippleView_rv_color, getResources().getColor(android.R.color.white));
         rippleType = typedArray.getInt(R.styleable.RippleView_rv_type, 0);
         hasToZoom = typedArray.getBoolean(R.styleable.RippleView_rv_zoom, false);
         isCentered = typedArray.getBoolean(R.styleable.RippleView_rv_centered, false);
@@ -326,13 +326,13 @@ public class RippleView extends RelativeLayout {
      * @param rippleColor New color resource
      */
     @ColorRes
-	public void setRippleColor(int rippleColor) {
-		this.rippleColor = rippleColor;
-	}
+    public void setRippleColor(int rippleColor) {
+        this.rippleColor = rippleColor;
+    }
 
-	public int getRippleColor() {
-		return rippleColor;
-	}
+    public int getRippleColor() {
+        return rippleColor;
+    }
 
     public RippleType getRippleType()
     {

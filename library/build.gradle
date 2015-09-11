@@ -28,7 +28,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.1'
     compile 'com.android.support:design:22.2.1'
     compile 'com.joanzapata.iconify:android-iconify-material:2.0.7'
-    compile project(':RippleEffect')
 }
 
 def siteUrl = 'https://github.com/guilhermesgb/marqueeto'

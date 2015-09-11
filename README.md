@@ -23,7 +23,7 @@ This widget is an enhanced `EditText` (already with `TextInputLayout` support) w
 To use `LabelledMarqueeEditText` in your layouts, all you need to do is declare usage of this widget:
 
 ``` xml
-    <com.guilhermesgb.marqueeto.LabelledMarqueeEditText
+    <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
@@ -67,7 +67,7 @@ just as you would normally; Additionally you can use:
 Declaring a LabelledMarqueeEditText for inputting phone numbers (using the Iconify Material icon `md-local-phone`):
 
 ``` xml
-    <com.guilhermesgb.marqueeto.LabelledMarqueeEditText
+    <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="phone"

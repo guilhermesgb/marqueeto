@@ -1,4 +1,4 @@
-package com.guilhermesgb.marqueeto.sample;
+package com.github.guilhermesgb.marqueeto.sample;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
@@ -17,7 +17,7 @@ public class ExamplesViewPagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         Context context = container.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.page_examples, container, false);
+        View view = inflater.inflate(R.layout.activity_main_bak, container, false);
         container.addView(view);
         return view;
     }

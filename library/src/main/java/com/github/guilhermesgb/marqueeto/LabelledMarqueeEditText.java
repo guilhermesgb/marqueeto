@@ -1,4 +1,4 @@
-package com.guilhermesgb.marqueeto;
+package com.github.guilhermesgb.marqueeto;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -27,7 +27,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.andexert.library.RippleView;
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.MaterialModule;

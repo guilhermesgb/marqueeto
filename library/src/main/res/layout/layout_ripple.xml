@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.andexert.library.RippleView
+<com.github.guilhermesgb.marqueeto.RippleView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ripple="http://schemas.android.com/apk/res-auto"
     android:id="@+id/labelled_marquee_edit_text_layout_ripple"

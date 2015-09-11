@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.guilhermesgb.marqueeto.view.MainActivity">
+    tools:context="com.github.guilhermesgb.marqueeto.view.MainActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.guilhermesgb.marqueeto.LabelledMarqueeEditText
+        <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
             android:id="@+id/phone_edit_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
             labelled_marquee:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustom"
             tools:ignore="HardcodedText"/>
 
-        <com.guilhermesgb.marqueeto.LabelledMarqueeEditText
+        <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
             android:id="@+id/email_edit_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
             labelled_marquee:mode="marquee"
             tools:ignore="HardcodedText"/>
 
-        <com.guilhermesgb.marqueeto.LabelledMarqueeEditText
+        <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
             android:id="@+id/website_edit_text"
             android:layout_width="225dp"
             android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
             android:padding="20dp"
             tools:ignore="HardcodedText"/>
 
-        <com.guilhermesgb.marqueeto.LabelledMarqueeEditText
+        <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
             android:id="@+id/address_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
             android:textColor="@android:color/white"
             tools:ignore="HardcodedText"/>
 
-        <com.guilhermesgb.marqueeto.LabelledMarqueeEditText
+        <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
             android:id="@+id/username_edit_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
             labelled_marquee:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustom"
             tools:ignore="HardcodedText"/>
 
-        <com.guilhermesgb.marqueeto.LabelledMarqueeEditText
+        <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
             android:id="@+id/work_edit_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
             android:layout_below="@id/work_edit_text"
             android:orientation="horizontal">
 
-            <com.guilhermesgb.marqueeto.LabelledMarqueeEditText
+            <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
                 android:id="@+id/name_edit_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -106,7 +106,7 @@
                 android:text="Guilherme"
                 tools:ignore="HardcodedText"/>
 
-            <com.guilhermesgb.marqueeto.LabelledMarqueeEditText
+            <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
                 android:id="@+id/home_edit_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -120,7 +120,7 @@
 
         </LinearLayout>
 
-        <com.guilhermesgb.marqueeto.LabelledMarqueeEditText
+        <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
             android:id="@+id/identity_number_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -1,4 +1,4 @@
-package com.guilhermesgb.marqueeto.sample;
+package com.github.guilhermesgb.marqueeto.sample;
 
 import android.app.Activity;
 import android.os.Bundle;
