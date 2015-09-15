@@ -202,6 +202,9 @@ public class LabelledMarqueeEditText extends FrameLayout {
         }
         mErrorEnabled = customAttributes.getBoolean(R.styleable.LabelledMarqueeEditText_errorEnabled, true);
         String error = customAttributes.getString(R.styleable.LabelledMarqueeEditText_error);
+        if (error == null || error.trim().isEmpty()) {
+            mErrorEnabled = false;
+        }
         if (mErrorEnabled) {
             mError = error;
         }
