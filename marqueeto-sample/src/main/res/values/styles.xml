@@ -5,4 +5,9 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="LabelledMarqueeEditTextCustomStyle">
+        <item name="baseColor">@android:color/holo_red_dark</item>
+        <item name="highlightColor">@android:color/holo_green_light</item>
+    </style>
+
 </resources>

@@ -22,15 +22,15 @@
         <item name="colorControlHighlight">?highlightColor</item>
     </style>
 
-    <style name="TextAppearance.Design.Hint" parent="TextAppearance.AppCompat.Caption">
+    <style name="LabelledMarqueeTextInputLayoutStyleHint" parent="TextAppearance.AppCompat.Caption">
         <item name="android:textColor">?attr/labelColor</item>
     </style>
-    <style name="TextAppearance.Design.Error" parent="TextAppearance.AppCompat.Caption">
+    <style name="LabelledMarqueeTextInputLayoutStyleError" parent="TextAppearance.AppCompat.Caption">
         <item name="android:textColor">?attr/errorColor</item>
     </style>
     <style name="LabelledMarqueeTextInputLayoutStyle">
-        <item name="hintTextAppearance">@style/TextAppearance.Design.Hint</item>
-        <item name="errorTextAppearance">@style/TextAppearance.Design.Error</item>
+        <item name="hintTextAppearance">@style/LabelledMarqueeTextInputLayoutStyleHint</item>
+        <item name="errorTextAppearance">@style/LabelledMarqueeTextInputLayoutStyleError</item>
     </style>
 
 </resources>
