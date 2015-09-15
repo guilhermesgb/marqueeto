@@ -28,19 +28,9 @@
     <style name="TextAppearance.Design.Error" parent="TextAppearance.AppCompat.Caption">
         <item name="android:textColor">?attr/errorColor</item>
     </style>
-    <style name="Widget.Design.TextInputLayout" parent="android:Widget">
+    <style name="LabelledMarqueeTextInputLayoutStyle">
         <item name="hintTextAppearance">@style/TextAppearance.Design.Hint</item>
         <item name="errorTextAppearance">@style/TextAppearance.Design.Error</item>
-    </style>
-
-    <style name="LabelledMarqueeEditTextCustom">
-        <item name="baseColor">@android:color/holo_red_light</item>
-        <item name="highlightColor">@android:color/holo_red_dark</item>
-    </style>
-
-    <style name="LabelledMarqueeEditTextCustom2">
-        <item name="baseColor">@android:color/holo_green_dark</item>
-        <item name="highlightColor">@android:color/holo_purple</item>
     </style>
 
 </resources>
