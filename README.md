@@ -63,13 +63,13 @@ just as you would normally; Additionally you can use:
 `LabelledMarqueeEditText` can be highly customized! Below are all the attributes that can be changed either via XML or programatically:
 
 * `android:textColor` via XML or `setTextColor()` programatically to set the text color in the widget;
-* `marqueeto:errorColor` via XML or `setErrorColor()` programatically to set the error color in the widget.
 * `marqueeto:labelledMarqueeEditTextStyle` via XML or `setCustomStyle()` programatically to change other more interesting appearance aspects of the widget, such as the icon, label and highlighted colors. A custom style defining the following attributes must be provided:
 
   * `<item name="baseColor"/>`\* to set the base color to be applied to the widget's overall appearance;
   * `<item name="highlightColor"/>`\* to set the color to be applied to the widget while it is highlighted (selected);
   * `<item name="iconColor"/>` to set the icon's color. If undefined, it will be equal to `baseColor`;
-  * `<item name="labelColor"/>` to set the floating label's color. If undefined, it will be equal to `highlightColor`.
+  * `<item name="labelColor"/>` to set the floating label's color. If undefined, it will be equal to `highlightColor`;
+  * `<item name="errorColor"/>` to set the error color in the widget. If undefined, it will be equal to `highlightColor`.
   
   \* You must provide this attribute in your custom style, otherwise it will be set to `android:color/black`.
 
