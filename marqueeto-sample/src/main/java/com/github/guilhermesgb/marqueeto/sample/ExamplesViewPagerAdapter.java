@@ -13,9 +13,11 @@ import butterknife.ButterKnife;
 
 public class ExamplesViewPagerAdapter extends PagerAdapter {
 
+    @Bind(R.id.website_edit_text) LabelledMarqueeEditText websiteField;
     @Bind(R.id.address_edit_text) LabelledMarqueeEditText addressField;
     @Bind(R.id.username_edit_text) LabelledMarqueeEditText usernameField;
     @Bind(R.id.work_edit_text) LabelledMarqueeEditText workField;
+    @Bind(R.id.home_edit_text) LabelledMarqueeEditText homeField;
 
     @Override
     public int getCount() {
@@ -28,12 +30,14 @@ public class ExamplesViewPagerAdapter extends PagerAdapter {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.activity_main_bak, container, false);
         ButterKnife.bind(this, view);
-        addressField.setErrorEnabled(true);
+        websiteField.setCustomStyle(R.style.LabelledMarqueeEditTextCustomStyle2);
+        //addressField.setErrorEnabled(true);
         addressField.setError("ADDRESS WRONG!");
         usernameField.setErrorEnabled(false);
-        workField.setErrorEnabled(true);
+        //workField.setErrorEnabled(true);
         workField.setError("Hey this is another error text!");
         container.addView(view);
+        homeField.setCustomStyle(R.style.LabelledMarqueeEditTextCustomStyle2);
         return view;
     }
 

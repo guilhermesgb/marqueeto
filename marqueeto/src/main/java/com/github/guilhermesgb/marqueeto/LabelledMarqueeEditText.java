@@ -258,6 +258,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
             setTextSize();
             setLabelColor();
             setCursorDrawableColor();
+            tintIconWithIconColor();
             mTextChanged = false;
             mIconChanged = false;
             mStyleColorsChanged = false;
@@ -705,6 +706,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
         buildEditAndMarqueeViews(context);
         mStyleColorsChanged = true;
         reloadEditAndMarqueeViews();
+        resetContextTheme(theme);
     }
 
     public void reloadEditAndMarqueeViews() {

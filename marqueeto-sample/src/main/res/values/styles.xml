@@ -10,4 +10,11 @@
         <item name="highlightColor">@android:color/holo_green_light</item>
     </style>
 
+    <style name="LabelledMarqueeEditTextCustomStyle2">
+        <item name="baseColor">@android:color/holo_purple</item>
+        <item name="highlightColor">@android:color/holo_orange_dark</item>
+        <item name="iconColor">@android:color/holo_purple</item>
+        <item name="labelColor">@android:color/holo_orange_dark</item>
+    </style>
+
 </resources>
