@@ -126,4 +126,10 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+
+It uses Iconify by Joan Zapata, licensed under Apache 2.0 as well,
+and RippleView by Robin Chutaux, licensed under MIT,
+which is compatible with this library's license.
+
+    https://opensource.org/licenses/MIT
 ```
