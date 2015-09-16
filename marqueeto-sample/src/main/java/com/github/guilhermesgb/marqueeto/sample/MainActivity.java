@@ -10,7 +10,7 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends Activity {
 
-    @Bind(R.id.tabLayout) TabLayout mTabLayout;
+//    @Bind(R.id.tabLayout) TabLayout mTabLayout;
     @Bind(R.id.viewPager) ViewPager mViewPager;
 
     @Override
@@ -19,7 +19,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         mViewPager.setAdapter(new ExamplesViewPagerAdapter());
-        mTabLayout.setupWithViewPager(mViewPager);
+//        mTabLayout.setupWithViewPager(mViewPager);
     }
 
 }
