@@ -9,7 +9,7 @@ EditTexts with floating labels and marquee ellipsize.
 Just add the following line to the dependencies section of your `build.gradle`:
 
 ``` gradle
-compile 'com.github.guilhermesgb:marqueeto:1.0.0'
+compile 'com.github.guilhermesgb:marqueeto:1.1.0'
 ```
 
 ## LabelledMarqueeEditText
@@ -127,7 +127,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-It uses Iconify by Joan Zapata, licensed under Apache 2.0 as well,
+It uses The Android Open Source Project's Suppor Libraries by Google,
+and Iconify by Joan Zapata, both licensed under Apache 2.0 as well,
 and RippleView by Robin Chutaux, licensed under MIT,
 which is compatible with this library's license.
 
