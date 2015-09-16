@@ -2,6 +2,7 @@ package com.github.guilhermesgb.marqueeto.sample;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,7 @@ public class ExamplesViewPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return 10;
+        return 1;
     }
 
     @Override
@@ -31,6 +32,13 @@ public class ExamplesViewPagerAdapter extends PagerAdapter {
         View view = inflater.inflate(R.layout.activity_main_bak, container, false);
         ButterKnife.bind(this, view);
         websiteField.setCustomStyle(R.style.LabelledMarqueeEditTextCustomStyle2);
+        websiteField.setText(websiteField.getText() + " :)");
+        websiteField.setTextColor(R.color.material_deep_teal_500);
+        websiteField.setHint(websiteField.getHint() + " :)");
+        websiteField.setError(websiteField.getError() + " :)");
+        websiteField.setInputType(InputType.TYPE_CLASS_PHONE);
+        websiteField.setIcon("md-access-alarms");
+        websiteField.setMode(LabelledMarqueeEditText.MODE_EDIT);
         //addressField.setErrorEnabled(true);
         addressField.setError("ADDRESS WRONG!");
         usernameField.setErrorEnabled(false);

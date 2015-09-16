@@ -72,7 +72,6 @@ public class LabelledMarqueeEditText extends FrameLayout {
     private String mIconKey;
     private IconDrawable mIconDrawable;
     private CharSequence mIconCharacter;
-    private int mLabelColor;
     private int mErrorColor;
     private String mError;
     private boolean mErrorEnabled;
@@ -106,8 +105,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
                 .getResourceId(R.styleable.LabelledMarqueeEditText_labelledMarqueeEditTextStyle, -1);
         Resources.Theme theme = overrideThemeWithCustomStyle(context, customLabelledMarqueeEditTextStyle);
         final TypedArray themeAttributes = theme.obtainStyledAttributes(mAttrs, new int[]{
-                R.attr.baseColor, R.attr.highlightColor, R.attr.iconColor,
-                R.attr.labelColor, R.attr.errorColor
+                R.attr.baseColor, R.attr.highlightColor, R.attr.iconColor, R.attr.errorColor
         }, R.attr.colorPrimary, 0);
         retrieveAttributesValues(customAttributes, themeAttributes);
         buildEditAndMarqueeViews(context);
@@ -158,12 +156,6 @@ public class LabelledMarqueeEditText extends FrameLayout {
             mIconColor = mBaseColor;
         }
         if (themeAttributes.getValue(themeAttributes.getIndex(3), typedValue)) {
-            mLabelColor = typedValue.data;
-        }
-        else {
-            mLabelColor = mHighlightColor;
-        }
-        if (themeAttributes.getValue(themeAttributes.getIndex(4), typedValue)) {
             mErrorColor = typedValue.data;
         }
         else {
@@ -355,7 +347,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
     }
 
     private void setLabelColor() {
-        mEditText.setHighlightColor(mLabelColor);
+        mEditText.setHighlightColor(mHighlightColor);
     }
 
     private void setError() {
@@ -620,10 +612,6 @@ public class LabelledMarqueeEditText extends FrameLayout {
         }
     }
 
-    public int getLabelColor() {
-        return mLabelColor;
-    }
-
     public int getErrorColor() {
         return mErrorColor;
     }
@@ -698,12 +686,17 @@ public class LabelledMarqueeEditText extends FrameLayout {
         Context context = getContext();
         Resources.Theme theme = overrideThemeWithCustomStyle(context, customStyle);
         final TypedArray themeAttributes = theme.obtainStyledAttributes(mAttrs, new int[]{
-                R.attr.baseColor, R.attr.highlightColor, R.attr.iconColor,
-                R.attr.labelColor, R.attr.errorColor
+                R.attr.baseColor, R.attr.highlightColor, R.attr.iconColor, R.attr.errorColor
         }, R.attr.colorPrimary, 0);
         retrieveThemeAttributeValues(themeAttributes);
         removeAllViews();
         buildEditAndMarqueeViews(context);
+        mTextChanged = true;
+        mTextColorChanged = true;
+        mHintChanged = true;
+        mIconChanged = true;
+        mErrorChanged = true;
+        mInputTypeChanged = true;
         mStyleColorsChanged = true;
         reloadEditAndMarqueeViews();
         resetContextTheme(theme);
