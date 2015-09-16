@@ -127,7 +127,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-It uses The Android Open Source Project's Suppor Libraries by Google,
+It uses The Android Open Source Project's Support Libraries by Google,
 and Iconify by Joan Zapata, both licensed under Apache 2.0 as well,
 and RippleView by Robin Chutaux, licensed under MIT,
 which is compatible with this library's license.
