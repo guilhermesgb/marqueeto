@@ -29,6 +29,13 @@ This widget is an enhanced `EditText` (already with `TextInputLayout` support) w
 
 Visually, you can tell the current mode the widget is at by the presence or absence of the bottom bar, and also from the size of the accompanying icon, which is a bit larger while in write mode.
 
+### Niceties
+
+* `LabelledMarqueeEditText` works consistently from **API 14** onwards (14, 16, 17 and 22 have been tested);
+* **Has the same Material look 'n feel throughout all supported API levels** (even the selector drawables!);
+* Even though support for the official Material icons is default, thanks to the awesome [Iconify](https://github.com/JoanZapata/android-iconify) library, **pretty much any icon can be supported**, even your own! If this interests you, refer to their project to find out how;
+* Your project won't have to have the Support Libraries (AppCompat, Design, etc.) as a dependency for this widget to work (so you can use this "enhanced `TextInputLayout` + `EditText` combination in places where they wouldn't work without these dependencies, e.g. a project without these support libs and simply good and old activities extending `Activity`).
+
 ### How to use in your projects
 
 To use `LabelledMarqueeEditText` in your layouts, all you need to do is declare usage of this widget:
@@ -65,12 +72,10 @@ just as you would normally; Additionally you can use:
 * `android:textColor` via XML or `setTextColor()` programatically to set the text color in the widget;
 * `marqueeto:labelledMarqueeEditTextStyle` via XML or `setCustomStyle()` programatically to change other more interesting appearance aspects of the widget, such as the icon, label and highlighted colors. A custom style defining the following attributes must be provided:
 
-  * `<item name="baseColor"/>`\* to set the base color to be applied to the widget's overall appearance;
-  * `<item name="highlightColor"/>`\* to set the color to be applied to the widget while it is highlighted (selected);
+  * `<item name="baseColor"/>` to set the base color to be applied to the widget's overall appearance. If undefined, it will be equal to the current theme's `colorPrimary`;
+  * `<item name="highlightColor"/>` to set the color to be applied to the widget while it is highlighted. If undefined, it will be equal to the current theme's `colorAccent`;
   * `<item name="iconColor"/>` to set the icon's color while the widget is not highlighted. If undefined, it will be equal to `baseColor`. Once the widget is highlighted, the icon's color will always be equal to `highlightColor`;
   * `<item name="errorColor"/>` to set the error color in the widget. If undefined, it will be equal to `highlightColor`.
-  
-  \* You must provide this attribute in your custom style, otherwise it will be set to `android:color/black`.
 
 ### Examples
 
