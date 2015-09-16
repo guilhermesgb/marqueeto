@@ -50,7 +50,7 @@
             marqueeto:error="Texto de erro aqui!"
             tools:ignore="HardcodedText"/>
 
-        <android.support.design.widget.TextInputLayout
+<!--        <android.support.design.widget.TextInputLayout
             android:id="@+id/stub_old_style_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -64,13 +64,13 @@
                 android:hint="OLD STYYYYLE"
                 android:maxLines="1"/>
 
-        </android.support.design.widget.TextInputLayout>
+        </android.support.design.widget.TextInputLayout>-->
 
         <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
             android:id="@+id/address_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/stub_old_style_edit_text"
+            android:layout_below="@id/website_edit_text"
             android:inputType="textPostalAddress"
             android:hint="Address"
             marqueeto:iconKey="md-location-on"
