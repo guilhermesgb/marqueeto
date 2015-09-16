@@ -55,12 +55,12 @@ public class LabelledMarqueeEditText extends FrameLayout {
         }
     }
 
-    private Resources.Theme contextTheme;
+    private Resources.Theme mContextTheme;
 
-    private TextInputLayout textInputLayout;
-    private AppCompatEditText editText;
-    private IconTextView textView;
-    private RippleView rippleView;
+    private TextInputLayout mTextInputLayout;
+    private AppCompatEditText mEditText;
+    private IconTextView mTextView;
+    private RippleView mRippleView;
 
     private String mText;
     private int mTextColor;
@@ -117,14 +117,14 @@ public class LabelledMarqueeEditText extends FrameLayout {
 
     private void resetContextTheme(Resources.Theme theme) {
         theme.setTo(getResources().newTheme());
-        theme.setTo(contextTheme);
-        contextTheme = null;
+        theme.setTo(mContextTheme);
+        mContextTheme = null;
     }
 
     private Resources.Theme overrideThemeWithCustomStyle(Context context, int customAttributesStyle) {
         final Resources.Theme theme = context.getTheme();
-        contextTheme = getResources().newTheme();
-        contextTheme.setTo(theme);
+        mContextTheme = getResources().newTheme();
+        mContextTheme.setTo(theme);
         theme.applyStyle(R.style.LabelledMarqueeEditTextTheme, true);
         if (customAttributesStyle != -1) {
             theme.applyStyle(customAttributesStyle, true);
@@ -220,19 +220,19 @@ public class LabelledMarqueeEditText extends FrameLayout {
 
     private void buildEditAndMarqueeViews(Context context) {
         View rippleViewSource = LayoutInflater.from(context).inflate(R.layout.layout_ripple, this, false);
-        rippleView = (RippleView) rippleViewSource.findViewById(R.id.labelled_marquee_edit_text_layout_ripple);
-        rippleView.setId(doGenerateViewId());
-        addView(rippleView);
+        mRippleView = (RippleView) rippleViewSource.findViewById(R.id.labelled_marquee_edit_text_layout_ripple);
+        mRippleView.setId(doGenerateViewId());
+        addView(mRippleView);
         View editViewSource = LayoutInflater.from(context).inflate(R.layout.layout_edit, this, false);
-        textInputLayout = (TextInputLayout) editViewSource.findViewById(R.id.labelled_marquee_edit_text_layout_label_wrapper);
-        textInputLayout.setId(doGenerateViewId());
-        editText = (AppCompatEditText) editViewSource.findViewById(R.id.labelled_marquee_edit_text_layout_edit_text);
-        editText.setId(doGenerateViewId());
-        addView(textInputLayout);
+        mTextInputLayout = (TextInputLayout) editViewSource.findViewById(R.id.labelled_marquee_edit_text_layout_label_wrapper);
+        mTextInputLayout.setId(doGenerateViewId());
+        mEditText = (AppCompatEditText) editViewSource.findViewById(R.id.labelled_marquee_edit_text_layout_edit_text);
+        mEditText.setId(doGenerateViewId());
+        addView(mTextInputLayout);
         View marqueeViewSource = LayoutInflater.from(context).inflate(R.layout.layout_marquee, this, false);
-        textView = (IconTextView) marqueeViewSource.findViewById(R.id.labelled_marquee_edit_text_layout_marquee_text);
-        textView.setId(doGenerateViewId());
-        addView(textView, new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        mTextView = (IconTextView) marqueeViewSource.findViewById(R.id.labelled_marquee_edit_text_layout_marquee_text);
+        mTextView.setId(doGenerateViewId());
+        addView(mTextView, new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
     }
 
     private static synchronized int doGenerateViewId() {
@@ -253,7 +253,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
 
     private void initEditAndMarqueeViews(boolean firstLoad) {
         if (mTextChanged || mIconChanged || mStyleColorsChanged) {
-            editText.setCompoundDrawablesWithIntrinsicBounds(null, null, mIconDrawable, null);
+            mEditText.setCompoundDrawablesWithIntrinsicBounds(null, null, mIconDrawable, null);
             setText();
             setTextSize();
             setLabelColor();
@@ -279,8 +279,8 @@ public class LabelledMarqueeEditText extends FrameLayout {
             setInputType();
             mInputTypeChanged = false;
         }
-        textView.setSelected(true);
-        textInputLayout.setVisibility(getVisibility());
+        mTextView.setSelected(true);
+        mTextInputLayout.setVisibility(getVisibility());
         if (mPreferredMode == MODE_MARQUEE) {
             enableMarqueeMode(mIconCharacter, firstLoad);
         }
@@ -319,7 +319,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
             }
 
         });
-        textView.setOnTouchListener(new OnTouchListener() {
+        mTextView.setOnTouchListener(new OnTouchListener() {
 
             @Override
             public boolean onTouch(View view, MotionEvent event) {
@@ -327,59 +327,59 @@ public class LabelledMarqueeEditText extends FrameLayout {
             }
 
         });
-        final View.OnFocusChangeListener existingListener = editText.getOnFocusChangeListener();
+        final View.OnFocusChangeListener existingListener = mEditText.getOnFocusChangeListener();
         if (!(existingListener instanceof DisableEditModeOnFocusChangeListener)) {
-            editText.setOnFocusChangeListener(
+            mEditText.setOnFocusChangeListener(
                     DisableEditModeOnFocusChangeListener.newInstance(this, existingListener)
             );
         }
     }
 
     private void setText() {
-        editText.setText(mText);
-        textView.setText((mText == null ? "" : mText) + mIconCharacter);
+        mEditText.setText(mText);
+        mTextView.setText((mText == null ? "" : mText) + mIconCharacter);
     }
 
     private void setTextSize() {
-        editText.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextSize);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextSize);
+        mEditText.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextSize);
+        mTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextSize);
     }
 
     private void setTextColor() {
-        editText.setTextColor(mTextColor);
-        textView.setTextColor(mTextColor);
+        mEditText.setTextColor(mTextColor);
+        mTextView.setTextColor(mTextColor);
     }
 
     private void setHint() {
-        textInputLayout.setHint(mHint);
+        mTextInputLayout.setHint(mHint);
     }
 
     private void setLabelColor() {
-        editText.setHighlightColor(mLabelColor);
+        mEditText.setHighlightColor(mLabelColor);
     }
 
     private void setError() {
-        textInputLayout.setError(mError);
+        mTextInputLayout.setError(mError);
     }
 
     private void setErrorEnabled() {
-        textInputLayout.setErrorEnabled(mErrorEnabled);
+        mTextInputLayout.setErrorEnabled(mErrorEnabled);
     }
 
     private void setCursorDrawableColor() {
         try {
             Field fCursorDrawableRes = TextView.class.getDeclaredField("mCursorDrawableRes");
             fCursorDrawableRes.setAccessible(true);
-            int mCursorDrawableRes = fCursorDrawableRes.getInt(editText);
+            int mCursorDrawableRes = fCursorDrawableRes.getInt(mEditText);
             final Drawable[] drawables = new Drawable[2];
-            drawables[0] = ContextCompat.getDrawable(editText.getContext(), mCursorDrawableRes);
-            drawables[1] = ContextCompat.getDrawable(editText.getContext(), mCursorDrawableRes);
+            drawables[0] = ContextCompat.getDrawable(mEditText.getContext(), mCursorDrawableRes);
+            drawables[1] = ContextCompat.getDrawable(mEditText.getContext(), mCursorDrawableRes);
             drawables[0].setColorFilter(mHighlightColor, PorterDuff.Mode.SRC_IN);
             drawables[1].setColorFilter(mHighlightColor, PorterDuff.Mode.SRC_IN);
             try {
                 Field fEditor = TextView.class.getDeclaredField("mEditor");
                 fEditor.setAccessible(true);
-                Object editor = fEditor.get(editText);
+                Object editor = fEditor.get(mEditText);
                 Field fCursorDrawable = editor.getClass().getDeclaredField("mCursorDrawable");
                 fCursorDrawable.setAccessible(true);
                 fCursorDrawable.set(editor, drawables);
@@ -387,7 +387,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
             catch (Throwable ignored) {
                 Field fCursorDrawable = TextView.class.getDeclaredField("mCursorDrawable");
                 fCursorDrawable.setAccessible(true);
-                fCursorDrawable.set(editText, drawables);
+                fCursorDrawable.set(mEditText, drawables);
             }
         }
         catch (Throwable ignored) {
@@ -397,7 +397,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
     }
 
     private void setInputType() {
-        editText.setInputType(mInputType);
+        mEditText.setInputType(mInputType);
     }
 
     private static final class DisableEditModeOnFocusChangeListener implements View.OnFocusChangeListener {
@@ -427,22 +427,22 @@ public class LabelledMarqueeEditText extends FrameLayout {
                     labelledMarqueeEditText.enableMarqueeMode(labelledMarqueeEditText.getIconCharacter(), false);
                     labelledMarqueeEditText.invalidate();
                     labelledMarqueeEditText.requestLayout();
-                    labelledMarqueeEditText.rippleView
+                    labelledMarqueeEditText.mRippleView
                             .setRippleColor(labelledMarqueeEditText.mBaseColor);
                 }
                 else {
                     labelledMarqueeEditText.tintIconWithHighlightColorIfApplicable();
                     labelledMarqueeEditText.tintSelectorDrawableWithHighlightColor();
-                    labelledMarqueeEditText.rippleView.clearAnimation();
-                    labelledMarqueeEditText.rippleView
+                    labelledMarqueeEditText.mRippleView.clearAnimation();
+                    labelledMarqueeEditText.mRippleView
                             .setRippleColor(labelledMarqueeEditText.mHighlightColor);
-                    int x = labelledMarqueeEditText.rippleView.getWidth() -
-                            (labelledMarqueeEditText.editText.getCompoundPaddingRight() / 2);
-                    int y = labelledMarqueeEditText.rippleView.getHeight() -
-                            (labelledMarqueeEditText.editText.getBaseline() +
-                            (labelledMarqueeEditText.editText
+                    int x = labelledMarqueeEditText.mRippleView.getWidth() -
+                            (labelledMarqueeEditText.mEditText.getCompoundPaddingRight() / 2);
+                    int y = labelledMarqueeEditText.mRippleView.getHeight() -
+                            (labelledMarqueeEditText.mEditText.getBaseline() +
+                            (labelledMarqueeEditText.mEditText
                                     .getCompoundDrawables()[2].getIntrinsicHeight() / 2));
-                    labelledMarqueeEditText.rippleView.animateRipple(x, y);
+                    labelledMarqueeEditText.mRippleView.animateRipple(x, y);
                 }
             }
         }
@@ -463,7 +463,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
         final int oldIconColor = mIconColor;
         mIconColor = color;
         setIcon(mIconKey, false);
-        editText.setCompoundDrawablesWithIntrinsicBounds(null, null, mIconDrawable, null);
+        mEditText.setCompoundDrawablesWithIntrinsicBounds(null, null, mIconDrawable, null);
         mIconColor = oldIconColor;
     }
 
@@ -472,17 +472,17 @@ public class LabelledMarqueeEditText extends FrameLayout {
     }
 
     private void setSelectorDrawableColorTemporarily(int color) {
-        Drawable middleHandle = ContextCompat.getDrawable(editText.getContext(),
+        Drawable middleHandle = ContextCompat.getDrawable(mEditText.getContext(),
                 R.drawable.text_select_handle_middle_material);
         Drawable middleHandleWrapper = DrawableCompat.wrap(middleHandle);
         DrawableCompat.setTint(middleHandleWrapper, color);
 
-        Drawable leftHandle = ContextCompat.getDrawable(editText.getContext(),
+        Drawable leftHandle = ContextCompat.getDrawable(mEditText.getContext(),
                 R.drawable.text_select_handle_left_material);
         Drawable leftHandleWrapper = DrawableCompat.wrap(leftHandle);
         DrawableCompat.setTint(leftHandleWrapper, color);
 
-        Drawable rightHandle = ContextCompat.getDrawable(editText.getContext(),
+        Drawable rightHandle = ContextCompat.getDrawable(mEditText.getContext(),
                 R.drawable.text_select_handle_right_material);
         Drawable rightHandleWrapper = DrawableCompat.wrap(rightHandle);
         DrawableCompat.setTint(rightHandleWrapper, color);
@@ -490,18 +490,18 @@ public class LabelledMarqueeEditText extends FrameLayout {
 
     private void enableEditMode() {
         mCurrentMode = MODE_EDIT;
-        editText.setVisibility(View.VISIBLE);
-        editText.setEnabled(true);
-        textView.setVisibility(View.INVISIBLE);
-        rippleView.clearAnimation();
-        int x = rippleView.getWidth() - (editText.getCompoundPaddingRight() / 2);
-        int y = rippleView.getHeight() - (editText.getBaseline() +
-                (editText.getCompoundDrawables()[2].getIntrinsicHeight() / 2));
-        rippleView.animateRipple(x, y);
+        mEditText.setVisibility(View.VISIBLE);
+        mEditText.setEnabled(true);
+        mTextView.setVisibility(View.INVISIBLE);
+        mRippleView.clearAnimation();
+        int x = mRippleView.getWidth() - (mEditText.getCompoundPaddingRight() / 2);
+        int y = mRippleView.getHeight() - (mEditText.getBaseline() +
+                (mEditText.getCompoundDrawables()[2].getIntrinsicHeight() / 2));
+        mRippleView.animateRipple(x, y);
     }
 
     private void enableMarqueeMode(final CharSequence iconCharacter, boolean firstLoad) {
-        if (editText.getText().toString().trim().isEmpty()) {
+        if (mEditText.getText().toString().trim().isEmpty()) {
             if (mPreferredMode == MODE_MARQUEE) {
                 enableEditMode();
             }
@@ -511,17 +511,17 @@ public class LabelledMarqueeEditText extends FrameLayout {
             fadeLabelInIfTextNotEmpty();
         }
         mCurrentMode = MODE_MARQUEE;
-        editText.setVisibility(View.INVISIBLE);
-        editText.setEnabled(false);
-        textView.setVisibility(View.VISIBLE);
-        textView.setSelected(true);
-        mText = editText.getText().toString();
-        textView.setText(mText + iconCharacter);
+        mEditText.setVisibility(View.INVISIBLE);
+        mEditText.setEnabled(false);
+        mTextView.setVisibility(View.VISIBLE);
+        mTextView.setSelected(true);
+        mText = mEditText.getText().toString();
+        mTextView.setText(mText + iconCharacter);
     }
 
     private void fadeLabelInIfTextNotEmpty() {
         if (!isEmpty(true)) {
-            textInputLayout.setVisibility(View.INVISIBLE);
+            mTextInputLayout.setVisibility(View.INVISIBLE);
             int duration = 500;
             final AnimationSet fadeIn = new AnimationSet(true);
             {
@@ -532,8 +532,8 @@ public class LabelledMarqueeEditText extends FrameLayout {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    textInputLayout.setVisibility(View.VISIBLE);
-                    textInputLayout.startAnimation(fadeIn);
+                    mTextInputLayout.setVisibility(View.VISIBLE);
+                    mTextInputLayout.startAnimation(fadeIn);
                 }
             }, duration);
         }
