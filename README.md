@@ -106,9 +106,9 @@ Note that it is using a custom style referenced through `@style/MyCustomStyle` f
 
 ## Special Thanks
 
-* [Iconify](https://github.com/JoanZapata/android-iconify)
-* [RippleEffect](https://github.com/traex/RippleEffect)
-* [Design Support Library](http://android-developers.blogspot.com.br/2015/05/android-design-support-library.html)
+* [Design Support Library](http://android-developers.blogspot.com.br/2015/05/android-design-support-library.html) by Google
+* [Iconify](https://github.com/JoanZapata/android-iconify) by Joan Zapata
+* [RippleEffect](https://github.com/traex/RippleEffect) by Robin Chutaux
 
 ## License
 
