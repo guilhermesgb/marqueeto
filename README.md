@@ -72,8 +72,8 @@ just as you would normally; Additionally you can use:
 * `android:textColor` via XML or `setTextColor()` programatically to set the text color in the widget;
 * `marqueeto:labelledMarqueeEditTextStyle` via XML or `setCustomStyle()` programatically to change other more interesting appearance aspects of the widget, such as the icon, label and highlighted colors. A custom style defining the following attributes must be provided:
 
-  * `<item name="baseColor"/>` to set the base color to be applied to the widget's overall appearance. If undefined, it will be equal to the current theme's `colorPrimary`;
-  * `<item name="highlightColor"/>` to set the color to be applied to the widget while it is highlighted. If undefined, it will be equal to the current theme's `colorAccent`;
+  * `<item name="baseColor"/>` to set the base color to be applied to the widget's overall appearance. If undefined, it will be equal to the Android default theme's `colorPrimary`;
+  * `<item name="highlightColor"/>` to set the color to be applied to the widget while it is highlighted. If undefined, it will be equal to the Android default theme's `colorAccent`;
   * `<item name="iconColor"/>` to set the icon's color while the widget is not highlighted. If undefined, it will be equal to `baseColor`. Once the widget is highlighted, the icon's color will always be equal to `highlightColor`;
   * `<item name="errorColor"/>` to set the error color in the widget. If undefined, it will be equal to `highlightColor`.
 
