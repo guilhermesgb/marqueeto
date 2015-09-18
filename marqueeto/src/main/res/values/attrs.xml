@@ -6,6 +6,7 @@
         <attr name="android:text"/>
         <attr name="android:textSize"/>
         <attr name="android:textColor"/>
+        <attr name="android:textStyle"/>
         <attr name="android:hint"/>
         <attr name="baseColor" format="color"/>
         <attr name="highlightColor" format="color"/>
@@ -19,6 +20,8 @@
             <enum name="marquee" value="1"/>
         </attr>
         <attr name="android:inputType"/>
+        <attr name="android:maxLength"/>
+        <attr name="android:textAllCaps"/>
         <attr name="labelledMarqueeEditTextStyle" format="reference"/>
 
     </declare-styleable>

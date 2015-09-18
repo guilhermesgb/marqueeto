@@ -19,6 +19,7 @@ public class ExamplesViewPagerAdapter extends PagerAdapter {
     @Bind(R.id.username_edit_text) LabelledMarqueeEditText usernameField;
     @Bind(R.id.work_edit_text) LabelledMarqueeEditText workField;
     @Bind(R.id.home_edit_text) LabelledMarqueeEditText homeField;
+    @Bind(R.id.identity_number_edit_text) LabelledMarqueeEditText identityNumberField;
 
     @Override
     public int getCount() {
@@ -36,9 +37,9 @@ public class ExamplesViewPagerAdapter extends PagerAdapter {
         websiteField.setTextColor(R.color.material_deep_teal_500);
         websiteField.setHint(websiteField.getHint() + " :)");
         websiteField.setError(websiteField.getError() + " :)");
-        websiteField.setInputType(InputType.TYPE_CLASS_PHONE);
+        //websiteField.setInputType(InputType.TYPE_CLASS_PHONE);
         websiteField.setIcon("md-access-alarms");
-        websiteField.setMode(LabelledMarqueeEditText.MODE_EDIT);
+        //websiteField.setMode(LabelledMarqueeEditText.MODE_EDIT);
         //addressField.setErrorEnabled(true);
         addressField.setError("ADDRESS WRONG!");
         usernameField.setErrorEnabled(false);
@@ -46,6 +47,8 @@ public class ExamplesViewPagerAdapter extends PagerAdapter {
         workField.setError("Hey this is another error text!");
         container.addView(view);
         homeField.setCustomStyle(R.style.LabelledMarqueeEditTextCustomStyle2);
+        homeField.setTextMaxLength(7);
+        identityNumberField.setText("12345678901234567890");
         return view;
     }
 

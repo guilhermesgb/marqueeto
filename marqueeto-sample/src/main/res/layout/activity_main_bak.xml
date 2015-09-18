@@ -38,7 +38,7 @@
             android:layout_width="225dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/email_edit_text"
-            android:inputType="textUri"
+            android:inputType="text"
             android:hint="Website"
             marqueeto:iconKey="md-language"
             marqueeto:mode="marquee"
@@ -48,6 +48,9 @@
             android:textColor="@android:color/white"
             android:padding="20dp"
             marqueeto:error="Texto de erro aqui!"
+            android:textStyle="italic"
+            android:textAllCaps="true"
+            android:maxLength="7"
             tools:ignore="HardcodedText"/>
 
 <!--        <android.support.design.widget.TextInputLayout
@@ -90,6 +93,8 @@
             marqueeto:mode="marquee"
             android:text="guilhermesgb"
             marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
+            android:maxLength="6"
+            android:textStyle="italic|bold"
             tools:ignore="HardcodedText"/>
 
         <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
@@ -134,6 +139,7 @@
                 marqueeto:iconKey="md-home"
                 marqueeto:mode="edit"
                 marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
+                android:text="Home Alone, The Movie"
                 tools:ignore="HardcodedText"/>
 
         </LinearLayout>
@@ -147,6 +153,7 @@
             android:hint="Identity Number"
             marqueeto:iconKey="md-perm-identity"
             marqueeto:mode="marquee"
+            android:maxLength="2"
             tools:ignore="HardcodedText"/>
 
     </RelativeLayout>

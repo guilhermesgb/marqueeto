@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
@@ -12,6 +13,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.widget.AppCompatEditText;
+import android.text.InputFilter;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
@@ -34,6 +36,8 @@ import com.joanzapata.iconify.widget.IconTextView;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class LabelledMarqueeEditText extends FrameLayout {
@@ -65,6 +69,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
     private String mText;
     private int mTextColor;
     private float mTextSize;
+    private int mTextStyle;
     private String mHint;
     private int mBaseColor;
     private int mHighlightColor;
@@ -79,14 +84,18 @@ public class LabelledMarqueeEditText extends FrameLayout {
     private int mPreferredMode;
     private int mCurrentMode;
     private int mInputType;
+    private int mTextMaxLength;
+    private boolean mTextAllCaps;
     private int mCurrentCustomStyle;
 
     private boolean mTextChanged = true;
     private boolean mTextColorChanged = true;
+    private boolean mTextStyleChanged = true;
     private boolean mHintChanged = true;
     private boolean mIconChanged = true;
     private boolean mErrorChanged = true;
     private boolean mInputTypeChanged = true;
+    private boolean mTextFiltersChanged = true;
     private boolean mStyleColorsChanged = true;
 
     public LabelledMarqueeEditText(Context context) {
@@ -169,6 +178,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
         mText = customAttributes.getString(R.styleable.LabelledMarqueeEditText_android_text);
         mTextColor = customAttributes.getColor(R.styleable.LabelledMarqueeEditText_android_textColor,
                 getResources().getColor(android.R.color.black));
+        mTextStyle = customAttributes.getInt(R.styleable.LabelledMarqueeEditText_android_textStyle, Typeface.NORMAL);
         float maxSize = getResources().getDimension(R.dimen.labelled_marquee_edit_text_max_text_size);
         float maxSizeConverted = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, maxSize,
                 getResources().getDisplayMetrics());
@@ -208,6 +218,8 @@ public class LabelledMarqueeEditText extends FrameLayout {
         mPreferredMode = customAttributes.getInt(R.styleable.LabelledMarqueeEditText_mode, MODE_MARQUEE);
         mInputType = customAttributes.getInt(R.styleable.LabelledMarqueeEditText_android_inputType,
                 EditorInfo.TYPE_CLASS_TEXT);
+        mTextMaxLength = customAttributes.getInt(R.styleable.LabelledMarqueeEditText_android_maxLength, -1);
+        mTextAllCaps = customAttributes.getBoolean(R.styleable.LabelledMarqueeEditText_android_textAllCaps, false);
         customAttributes.recycle();
     }
 
@@ -244,9 +256,10 @@ public class LabelledMarqueeEditText extends FrameLayout {
         }
     }
 
-    private void initEditAndMarqueeViews(boolean firstLoad) {
-        if (mTextChanged || mIconChanged || mStyleColorsChanged) {
+    private void initEditAndMarqueeViews(final boolean animate) {
+        if (mTextChanged || mIconChanged || mTextFiltersChanged || mStyleColorsChanged) {
             mEditText.setCompoundDrawablesWithIntrinsicBounds(null, null, mIconDrawable, null);
+            setTextFilters();
             setText();
             setTextSize();
             setLabelColor();
@@ -254,11 +267,16 @@ public class LabelledMarqueeEditText extends FrameLayout {
             tintIconWithIconColor();
             mTextChanged = false;
             mIconChanged = false;
+            mTextFiltersChanged = false;
             mStyleColorsChanged = false;
         }
         if (mTextColorChanged) {
             setTextColor();
             mTextColorChanged = false;
+        }
+        if (mTextStyleChanged) {
+            setTextStyle();
+            mTextStyleChanged = false;
         }
         if (mHintChanged) {
             setHint();
@@ -273,12 +291,11 @@ public class LabelledMarqueeEditText extends FrameLayout {
             mInputTypeChanged = false;
         }
         mTextView.setSelected(true);
-        mTextInputLayout.setVisibility(getVisibility());
         if (mPreferredMode == MODE_MARQUEE) {
-            enableMarqueeMode(mIconCharacter, firstLoad);
+            enableMarqueeMode(mIconCharacter, animate);
         }
         else if (mPreferredMode == MODE_EDIT) {
-            enableEditMode();
+            enableEditMode(animate);
         }
         final GestureDetectorCompat detector = new GestureDetectorCompat(getContext(),
                 new GestureDetector.OnGestureListener() {
@@ -303,7 +320,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
 
             @Override
             public void onLongPress(MotionEvent e) {
-                enableEditMode();
+                enableEditMode(animate);
             }
 
             @Override
@@ -341,6 +358,11 @@ public class LabelledMarqueeEditText extends FrameLayout {
     private void setTextColor() {
         mEditText.setTextColor(mTextColor);
         mTextView.setTextColor(mTextColor);
+    }
+
+    private void setTextStyle() {
+        mEditText.setTypeface(Typeface.create(mEditText.getTypeface(), mTextStyle));
+        mTextView.setTypeface(Typeface.create(mTextView.getTypeface(), mTextStyle));
     }
 
     private void setHint() {
@@ -391,6 +413,17 @@ public class LabelledMarqueeEditText extends FrameLayout {
 
     private void setInputType() {
         mEditText.setInputType(mInputType);
+    }
+
+    private void setTextFilters() {
+        List<InputFilter> filters = new ArrayList<>();
+        if (mTextMaxLength >= 0) {
+            filters.add(new InputFilter.LengthFilter(mTextMaxLength));
+        }
+        if (mTextAllCaps) {
+            filters.add(new InputFilter.AllCaps());
+        }
+        mEditText.setFilters(filters.toArray(new InputFilter[filters.size()]));
     }
 
     private static final class DisableEditModeOnFocusChangeListener implements View.OnFocusChangeListener {
@@ -481,7 +514,24 @@ public class LabelledMarqueeEditText extends FrameLayout {
         DrawableCompat.setTint(rightHandleWrapper, color);
     }
 
-    private void enableEditMode() {
+    private void enableEditMode(boolean animate) {
+/*
+        //TODO add a nice and smooth animation for the case where widget is in edit mode
+        //TODO and there's some text, to avoid label hanging problem in this case as well (issue #2)
+        if (animate && !isEmpty(true)) {
+            final AnimationSet fadeIn = new AnimationSet(true);
+            {
+                fadeIn.setDuration(500);
+                fadeIn.setInterpolator(new AccelerateInterpolator());
+                fadeIn.addAnimation(new AlphaAnimation(0, 1));
+            }
+            mTextInputLayout.setVisibility(View.VISIBLE);
+            mTextInputLayout.startAnimation(fadeIn);
+        }
+        else {
+            mTextInputLayout.setVisibility(View.VISIBLE);
+        }*/
+        mTextInputLayout.setVisibility(View.VISIBLE);
         mCurrentMode = MODE_EDIT;
         mEditText.setVisibility(View.VISIBLE);
         mEditText.setEnabled(true);
@@ -493,15 +543,25 @@ public class LabelledMarqueeEditText extends FrameLayout {
         mRippleView.animateRipple(x, y);
     }
 
-    private void enableMarqueeMode(final CharSequence iconCharacter, boolean firstLoad) {
+    private void enableMarqueeMode(final CharSequence iconCharacter, boolean animate) {
         if (mEditText.getText().toString().trim().isEmpty()) {
             if (mPreferredMode == MODE_MARQUEE) {
-                enableEditMode();
+                enableEditMode(animate);
             }
             return;
         }
-        if (firstLoad) {
-            fadeLabelInIfTextNotEmpty();
+        if (animate && !isEmpty(true)) {
+            final AnimationSet fadeIn = new AnimationSet(true);
+            {
+                fadeIn.setDuration(500);
+                fadeIn.setInterpolator(new AccelerateInterpolator());
+                fadeIn.addAnimation(new AlphaAnimation(0, 1));
+            }
+            mTextInputLayout.setVisibility(View.VISIBLE);
+            mTextInputLayout.startAnimation(fadeIn);
+        }
+        else {
+            mTextInputLayout.setVisibility(View.VISIBLE);
         }
         mCurrentMode = MODE_MARQUEE;
         mEditText.setVisibility(View.INVISIBLE);
@@ -512,28 +572,8 @@ public class LabelledMarqueeEditText extends FrameLayout {
         mTextView.setText(mText + iconCharacter);
     }
 
-    private void fadeLabelInIfTextNotEmpty() {
-        if (!isEmpty(true)) {
-            mTextInputLayout.setVisibility(View.INVISIBLE);
-            int duration = 500;
-            final AnimationSet fadeIn = new AnimationSet(true);
-            {
-                fadeIn.setDuration(duration);
-                fadeIn.setInterpolator(new AccelerateInterpolator());
-                fadeIn.addAnimation(new AlphaAnimation(0, 1));
-            }
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mTextInputLayout.setVisibility(View.VISIBLE);
-                    mTextInputLayout.startAnimation(fadeIn);
-                }
-            }, duration);
-        }
-    }
-
     public boolean isEmpty(boolean trim) {
-        return (trim ? mText.trim().isEmpty() : mText.isEmpty());
+        return mText == null || (trim ? mText.trim().isEmpty() : mText.isEmpty());
     }
 
     public String getText() {
@@ -553,6 +593,16 @@ public class LabelledMarqueeEditText extends FrameLayout {
     public void setTextColor(int color) {
         mTextColor = getResources().getColor(color);
         mTextColorChanged = true;
+        reloadEditAndMarqueeViews();
+    }
+
+    public int getTextStyle() {
+        return mTextStyle;
+    }
+
+    public void setTextStyle(int style) {
+        mTextStyle = style;
+        mTextStyleChanged = true;
         reloadEditAndMarqueeViews();
     }
 
@@ -691,6 +741,26 @@ public class LabelledMarqueeEditText extends FrameLayout {
         reloadEditAndMarqueeViews();
     }
 
+    public int getTextMaxLength() {
+        return mTextMaxLength;
+    }
+
+    public void setTextMaxLength(int maxLength) {
+        mTextMaxLength = maxLength;
+        mTextFiltersChanged = true;
+        reloadEditAndMarqueeViews();
+    }
+
+    public boolean getTextAllCaps() {
+        return mTextAllCaps;
+    }
+
+    public void setTextAllCaps(boolean allCaps) {
+        mTextAllCaps = allCaps;
+        mTextFiltersChanged = true;
+        reloadEditAndMarqueeViews();
+    }
+
     public void setCustomStyle(int customStyle) {
         mCurrentCustomStyle = customStyle;
         Context context = getContext();
@@ -703,13 +773,17 @@ public class LabelledMarqueeEditText extends FrameLayout {
         buildEditAndMarqueeViews(context);
         mTextChanged = true;
         mTextColorChanged = true;
+        mTextStyleChanged = true;
         mHintChanged = true;
         mIconChanged = true;
         mErrorChanged = true;
         mInputTypeChanged = true;
+        mTextFiltersChanged = true;
         mStyleColorsChanged = true;
-        reloadEditAndMarqueeViews();
+        initEditAndMarqueeViews(true);
         resetContextTheme(theme);
+        invalidate();
+        requestLayout();
     }
 
     public void reloadEditAndMarqueeViews() {
