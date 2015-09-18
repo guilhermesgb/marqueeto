@@ -136,7 +136,6 @@
                 android:layout_weight="0.5"
                 android:inputType="text"
                 android:hint="Home"
-                marqueeto:iconKey="md-home"
                 marqueeto:mode="edit"
                 marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
                 android:text="Home Alone, The Movie"

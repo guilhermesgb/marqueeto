@@ -459,16 +459,18 @@ public class LabelledMarqueeEditText extends FrameLayout {
                 else {
                     labelledMarqueeEditText.tintIconWithHighlightColorIfApplicable();
                     labelledMarqueeEditText.tintSelectorDrawableWithHighlightColor();
-                    labelledMarqueeEditText.mRippleView.clearAnimation();
-                    labelledMarqueeEditText.mRippleView
-                            .setRippleColor(labelledMarqueeEditText.mHighlightColor);
-                    int x = labelledMarqueeEditText.mRippleView.getWidth() -
-                            (labelledMarqueeEditText.mEditText.getCompoundPaddingRight() / 2);
-                    int y = labelledMarqueeEditText.mRippleView.getHeight() -
-                            (labelledMarqueeEditText.mEditText.getBaseline() +
-                            (labelledMarqueeEditText.mEditText
-                                    .getCompoundDrawables()[2].getIntrinsicHeight() / 2));
-                    labelledMarqueeEditText.mRippleView.animateRipple(x, y);
+                    if (labelledMarqueeEditText.mEditText.getCompoundDrawables()[2] != null) {
+                        labelledMarqueeEditText.mRippleView.clearAnimation();
+                        labelledMarqueeEditText.mRippleView
+                                .setRippleColor(labelledMarqueeEditText.mHighlightColor);
+                        int x = labelledMarqueeEditText.mRippleView.getWidth() -
+                                (labelledMarqueeEditText.mEditText.getCompoundPaddingRight() / 2);
+                        int y = labelledMarqueeEditText.mRippleView.getHeight() -
+                                (labelledMarqueeEditText.mEditText.getBaseline() +
+                                        (labelledMarqueeEditText.mEditText
+                                                .getCompoundDrawables()[2].getIntrinsicHeight() / 2));
+                        labelledMarqueeEditText.mRippleView.animateRipple(x, y);
+                    }
                 }
             }
         }
@@ -536,11 +538,13 @@ public class LabelledMarqueeEditText extends FrameLayout {
         mEditText.setVisibility(View.VISIBLE);
         mEditText.setEnabled(true);
         mTextView.setVisibility(View.INVISIBLE);
-        mRippleView.clearAnimation();
-        int x = mRippleView.getWidth() - (mEditText.getCompoundPaddingRight() / 2);
-        int y = mRippleView.getHeight() - (mEditText.getBaseline() +
-                (mEditText.getCompoundDrawables()[2].getIntrinsicHeight() / 2));
-        mRippleView.animateRipple(x, y);
+        if (mEditText.getCompoundDrawables()[2] != null) {
+            mRippleView.clearAnimation();
+            int x = mRippleView.getWidth() - (mEditText.getCompoundPaddingRight() / 2);
+            int y = mRippleView.getHeight() - (mEditText.getBaseline() +
+                    (mEditText.getCompoundDrawables()[2].getIntrinsicHeight() / 2));
+            mRippleView.animateRipple(x, y);
+        }
     }
 
     private void enableMarqueeMode(final CharSequence iconCharacter, boolean animate) {
