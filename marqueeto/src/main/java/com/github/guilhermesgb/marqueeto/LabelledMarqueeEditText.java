@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.inputmethod.EditorInfo;
 import android.widget.FrameLayout;
@@ -123,6 +124,8 @@ public class LabelledMarqueeEditText extends FrameLayout {
     private boolean mInputTypeChanged = true;
     private boolean mTextFiltersChanged = true;
     private boolean mStyleColorsChanged = true;
+
+    private boolean mAnimationEnded = false;
 
     public LabelledMarqueeEditText(Context context) {
         this(context, null);
@@ -611,6 +614,22 @@ public class LabelledMarqueeEditText extends FrameLayout {
                 fadeIn.setInterpolator(new AccelerateInterpolator());
                 fadeIn.addAnimation(new AlphaAnimation(0, 1));
             }
+            mTextInputLayout.setLayoutAnimationListener(new Animation.AnimationListener() {
+
+                @Override
+                public void onAnimationStart(Animation animation) {}
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    mAnimationEnded = true;
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+                    mAnimationEnded = false;
+                }
+
+            });
             mTextInputLayout.setVisibility(View.VISIBLE);
             mTextInputLayout.startAnimation(fadeIn);
         }
@@ -865,7 +884,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
     }
 
     public void reloadEditAndMarqueeViews() {
-        initEditAndMarqueeViews(false);
+        initEditAndMarqueeViews(!mAnimationEnded);
         invalidate();
         requestLayout();
     }
