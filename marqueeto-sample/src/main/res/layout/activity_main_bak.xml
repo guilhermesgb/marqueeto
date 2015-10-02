@@ -12,7 +12,7 @@
 
         <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
             android:id="@+id/phone_edit_text"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:inputType="phone"
@@ -24,13 +24,15 @@
 
         <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
             android:id="@+id/email_edit_text"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/phone_edit_text"
+            android:text="Hey ho lets go call me maybe?"
             android:inputType="textEmailAddress"
             android:hint="Email"
             marqueeto:iconKey="md-local-post-office"
-            marqueeto:mode="marquee"
+            marqueeto:mode="edit"
+            marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle2"
             tools:ignore="HardcodedText"/>
 
         <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
@@ -41,7 +43,7 @@
             android:inputType="text"
             android:hint="Website"
             marqueeto:iconKey="md-language"
-            marqueeto:mode="marquee"
+            marqueeto:mode="edit"
             android:text="www.developers.android.com/facebook"
             marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
             android:textSize="22sp"

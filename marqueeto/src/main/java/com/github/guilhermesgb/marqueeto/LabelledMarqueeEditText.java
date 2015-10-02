@@ -7,6 +7,7 @@ import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Handler;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -573,24 +574,37 @@ public class LabelledMarqueeEditText extends FrameLayout {
 /*
         //TODO add a nice and smooth animation for the case where widget is in edit mode
         //TODO and there's some text, to avoid label hanging problem in this case as well (issue #2)
+*/
         if (animate && !isEmpty(true)) {
+            mTextView.setVisibility(View.VISIBLE);
             final AnimationSet fadeIn = new AnimationSet(true);
-            {
-                fadeIn.setDuration(500);
-                fadeIn.setInterpolator(new AccelerateInterpolator());
-                fadeIn.addAnimation(new AlphaAnimation(0, 1));
-            }
+            fadeIn.setDuration(500);
+            fadeIn.setInterpolator(new AccelerateInterpolator());
+            fadeIn.addAnimation(new AlphaAnimation(0, 1));
+            final AnimationSet fadeOut = new AnimationSet(true);
+            fadeIn.setDuration(800);
+            fadeIn.setInterpolator(new AccelerateInterpolator());
+            fadeIn.addAnimation(new AlphaAnimation(1, 0));
             mTextInputLayout.setVisibility(View.VISIBLE);
             mTextInputLayout.startAnimation(fadeIn);
+            mTextView.startAnimation(fadeOut);
+            (new Handler()).postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mAnimationEnded = true;
+                    mTextView.setVisibility(View.INVISIBLE);
+                }
+            }, 800);
         }
         else {
             mTextInputLayout.setVisibility(View.VISIBLE);
-        }*/
-        mTextInputLayout.setVisibility(View.VISIBLE);
+            mTextView.setVisibility(View.INVISIBLE);
+        }
+//        mTextInputLayout.setVisibility(View.VISIBLE);
         mCurrentMode = MODE_EDIT;
         mEditText.setVisibility(View.VISIBLE);
         mEditText.setEnabled(true);
-        mTextView.setVisibility(View.INVISIBLE);
+//        mTextView.setVisibility(View.INVISIBLE);
         if (mEditText.getCompoundDrawables()[2] != null) {
             mRippleView.clearAnimation();
             int x = mRippleView.getWidth() - (mEditText.getCompoundPaddingRight() / 2);
@@ -614,24 +628,14 @@ public class LabelledMarqueeEditText extends FrameLayout {
                 fadeIn.setInterpolator(new AccelerateInterpolator());
                 fadeIn.addAnimation(new AlphaAnimation(0, 1));
             }
-            mTextInputLayout.setLayoutAnimationListener(new Animation.AnimationListener() {
-
-                @Override
-                public void onAnimationStart(Animation animation) {}
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    mAnimationEnded = true;
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-                    mAnimationEnded = false;
-                }
-
-            });
             mTextInputLayout.setVisibility(View.VISIBLE);
             mTextInputLayout.startAnimation(fadeIn);
+            (new Handler()).postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mAnimationEnded = true;
+                }
+            }, 500);
         }
         else {
             mTextInputLayout.setVisibility(View.VISIBLE);
