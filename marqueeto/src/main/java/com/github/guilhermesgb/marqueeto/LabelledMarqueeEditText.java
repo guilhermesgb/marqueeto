@@ -7,7 +7,6 @@ import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.os.Handler;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -29,7 +28,9 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.joanzapata.iconify.Icon;
 import com.joanzapata.iconify.IconDrawable;
+import com.joanzapata.iconify.IconFontDescriptor;
 import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.MaterialModule;
 import com.joanzapata.iconify.widget.IconTextView;
@@ -40,6 +41,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static android.util.TypedValue.COMPLEX_UNIT_DIP;
+
 public class LabelledMarqueeEditText extends FrameLayout {
 
     private static final String TAG = LabelledMarqueeEditText.class.getSimpleName();
@@ -48,10 +51,32 @@ public class LabelledMarqueeEditText extends FrameLayout {
 
     private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);
 
-    private AttributeSet mAttrs;
+    private static Icon sNullIcon = new Icon() {
+        @Override
+        public String key() {
+            return "null";
+        }
 
+        @Override
+        public char character() {
+            return ' ';
+        }
+    };
     static {
         try {
+            Iconify.with(new IconFontDescriptor() {
+
+                @Override
+                public String ttfFileName() {
+                    return "fonts/nullDescriptor.otf";
+                }
+
+                @Override
+                public Icon[] characters() {
+                    return new Icon[]{sNullIcon};
+                }
+
+            });
             Iconify.with(new MaterialModule());
         }
         catch (IllegalArgumentException exception) {
@@ -60,6 +85,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
     }
 
     private Resources.Theme mContextTheme;
+    private AttributeSet mAttrs;
 
     private TextInputLayout mTextInputLayout;
     private AppCompatEditText mEditText;
@@ -192,7 +218,31 @@ public class LabelledMarqueeEditText extends FrameLayout {
         mHint = customAttributes.getString(R.styleable.LabelledMarqueeEditText_android_hint);
         mIconKey = customAttributes.getString(R.styleable.LabelledMarqueeEditText_iconKey);
         if (mIconKey == null) {
-            mIconDrawable = null;
+            mIconDrawable = new IconDrawable(getContext(), sNullIcon) {
+
+                private int width, height;
+
+                public IconDrawable adjustBounds() {
+                    this.width = (int) TypedValue.applyDimension(COMPLEX_UNIT_DIP, 5,
+                            getContext().getResources().getDisplayMetrics());
+                    height = getContext().getResources().getDimensionPixelSize(R.dimen
+                            .labelled_marquee_edit_text_default_icon_size_big);
+                    setBounds(0, 0, width, height);
+                    invalidateSelf();
+                    return this;
+                }
+
+                @Override
+                public int getIntrinsicWidth() {
+                    return this.width;
+                }
+
+                @Override
+                public int getIntrinsicHeight() {
+                    return this.height;
+                }
+
+            }.adjustBounds();
             mIconCharacter = "";
         }
         else {
@@ -347,7 +397,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
 
     private void setText() {
         mEditText.setText(mText);
-        mTextView.setText((mText == null ? "" : mText) + mIconCharacter);
+        mTextView.setText(String.format("%s%s", mText == null ? "" : mText, mIconCharacter));
     }
 
     private void setTextSize() {
@@ -573,7 +623,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
         mTextView.setVisibility(View.VISIBLE);
         mTextView.setSelected(true);
         mText = mEditText.getText().toString();
-        mTextView.setText(mText + iconCharacter);
+        mTextView.setText(String.format("%s%s", mText, iconCharacter));
     }
 
     public boolean isEmpty(boolean trim) {
@@ -651,7 +701,31 @@ public class LabelledMarqueeEditText extends FrameLayout {
     private void setIcon(String iconKey, boolean shouldReload) {
         mIconKey = iconKey;
         if (mIconKey == null) {
-            mIconDrawable = null;
+            mIconDrawable = new IconDrawable(getContext(), sNullIcon) {
+
+                private int width, height;
+
+                public IconDrawable adjustBounds() {
+                    this.width = (int) TypedValue.applyDimension(COMPLEX_UNIT_DIP, 5,
+                            getContext().getResources().getDisplayMetrics());
+                    height = getContext().getResources().getDimensionPixelSize(R.dimen
+                            .labelled_marquee_edit_text_default_icon_size_big);
+                    setBounds(0, 0, width, height);
+                    invalidateSelf();
+                    return this;
+                }
+
+                @Override
+                public int getIntrinsicWidth() {
+                    return this.width;
+                }
+
+                @Override
+                public int getIntrinsicHeight() {
+                    return this.height;
+                }
+
+            }.adjustBounds();
             mIconCharacter = "";
         } else {
             mIconDrawable = new IconDrawable(getContext(), mIconKey)

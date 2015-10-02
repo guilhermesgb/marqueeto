@@ -47,7 +47,6 @@ public class ExamplesViewPagerAdapter extends PagerAdapter {
         workField.setError("Hey this is another error text!");
         container.addView(view);
         homeField.setCustomStyle(R.style.LabelledMarqueeEditTextCustomStyle2);
-        homeField.setTextMaxLength(7);
         identityNumberField.setText("12345678901234567890");
         return view;
     }
