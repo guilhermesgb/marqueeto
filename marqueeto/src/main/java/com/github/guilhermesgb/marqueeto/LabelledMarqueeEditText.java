@@ -378,7 +378,8 @@ public class LabelledMarqueeEditText extends FrameLayout {
 
             @Override
             public void onLongPress(MotionEvent e) {
-                enableEditMode(animate);
+                //TODO maybe reset/clear animation right here, right now
+                enableEditMode(false);
             }
 
             @Override
@@ -386,7 +387,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
                 return false;
             }
 
-                });
+        });
         mTextView.setOnTouchListener(new OnTouchListener() {
 
             @Override
@@ -583,10 +584,6 @@ public class LabelledMarqueeEditText extends FrameLayout {
     }
 
     private void enableEditMode(boolean animate) {
-/*
-        //TODO add a nice and smooth animation for the case where widget is in edit mode
-        //TODO and there's some text, to avoid label hanging problem in this case as well (issue #2)
-*/
         if (animate && !isEmpty(true)) {
             mTextView.setVisibility(View.VISIBLE);
             final AnimationSet fadeIn = new AnimationSet(true);
