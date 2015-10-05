@@ -90,7 +90,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
     private Resources.Theme mContextTheme;
     private AttributeSet mAttrs;
 
-    private final IconDrawable mNullIconDrawable;
+    private IconDrawable mNullIconDrawable;
 
     private TextInputLayout mTextInputLayout;
     private AppCompatEditText mEditText;
@@ -142,6 +142,9 @@ public class LabelledMarqueeEditText extends FrameLayout {
     public LabelledMarqueeEditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mAttrs = attrs;
+        if (isInEditMode()) {
+            return;
+        }
         TypedArray customAttributes = context.obtainStyledAttributes(mAttrs,
                 R.styleable.LabelledMarqueeEditText);
         mCurrentCustomStyle = customAttributes
@@ -179,6 +182,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
             }
 
         }.adjustBounds();
+        Log.wtf("TAG", "WIDGET BUILT");
     }
 
     private void resetContextTheme(Resources.Theme theme) {
