@@ -48,8 +48,8 @@ public class ExamplesViewPagerAdapter extends PagerAdapter {
         container.addView(view);
         homeField.setCustomStyle(R.style.LabelledMarqueeEditTextCustomStyle2);
         identityNumberField.setText("12345678901234567890");
-        websiteField.setMode(LabelledMarqueeEditText.MODE_MARQUEE);
-        websiteField.setMode(LabelledMarqueeEditText.MODE_EDIT);
+        //websiteField.setMode(LabelledMarqueeEditText.MODE_MARQUEE);
+        //websiteField.setMode(LabelledMarqueeEditText.MODE_EDIT);
         return view;
     }
 

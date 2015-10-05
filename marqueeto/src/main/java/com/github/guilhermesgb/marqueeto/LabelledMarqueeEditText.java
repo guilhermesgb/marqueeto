@@ -24,7 +24,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.inputmethod.EditorInfo;
 import android.widget.FrameLayout;
@@ -50,6 +49,8 @@ public class LabelledMarqueeEditText extends FrameLayout {
     private static final String TAG = LabelledMarqueeEditText.class.getSimpleName();
     public static final int MODE_EDIT = 0;
     public static final int MODE_MARQUEE = 1;
+
+    private static final int ICON_CHARACTER_SECTION_LENGHT = 4;
 
     private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);
 
@@ -273,6 +274,9 @@ public class LabelledMarqueeEditText extends FrameLayout {
         mInputType = customAttributes.getInt(R.styleable.LabelledMarqueeEditText_android_inputType,
                 EditorInfo.TYPE_CLASS_TEXT);
         mTextMaxLength = customAttributes.getInt(R.styleable.LabelledMarqueeEditText_android_maxLength, -1);
+        if (mTextMaxLength != -1) {
+            mTextMaxLength += ICON_CHARACTER_SECTION_LENGHT;
+        }
         mTextAllCaps = customAttributes.getBoolean(R.styleable.LabelledMarqueeEditText_android_textAllCaps, false);
         customAttributes.recycle();
     }
@@ -382,7 +386,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
                 return false;
             }
 
-        });
+                });
         mTextView.setOnTouchListener(new OnTouchListener() {
 
             @Override
@@ -400,8 +404,12 @@ public class LabelledMarqueeEditText extends FrameLayout {
     }
 
     private void setText() {
-        mEditText.setText(mText);
-        mTextView.setText(String.format("%s%s", mText == null ? "" : mText, mIconCharacter));
+        String text = mText;
+        if (text != null && mTextMaxLength != -1) {
+            text = text.substring(0, mTextMaxLength - ICON_CHARACTER_SECTION_LENGHT);
+        }
+        mEditText.setText(text);
+        mTextView.setText(String.format("%s%s", text == null ? "" : text, mIconCharacter));
     }
 
     private void setTextSize() {
@@ -470,14 +478,18 @@ public class LabelledMarqueeEditText extends FrameLayout {
     }
 
     private void setTextFilters() {
-        List<InputFilter> filters = new ArrayList<>();
+        List<InputFilter> editTextFilters = new ArrayList<>();
+        List<InputFilter> textViewFilters = new ArrayList<>();
         if (mTextMaxLength >= 0) {
-            filters.add(new InputFilter.LengthFilter(mTextMaxLength));
+            editTextFilters.add(new InputFilter.LengthFilter(mTextMaxLength - ICON_CHARACTER_SECTION_LENGHT));
+            textViewFilters.add(new InputFilter.LengthFilter(mTextMaxLength));
         }
         if (mTextAllCaps) {
-            filters.add(new InputFilter.AllCaps());
+            editTextFilters.add(new InputFilter.AllCaps());
+            textViewFilters.add(new InputFilter.AllCaps());
         }
-        mEditText.setFilters(filters.toArray(new InputFilter[filters.size()]));
+        mEditText.setFilters(editTextFilters.toArray(new InputFilter[editTextFilters.size()]));
+        mTextView.setFilters(textViewFilters.toArray(new InputFilter[editTextFilters.size()]));
     }
 
     private static final class DisableEditModeOnFocusChangeListener implements View.OnFocusChangeListener {
@@ -582,9 +594,9 @@ public class LabelledMarqueeEditText extends FrameLayout {
             fadeIn.setInterpolator(new AccelerateInterpolator());
             fadeIn.addAnimation(new AlphaAnimation(0, 1));
             final AnimationSet fadeOut = new AnimationSet(true);
-            fadeIn.setDuration(800);
-            fadeIn.setInterpolator(new AccelerateInterpolator());
-            fadeIn.addAnimation(new AlphaAnimation(1, 0));
+            fadeOut.setDuration(800);
+            fadeOut.setInterpolator(new AccelerateInterpolator());
+            fadeOut.addAnimation(new AlphaAnimation(1, 0));
             mTextInputLayout.setVisibility(View.VISIBLE);
             mTextInputLayout.startAnimation(fadeIn);
             mTextView.startAnimation(fadeOut);
@@ -848,6 +860,9 @@ public class LabelledMarqueeEditText extends FrameLayout {
 
     public void setTextMaxLength(int maxLength) {
         mTextMaxLength = maxLength;
+        if (mTextMaxLength != -1) {
+            mTextMaxLength += ICON_CHARACTER_SECTION_LENGHT;
+        }
         mTextFiltersChanged = true;
         reloadEditAndMarqueeViews();
     }

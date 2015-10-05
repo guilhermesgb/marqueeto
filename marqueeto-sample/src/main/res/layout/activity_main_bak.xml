@@ -31,7 +31,7 @@
             android:inputType="textEmailAddress"
             android:hint="Email"
             marqueeto:iconKey="md-local-post-office"
-            marqueeto:mode="edit"
+            marqueeto:mode="marquee"
             marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle2"
             tools:ignore="HardcodedText"/>
 
