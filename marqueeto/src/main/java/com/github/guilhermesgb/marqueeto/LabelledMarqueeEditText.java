@@ -90,6 +90,8 @@ public class LabelledMarqueeEditText extends FrameLayout {
     private Resources.Theme mContextTheme;
     private AttributeSet mAttrs;
 
+    private final IconDrawable mNullIconDrawable;
+
     private TextInputLayout mTextInputLayout;
     private AppCompatEditText mEditText;
     private IconTextView mTextView;
@@ -152,6 +154,31 @@ public class LabelledMarqueeEditText extends FrameLayout {
         buildEditAndMarqueeViews(context);
         initEditAndMarqueeViews(true);
         resetContextTheme(theme);
+        mNullIconDrawable = new IconDrawable(getContext(), sNullIcon) {
+
+            private int width, height;
+
+            public IconDrawable adjustBounds() {
+                this.width = (int) TypedValue.applyDimension(COMPLEX_UNIT_DIP, 5,
+                        getContext().getResources().getDisplayMetrics());
+                height = getContext().getResources().getDimensionPixelSize(R.dimen
+                        .labelled_marquee_edit_text_default_icon_size_big);
+                setBounds(0, 0, width, height);
+                invalidateSelf();
+                return this;
+            }
+
+            @Override
+            public int getIntrinsicWidth() {
+                return this.width;
+            }
+
+            @Override
+            public int getIntrinsicHeight() {
+                return this.height;
+            }
+
+        }.adjustBounds();
     }
 
     private void resetContextTheme(Resources.Theme theme) {
@@ -223,31 +250,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
         mHint = customAttributes.getString(R.styleable.LabelledMarqueeEditText_android_hint);
         mIconKey = customAttributes.getString(R.styleable.LabelledMarqueeEditText_iconKey);
         if (mIconKey == null) {
-            mIconDrawable = new IconDrawable(getContext(), sNullIcon) {
-
-                private int width, height;
-
-                public IconDrawable adjustBounds() {
-                    this.width = (int) TypedValue.applyDimension(COMPLEX_UNIT_DIP, 5,
-                            getContext().getResources().getDisplayMetrics());
-                    height = getContext().getResources().getDimensionPixelSize(R.dimen
-                            .labelled_marquee_edit_text_default_icon_size_big);
-                    setBounds(0, 0, width, height);
-                    invalidateSelf();
-                    return this;
-                }
-
-                @Override
-                public int getIntrinsicWidth() {
-                    return this.width;
-                }
-
-                @Override
-                public int getIntrinsicHeight() {
-                    return this.height;
-                }
-
-            }.adjustBounds();
+            mIconDrawable = mNullIconDrawable;
             mIconCharacter = "";
         }
         else {
@@ -378,7 +381,6 @@ public class LabelledMarqueeEditText extends FrameLayout {
 
             @Override
             public void onLongPress(MotionEvent e) {
-                //TODO maybe reset/clear animation right here, right now
                 enableEditMode(false);
             }
 
@@ -585,13 +587,16 @@ public class LabelledMarqueeEditText extends FrameLayout {
 
     private void enableEditMode(boolean animate) {
         if (animate && !isEmpty(true)) {
+            mTextInputLayout.clearAnimation();
+            mTextView.clearAnimation();
+            mTextView.setText(mEditText.getText().toString());
             mTextView.setVisibility(View.VISIBLE);
             final AnimationSet fadeIn = new AnimationSet(true);
             fadeIn.setDuration(500);
             fadeIn.setInterpolator(new AccelerateInterpolator());
             fadeIn.addAnimation(new AlphaAnimation(0, 1));
             final AnimationSet fadeOut = new AnimationSet(true);
-            fadeOut.setDuration(800);
+            fadeOut.setDuration(700);
             fadeOut.setInterpolator(new AccelerateInterpolator());
             fadeOut.addAnimation(new AlphaAnimation(1, 0));
             mTextInputLayout.setVisibility(View.VISIBLE);
@@ -601,19 +606,19 @@ public class LabelledMarqueeEditText extends FrameLayout {
                 @Override
                 public void run() {
                     mAnimationEnded = true;
-                    mTextView.setVisibility(View.INVISIBLE);
+                    if (mCurrentMode == MODE_EDIT) {
+                        mTextView.setVisibility(View.INVISIBLE);
+                    }
                 }
-            }, 800);
+            }, 700);
         }
         else {
             mTextInputLayout.setVisibility(View.VISIBLE);
             mTextView.setVisibility(View.INVISIBLE);
         }
-//        mTextInputLayout.setVisibility(View.VISIBLE);
         mCurrentMode = MODE_EDIT;
         mEditText.setVisibility(View.VISIBLE);
         mEditText.setEnabled(true);
-//        mTextView.setVisibility(View.INVISIBLE);
         if (mEditText.getCompoundDrawables()[2] != null) {
             mRippleView.clearAnimation();
             int x = mRippleView.getWidth() - (mEditText.getCompoundPaddingRight() / 2);
@@ -631,6 +636,8 @@ public class LabelledMarqueeEditText extends FrameLayout {
             return;
         }
         if (animate && !isEmpty(true)) {
+            mTextInputLayout.clearAnimation();
+            mTextView.clearAnimation();
             final AnimationSet fadeIn = new AnimationSet(true);
             {
                 fadeIn.setDuration(500);
@@ -733,31 +740,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
     private void setIcon(String iconKey, boolean shouldReload) {
         mIconKey = iconKey;
         if (mIconKey == null) {
-            mIconDrawable = new IconDrawable(getContext(), sNullIcon) {
-
-                private int width, height;
-
-                public IconDrawable adjustBounds() {
-                    this.width = (int) TypedValue.applyDimension(COMPLEX_UNIT_DIP, 5,
-                            getContext().getResources().getDisplayMetrics());
-                    height = getContext().getResources().getDimensionPixelSize(R.dimen
-                            .labelled_marquee_edit_text_default_icon_size_big);
-                    setBounds(0, 0, width, height);
-                    invalidateSelf();
-                    return this;
-                }
-
-                @Override
-                public int getIntrinsicWidth() {
-                    return this.width;
-                }
-
-                @Override
-                public int getIntrinsicHeight() {
-                    return this.height;
-                }
-
-            }.adjustBounds();
+            mIconDrawable = mNullIconDrawable;
             mIconCharacter = "";
         } else {
             mIconDrawable = new IconDrawable(getContext(), mIconKey)

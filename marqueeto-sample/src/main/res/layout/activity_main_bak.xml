@@ -44,7 +44,7 @@
             android:hint="Website"
             marqueeto:iconKey="md-language"
             marqueeto:mode="edit"
-            android:text="www.developers.android.com/facebook"
+            android:text="www.deve.brAHSDUAHUEAD"
             marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
             android:textSize="22sp"
             android:textColor="@android:color/white"
@@ -52,7 +52,6 @@
             marqueeto:error="Texto de erro aqui!"
             android:textStyle="italic"
             android:textAllCaps="true"
-            android:maxLength="7"
             tools:ignore="HardcodedText"/>
 
 <!--        <android.support.design.widget.TextInputLayout
