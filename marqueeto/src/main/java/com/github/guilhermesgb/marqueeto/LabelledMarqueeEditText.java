@@ -87,10 +87,10 @@ public class LabelledMarqueeEditText extends FrameLayout {
         }
     }
 
+    private final IconDrawable mNullIconDrawable;
+
     private Resources.Theme mContextTheme;
     private AttributeSet mAttrs;
-
-    private final IconDrawable mNullIconDrawable;
 
     private TextInputLayout mTextInputLayout;
     private AppCompatEditText mEditText;
@@ -141,19 +141,6 @@ public class LabelledMarqueeEditText extends FrameLayout {
 
     public LabelledMarqueeEditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        mAttrs = attrs;
-        TypedArray customAttributes = context.obtainStyledAttributes(mAttrs,
-                R.styleable.LabelledMarqueeEditText);
-        mCurrentCustomStyle = customAttributes
-                .getResourceId(R.styleable.LabelledMarqueeEditText_labelledMarqueeEditTextStyle, -1);
-        Resources.Theme theme = overrideThemeWithCustomStyle(context, mCurrentCustomStyle);
-        final TypedArray themeAttributes = theme.obtainStyledAttributes(mAttrs, new int[]{
-                R.attr.baseColor, R.attr.highlightColor, R.attr.iconColor, R.attr.errorColor
-        }, 0, 0);
-        retrieveAttributesValues(customAttributes, themeAttributes);
-        buildEditAndMarqueeViews(context);
-        initEditAndMarqueeViews(true);
-        resetContextTheme(theme);
         mNullIconDrawable = new IconDrawable(getContext(), sNullIcon) {
 
             private int width, height;
@@ -179,6 +166,19 @@ public class LabelledMarqueeEditText extends FrameLayout {
             }
 
         }.adjustBounds();
+        mAttrs = attrs;
+        TypedArray customAttributes = context.obtainStyledAttributes(mAttrs,
+                R.styleable.LabelledMarqueeEditText);
+        mCurrentCustomStyle = customAttributes
+                .getResourceId(R.styleable.LabelledMarqueeEditText_labelledMarqueeEditTextStyle, -1);
+        Resources.Theme theme = overrideThemeWithCustomStyle(context, mCurrentCustomStyle);
+        final TypedArray themeAttributes = theme.obtainStyledAttributes(mAttrs, new int[]{
+                R.attr.baseColor, R.attr.highlightColor, R.attr.iconColor, R.attr.errorColor
+        }, 0, 0);
+        retrieveAttributesValues(customAttributes, themeAttributes);
+        buildEditAndMarqueeViews(context);
+        initEditAndMarqueeViews(true);
+        resetContextTheme(theme);
     }
 
     private void resetContextTheme(Resources.Theme theme) {
