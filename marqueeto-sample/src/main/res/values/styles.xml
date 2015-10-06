@@ -6,13 +6,15 @@
     </style>
 
     <style name="LabelledMarqueeEditTextCustomStyle">
+        <item name="baseColor">@android:color/holo_green_dark</item>
+        <item name="highlightColor">@android:color/holo_green_light</item>
+        <item name="errorColor">@android:color/holo_red_dark</item>
     </style>
 
     <style name="LabelledMarqueeEditTextCustomStyle2">
         <item name="baseColor">@android:color/holo_purple</item>
         <item name="highlightColor">@android:color/holo_orange_dark</item>
-        <item name="iconColor">@android:color/holo_red_dark</item>
-        <item name="errorColor">@color/material_deep_teal_500</item>
+        <item name="errorColor">@android:color/holo_red_dark</item>
     </style>
 
 </resources>

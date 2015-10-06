@@ -1,0 +1,165 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:marqueeto="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Space
+            android:id="@+id/space_above"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_alignParentTop="true"/>
+
+        <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
+            android:id="@+id/name_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/space_above"
+            android:hint="Nome"
+            marqueeto:iconKey="md-face"
+            marqueeto:mode="edit"
+            marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
+            tools:ignore="HardcodedText"/>
+
+        <LinearLayout
+            android:id="@+id/doc_identify_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/name_edit_text">
+
+            <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+<<<<<<< HEAD
+                android:layout_weight="0.55"
+=======
+                android:layout_weight="0.75"
+>>>>>>> b831591fbf50082cda0132a5970afc02d6f63c6c
+                android:hint="Doc.Identidade"
+                marqueeto:mode="edit"
+                marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
+                tools:ignore="HardcodedText"/>
+
+            <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+<<<<<<< HEAD
+                android:layout_weight="0.45"
+=======
+                android:layout_weight="0.25"
+>>>>>>> b831591fbf50082cda0132a5970afc02d6f63c6c
+                android:hint="Org.Emissor ─ UF"
+                marqueeto:mode="edit"
+                marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
+                tools:ignore="HardcodedText"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/person_identify_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/doc_identify_edit_text">
+
+            <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.55"
+                android:hint="CPF"
+<<<<<<< HEAD
+                marqueeto:iconKey="md-confirmation-number"
+                android:text="065.110.194-89"
+=======
+                marqueeto:mode="edit"
+>>>>>>> b831591fbf50082cda0132a5970afc02d6f63c6c
+                marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
+                tools:ignore="HardcodedText"/>
+
+            <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.45"
+                android:hint="Data Nascimento"
+<<<<<<< HEAD
+                marqueeto:iconKey="md-nature"
+=======
+>>>>>>> b831591fbf50082cda0132a5970afc02d6f63c6c
+                marqueeto:mode="edit"
+                marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
+                tools:ignore="HardcodedText"/>
+
+        </LinearLayout>
+
+        <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
+            android:id="@+id/parents_names_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/person_identify_edit_text"
+            android:hint="Filiação"
+            marqueeto:iconKey="md-face"
+            marqueeto:mode="edit"
+            marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
+            tools:ignore="HardcodedText"/>
+
+        <LinearLayout
+            android:id="@+id/doc_dates_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/parents_names_edit_text">
+
+            <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+<<<<<<< HEAD
+                android:layout_weight="0.55"
+=======
+                android:layout_weight="0.5"
+>>>>>>> b831591fbf50082cda0132a5970afc02d6f63c6c
+                android:hint="Validade"
+                marqueeto:mode="edit"
+                marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
+                tools:ignore="HardcodedText"/>
+
+            <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+<<<<<<< HEAD
+                android:layout_weight="0.45"
+=======
+                android:layout_weight="0.5"
+>>>>>>> b831591fbf50082cda0132a5970afc02d6f63c6c
+                android:hint="1ª Habilitação"
+                marqueeto:mode="edit"
+                marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
+                tools:ignore="HardcodedText"/>
+
+        </LinearLayout>
+
+        <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
+            android:id="@+id/location_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/doc_dates_edit_text"
+            android:hint="Local"
+            marqueeto:iconKey="md-location-on"
+            marqueeto:mode="edit"
+            marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
+            tools:ignore="HardcodedText"/>
+
+        <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
+            android:id="@+id/issue_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/location_edit_text"
+            android:hint="Data Emissão"
+            marqueeto:mode="edit"
+            marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
+            tools:ignore="HardcodedText"/>
+
+    </RelativeLayout>
+
+</ScrollView>

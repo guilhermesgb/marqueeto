@@ -7,6 +7,7 @@ import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Handler;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -49,6 +50,8 @@ public class LabelledMarqueeEditText extends FrameLayout {
     public static final int MODE_EDIT = 0;
     public static final int MODE_MARQUEE = 1;
 
+    private static final int ICON_CHARACTER_SECTION_LENGHT = 4;
+
     private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);
 
     private static Icon sNullIcon = new Icon() {
@@ -83,6 +86,8 @@ public class LabelledMarqueeEditText extends FrameLayout {
             Log.d(TAG, "Iconify modules already set.");
         }
     }
+
+    private final IconDrawable mNullIconDrawable;
 
     private Resources.Theme mContextTheme;
     private AttributeSet mAttrs;
@@ -124,6 +129,8 @@ public class LabelledMarqueeEditText extends FrameLayout {
     private boolean mTextFiltersChanged = true;
     private boolean mStyleColorsChanged = true;
 
+    private boolean mAnimationEnded = false;
+
     public LabelledMarqueeEditText(Context context) {
         this(context, null);
     }
@@ -134,6 +141,31 @@ public class LabelledMarqueeEditText extends FrameLayout {
 
     public LabelledMarqueeEditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        mNullIconDrawable = new IconDrawable(getContext(), sNullIcon) {
+
+            private int width, height;
+
+            public IconDrawable adjustBounds() {
+                this.width = (int) TypedValue.applyDimension(COMPLEX_UNIT_DIP, 5,
+                        getContext().getResources().getDisplayMetrics());
+                height = getContext().getResources().getDimensionPixelSize(R.dimen
+                        .labelled_marquee_edit_text_default_icon_size_big);
+                setBounds(0, 0, width, height);
+                invalidateSelf();
+                return this;
+            }
+
+            @Override
+            public int getIntrinsicWidth() {
+                return this.width;
+            }
+
+            @Override
+            public int getIntrinsicHeight() {
+                return this.height;
+            }
+
+        }.adjustBounds();
         mAttrs = attrs;
         TypedArray customAttributes = context.obtainStyledAttributes(mAttrs,
                 R.styleable.LabelledMarqueeEditText);
@@ -218,31 +250,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
         mHint = customAttributes.getString(R.styleable.LabelledMarqueeEditText_android_hint);
         mIconKey = customAttributes.getString(R.styleable.LabelledMarqueeEditText_iconKey);
         if (mIconKey == null) {
-            mIconDrawable = new IconDrawable(getContext(), sNullIcon) {
-
-                private int width, height;
-
-                public IconDrawable adjustBounds() {
-                    this.width = (int) TypedValue.applyDimension(COMPLEX_UNIT_DIP, 5,
-                            getContext().getResources().getDisplayMetrics());
-                    height = getContext().getResources().getDimensionPixelSize(R.dimen
-                            .labelled_marquee_edit_text_default_icon_size_big);
-                    setBounds(0, 0, width, height);
-                    invalidateSelf();
-                    return this;
-                }
-
-                @Override
-                public int getIntrinsicWidth() {
-                    return this.width;
-                }
-
-                @Override
-                public int getIntrinsicHeight() {
-                    return this.height;
-                }
-
-            }.adjustBounds();
+            mIconDrawable = mNullIconDrawable;
             mIconCharacter = "";
         }
         else {
@@ -269,6 +277,9 @@ public class LabelledMarqueeEditText extends FrameLayout {
         mInputType = customAttributes.getInt(R.styleable.LabelledMarqueeEditText_android_inputType,
                 EditorInfo.TYPE_CLASS_TEXT);
         mTextMaxLength = customAttributes.getInt(R.styleable.LabelledMarqueeEditText_android_maxLength, -1);
+        if (mTextMaxLength != -1) {
+            mTextMaxLength += ICON_CHARACTER_SECTION_LENGHT;
+        }
         mTextAllCaps = customAttributes.getBoolean(R.styleable.LabelledMarqueeEditText_android_textAllCaps, false);
         customAttributes.recycle();
     }
@@ -370,7 +381,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
 
             @Override
             public void onLongPress(MotionEvent e) {
-                enableEditMode(animate);
+                enableEditMode(false);
             }
 
             @Override
@@ -396,8 +407,12 @@ public class LabelledMarqueeEditText extends FrameLayout {
     }
 
     private void setText() {
-        mEditText.setText(mText);
-        mTextView.setText(String.format("%s%s", mText == null ? "" : mText, mIconCharacter));
+        String text = mText;
+        if (text != null && mTextMaxLength != -1) {
+            text = text.substring(0, mTextMaxLength - ICON_CHARACTER_SECTION_LENGHT);
+        }
+        mEditText.setText(text);
+        mTextView.setText(String.format("%s%s", text == null ? "" : text, mIconCharacter));
     }
 
     private void setTextSize() {
@@ -466,14 +481,18 @@ public class LabelledMarqueeEditText extends FrameLayout {
     }
 
     private void setTextFilters() {
-        List<InputFilter> filters = new ArrayList<>();
+        List<InputFilter> editTextFilters = new ArrayList<>();
+        List<InputFilter> textViewFilters = new ArrayList<>();
         if (mTextMaxLength >= 0) {
-            filters.add(new InputFilter.LengthFilter(mTextMaxLength));
+            editTextFilters.add(new InputFilter.LengthFilter(mTextMaxLength - ICON_CHARACTER_SECTION_LENGHT));
+            textViewFilters.add(new InputFilter.LengthFilter(mTextMaxLength));
         }
         if (mTextAllCaps) {
-            filters.add(new InputFilter.AllCaps());
+            editTextFilters.add(new InputFilter.AllCaps());
+            textViewFilters.add(new InputFilter.AllCaps());
         }
-        mEditText.setFilters(filters.toArray(new InputFilter[filters.size()]));
+        mEditText.setFilters(editTextFilters.toArray(new InputFilter[editTextFilters.size()]));
+        mTextView.setFilters(textViewFilters.toArray(new InputFilter[editTextFilters.size()]));
     }
 
     private static final class DisableEditModeOnFocusChangeListener implements View.OnFocusChangeListener {
@@ -567,27 +586,39 @@ public class LabelledMarqueeEditText extends FrameLayout {
     }
 
     private void enableEditMode(boolean animate) {
-/*
-        //TODO add a nice and smooth animation for the case where widget is in edit mode
-        //TODO and there's some text, to avoid label hanging problem in this case as well (issue #2)
         if (animate && !isEmpty(true)) {
+            mTextInputLayout.clearAnimation();
+            mTextView.clearAnimation();
+            mTextView.setText(mEditText.getText().toString());
+            mTextView.setVisibility(View.VISIBLE);
             final AnimationSet fadeIn = new AnimationSet(true);
-            {
-                fadeIn.setDuration(500);
-                fadeIn.setInterpolator(new AccelerateInterpolator());
-                fadeIn.addAnimation(new AlphaAnimation(0, 1));
-            }
+            fadeIn.setDuration(500);
+            fadeIn.setInterpolator(new AccelerateInterpolator());
+            fadeIn.addAnimation(new AlphaAnimation(0, 1));
+            final AnimationSet fadeOut = new AnimationSet(true);
+            fadeOut.setDuration(700);
+            fadeOut.setInterpolator(new AccelerateInterpolator());
+            fadeOut.addAnimation(new AlphaAnimation(1, 0));
             mTextInputLayout.setVisibility(View.VISIBLE);
             mTextInputLayout.startAnimation(fadeIn);
+            mTextView.startAnimation(fadeOut);
+            (new Handler()).postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mAnimationEnded = true;
+                    if (mCurrentMode == MODE_EDIT) {
+                        mTextView.setVisibility(View.INVISIBLE);
+                    }
+                }
+            }, 700);
         }
         else {
             mTextInputLayout.setVisibility(View.VISIBLE);
-        }*/
-        mTextInputLayout.setVisibility(View.VISIBLE);
+            mTextView.setVisibility(View.INVISIBLE);
+        }
         mCurrentMode = MODE_EDIT;
         mEditText.setVisibility(View.VISIBLE);
         mEditText.setEnabled(true);
-        mTextView.setVisibility(View.INVISIBLE);
         if (mEditText.getCompoundDrawables()[2] != null) {
             mRippleView.clearAnimation();
             int x = mRippleView.getWidth() - (mEditText.getCompoundPaddingRight() / 2);
@@ -605,6 +636,8 @@ public class LabelledMarqueeEditText extends FrameLayout {
             return;
         }
         if (animate && !isEmpty(true)) {
+            mTextInputLayout.clearAnimation();
+            mTextView.clearAnimation();
             final AnimationSet fadeIn = new AnimationSet(true);
             {
                 fadeIn.setDuration(500);
@@ -613,6 +646,12 @@ public class LabelledMarqueeEditText extends FrameLayout {
             }
             mTextInputLayout.setVisibility(View.VISIBLE);
             mTextInputLayout.startAnimation(fadeIn);
+            (new Handler()).postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mAnimationEnded = true;
+                }
+            }, 500);
         }
         else {
             mTextInputLayout.setVisibility(View.VISIBLE);
@@ -701,31 +740,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
     private void setIcon(String iconKey, boolean shouldReload) {
         mIconKey = iconKey;
         if (mIconKey == null) {
-            mIconDrawable = new IconDrawable(getContext(), sNullIcon) {
-
-                private int width, height;
-
-                public IconDrawable adjustBounds() {
-                    this.width = (int) TypedValue.applyDimension(COMPLEX_UNIT_DIP, 5,
-                            getContext().getResources().getDisplayMetrics());
-                    height = getContext().getResources().getDimensionPixelSize(R.dimen
-                            .labelled_marquee_edit_text_default_icon_size_big);
-                    setBounds(0, 0, width, height);
-                    invalidateSelf();
-                    return this;
-                }
-
-                @Override
-                public int getIntrinsicWidth() {
-                    return this.width;
-                }
-
-                @Override
-                public int getIntrinsicHeight() {
-                    return this.height;
-                }
-
-            }.adjustBounds();
+            mIconDrawable = mNullIconDrawable;
             mIconCharacter = "";
         } else {
             mIconDrawable = new IconDrawable(getContext(), mIconKey)
@@ -825,6 +840,9 @@ public class LabelledMarqueeEditText extends FrameLayout {
 
     public void setTextMaxLength(int maxLength) {
         mTextMaxLength = maxLength;
+        if (mTextMaxLength != -1) {
+            mTextMaxLength += ICON_CHARACTER_SECTION_LENGHT;
+        }
         mTextFiltersChanged = true;
         reloadEditAndMarqueeViews();
     }
@@ -865,7 +883,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
     }
 
     public void reloadEditAndMarqueeViews() {
-        initEditAndMarqueeViews(false);
+        initEditAndMarqueeViews(!mAnimationEnded);
         invalidate();
         requestLayout();
     }
