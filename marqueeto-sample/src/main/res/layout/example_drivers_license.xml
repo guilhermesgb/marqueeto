@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/doc_name_text_view"
             android:hint="Nome"
-            marqueeto:iconKey="md-face"
+            marqueeto:iconKey="md-account-circle"
             marqueeto:mode="edit"
             marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
             tools:ignore="HardcodedText"/>
@@ -52,6 +52,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.45"
                 android:hint="Org.Emissor ─ UF"
+                marqueeto:iconKey="md-store"
                 marqueeto:mode="edit"
                 marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
                 tools:ignore="HardcodedText"/>
@@ -92,7 +93,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/person_identify_edit_text"
             android:hint="Filiação"
-            marqueeto:iconKey="md-face"
+            marqueeto:iconKey="md-supervisor-account"
             marqueeto:mode="edit"
             marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
             tools:ignore="HardcodedText"/>
@@ -108,6 +109,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.55"
                 android:hint="Validade"
+                marqueeto:iconKey="md-done"
                 marqueeto:mode="edit"
                 marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
                 tools:ignore="HardcodedText"/>
@@ -117,6 +119,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.45"
                 android:hint="Data Emissão"
+                marqueeto:iconKey="md-receipt"
                 marqueeto:mode="edit"
                 marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
                 tools:ignore="HardcodedText"/>
