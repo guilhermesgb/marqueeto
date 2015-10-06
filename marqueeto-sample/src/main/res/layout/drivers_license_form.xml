@@ -28,99 +28,97 @@
             android:layout_below="@id/doc_name_text_view"
             android:hint="Nome"
             marqueeto:iconKey="md-account-circle"
-            marqueeto:mode="edit"
             marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
             tools:ignore="HardcodedText"/>
 
         <LinearLayout
-            android:id="@+id/doc_identify_edit_text"
+            android:id="@+id/doc_identify_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/name_edit_text">
 
             <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
+                android:id="@+id/identity_number_edit_text"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.55"
                 android:hint="Doc.Identidade"
-                marqueeto:mode="edit"
                 marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
                 tools:ignore="HardcodedText"/>
 
             <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
+                android:id="@+id/issuing_org_edit_text"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.45"
                 android:hint="Org.Emissor ─ UF"
                 marqueeto:iconKey="md-store"
-                marqueeto:mode="edit"
                 marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
                 tools:ignore="HardcodedText"/>
 
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/person_identify_edit_text"
+            android:id="@+id/person_identify_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/doc_identify_edit_text">
+            android:layout_below="@id/doc_identify_linear_layout">
 
             <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
+                android:id="@+id/cpf_number_edit_text"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.55"
                 android:hint="CPF"
                 marqueeto:iconKey="md-confirmation-number"
-                marqueeto:mode="edit"
                 marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
                 tools:ignore="HardcodedText"/>
 
             <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
+                android:id="@+id/birth_date_edit_text"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.45"
                 android:hint="Data Nascimento"
                 marqueeto:iconKey="md-nature"
-                marqueeto:mode="edit"
                 marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
                 tools:ignore="HardcodedText"/>
 
         </LinearLayout>
 
         <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
-            android:id="@+id/parents_names_edit_text"
+            android:id="@+id/filiation_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/person_identify_edit_text"
+            android:layout_below="@id/person_identify_linear_layout"
             android:hint="Filiação"
             marqueeto:iconKey="md-supervisor-account"
-            marqueeto:mode="edit"
             marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
             tools:ignore="HardcodedText"/>
 
         <LinearLayout
-            android:id="@+id/doc_dates_edit_text"
+            android:id="@+id/doc_dates_linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/parents_names_edit_text">
+            android:layout_below="@id/filiation_edit_text">
 
             <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
+                android:id="@+id/good_thru_edit_text"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.55"
                 android:hint="Validade"
                 marqueeto:iconKey="md-done"
-                marqueeto:mode="edit"
                 marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
                 tools:ignore="HardcodedText"/>
 
             <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
+                android:id="@+id/issuing_date_edit_text"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.45"
                 android:hint="Data Emissão"
                 marqueeto:iconKey="md-receipt"
-                marqueeto:mode="edit"
                 marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
                 tools:ignore="HardcodedText"/>
 
@@ -130,14 +128,14 @@
             android:id="@+id/location_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/doc_dates_edit_text"
+            android:layout_below="@id/doc_dates_linear_layout"
             android:hint="Local"
             marqueeto:iconKey="md-location-on"
-            marqueeto:mode="edit"
             marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
             tools:ignore="HardcodedText"/>
 
         <Button
+            android:id="@+id/save_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/location_edit_text"

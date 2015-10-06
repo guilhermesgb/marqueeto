@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 
 public class MainActivity extends Activity {
 
@@ -18,8 +19,24 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        mViewPager.setAdapter(new ExamplesViewPagerAdapter());
+        mViewPager.setAdapter(new LicensesViewPagerAdapter());
         mTabLayout.setupWithViewPager(mViewPager);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    public void onEvent(NewLicenseEvent event) {
+        mViewPager.setAdapter(new LicensesViewPagerAdapter());
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
     }
 
 }
