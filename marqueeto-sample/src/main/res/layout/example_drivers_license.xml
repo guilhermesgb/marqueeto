@@ -34,11 +34,7 @@
             <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-<<<<<<< HEAD
                 android:layout_weight="0.55"
-=======
-                android:layout_weight="0.75"
->>>>>>> b831591fbf50082cda0132a5970afc02d6f63c6c
                 android:hint="Doc.Identidade"
                 marqueeto:mode="edit"
                 marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
@@ -47,11 +43,7 @@
             <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-<<<<<<< HEAD
                 android:layout_weight="0.45"
-=======
-                android:layout_weight="0.25"
->>>>>>> b831591fbf50082cda0132a5970afc02d6f63c6c
                 android:hint="Org.Emissor ─ UF"
                 marqueeto:mode="edit"
                 marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
@@ -70,12 +62,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.55"
                 android:hint="CPF"
-<<<<<<< HEAD
                 marqueeto:iconKey="md-confirmation-number"
                 android:text="065.110.194-89"
-=======
-                marqueeto:mode="edit"
->>>>>>> b831591fbf50082cda0132a5970afc02d6f63c6c
                 marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
                 tools:ignore="HardcodedText"/>
 
@@ -84,10 +72,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.45"
                 android:hint="Data Nascimento"
-<<<<<<< HEAD
                 marqueeto:iconKey="md-nature"
-=======
->>>>>>> b831591fbf50082cda0132a5970afc02d6f63c6c
                 marqueeto:mode="edit"
                 marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
                 tools:ignore="HardcodedText"/>
@@ -114,11 +99,7 @@
             <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-<<<<<<< HEAD
                 android:layout_weight="0.55"
-=======
-                android:layout_weight="0.5"
->>>>>>> b831591fbf50082cda0132a5970afc02d6f63c6c
                 android:hint="Validade"
                 marqueeto:mode="edit"
                 marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
@@ -127,11 +108,7 @@
             <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-<<<<<<< HEAD
                 android:layout_weight="0.45"
-=======
-                android:layout_weight="0.5"
->>>>>>> b831591fbf50082cda0132a5970afc02d6f63c6c
                 android:hint="1ª Habilitação"
                 marqueeto:mode="edit"
                 marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
