@@ -134,16 +134,29 @@
             marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
             tools:ignore="HardcodedText"/>
 
-        <Button
-            android:id="@+id/save_button"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/location_edit_text"
-            android:text="Salvar"
-            android:layout_centerHorizontal="true"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            tools:ignore="HardcodedText"/>
+            android:gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/save_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Salvar"
+                tools:ignore="ButtonStyle,HardcodedText"/>
+
+            <Button
+                android:id="@+id/delete_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Remover"
+                tools:ignore="ButtonStyle,HardcodedText"/>
+
+        </LinearLayout>
 
     </RelativeLayout>
 
