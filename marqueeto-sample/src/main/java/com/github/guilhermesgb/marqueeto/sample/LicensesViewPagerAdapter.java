@@ -96,7 +96,7 @@ public class LicensesViewPagerAdapter extends PagerAdapter {
                         EventBus.getDefault().post(new NewLicenseEvent());
                     }
                     else {
-                        EventBus.getDefault().post(new UpdateLicenseEvent());
+                        EventBus.getDefault().post(new UpdateLicenseEvent(license.getCpfNumber()));
                     }
                 } else {
                     Snackbar.make(form.saveButton, "Não foi possível salvar, alguns campos estão incorretos.",
