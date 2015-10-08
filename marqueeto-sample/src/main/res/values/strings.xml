@@ -16,5 +16,19 @@
     <string name="label_edit_text_good_thru">Validade</string>
     <string name="label_edit_text_issuing_date">Data Emissão</string>
     <string name="label_edit_text_location">Local</string>
+    <string name="dialog_positive">Sim</string>
+    <string name="dialog_negative">Não</string>
+    <string name="dialog_title_notice">Aviso:</string>
+    <string name="message_no_sensitive_data_warning">
+        Esse aplicativo é apenas uma demonstração de uso da biblioteca marqueeto.\n
+        Trata-se de uma simulação de um formulário de carteira de motorista.\n
+        De forma alguma, durante suas experimentações, insira aqui dados confidenciais.
+    </string>
+    <string name="dialog_title_are_you_sure">Tem certeza?</string>
+    <string name="snackbar_saved_successfully">Salvo com sucesso.</string>
+    <string name="snackbar_removed_successfully">Removido com sucesso.</string>
+    <string name="snackbar_save_failed">Não foi possível salvar, alguns campos estão incorretos.</string>
+    <string name="label_error_value_cannot_be_empty">Não pode ser vazio!</string>
+    <string name="dialog_understood">Entendi</string>
 
 </resources>

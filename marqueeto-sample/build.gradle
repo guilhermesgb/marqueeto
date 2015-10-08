@@ -24,5 +24,6 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
     compile 'de.greenrobot:eventbus:2.4.0'
+    compile 'com.jonathanfinerty.once:once:0.4.0'
     compile project(":marqueeto")
 }

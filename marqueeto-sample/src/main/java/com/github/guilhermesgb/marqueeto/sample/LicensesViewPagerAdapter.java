@@ -80,7 +80,7 @@ public class LicensesViewPagerAdapter extends PagerAdapter {
 
             @Override
             public void onClick(View view) {
-                if (validateAllFieldValues(form)) {
+                if (validateAllFieldValues(form, context.getString(R.string.label_error_value_cannot_be_empty))) {
                     license.setName(form.nameEditText.getText());
                     license.setIdentityNumber(form.identityNumberEditText.getText());
                     license.setIssuingOrg(form.issuingOrgEditText.getText());
@@ -91,7 +91,8 @@ public class LicensesViewPagerAdapter extends PagerAdapter {
                     license.setIssuingDate(form.issuingDateEditText.getText());
                     license.setLocation(form.locationEditText.getText());
                     license.save();
-                    Snackbar.make(form.saveButton, "Salvo com sucesso.", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(form.saveButton, context.getString(R.string.snackbar_saved_successfully),
+                            Snackbar.LENGTH_SHORT).show();
                     if (position == 0) {
                         EventBus.getDefault().post(new NewLicenseEvent());
                     }
@@ -99,7 +100,7 @@ public class LicensesViewPagerAdapter extends PagerAdapter {
                         EventBus.getDefault().post(new UpdateLicenseEvent(license.getCpfNumber()));
                     }
                 } else {
-                    Snackbar.make(form.saveButton, "Não foi possível salvar, alguns campos estão incorretos.",
+                    Snackbar.make(form.saveButton, context.getString(R.string.snackbar_save_failed),
                             Snackbar.LENGTH_SHORT).show();
                 }
             }
@@ -111,48 +112,50 @@ public class LicensesViewPagerAdapter extends PagerAdapter {
             @Override
             public void onClick(View view) {
                 new AlertDialog.Builder(context)
-                        .setTitle("Tem certeza?")
-                        .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                        .setTitle(context.getString(R.string.dialog_title_are_you_sure))
+                        .setPositiveButton(context.getString(R.string.dialog_positive), new DialogInterface.OnClickListener() {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 license.delete();
-                                Snackbar.make(form.deleteButton, "Removido com sucesso.", Snackbar.LENGTH_SHORT).show();
+                                Snackbar.make(form.deleteButton,
+                                        context.getString(R.string.snackbar_removed_successfully),
+                                        Snackbar.LENGTH_SHORT).show();
                                 EventBus.getDefault().post(new DeleteLicenseEvent());
                             }
 
                         })
-                        .setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(context.getString(R.string.dialog_negative),
+                                new DialogInterface.OnClickListener() {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {}
 
-                        }
-                ).show();
+                        }).show();
             }
 
         });
         return view;
     }
 
-    private boolean validateAllFieldValues(DriversLicenseForm form) {
-        boolean veredict = validateFieldValue(form.nameEditText);
-        veredict &= validateFieldValue(form.identityNumberEditText);
-        veredict &= validateFieldValue(form.issuingOrgEditText);
-        veredict &= validateFieldValue(form.cpfNumberEditText);
-        veredict &= validateFieldValue(form.birthDateEditText);
-        veredict &= validateFieldValue(form.filiationEditText);
-        veredict &= validateFieldValue(form.goodThruEditText);
-        veredict &= validateFieldValue(form.issuingDateEditText);
-        veredict &= validateFieldValue(form.locationEditText);
+    private boolean validateAllFieldValues(DriversLicenseForm form, String errorMessage) {
+        boolean veredict = validateFieldValue(form.nameEditText, errorMessage);
+        veredict &= validateFieldValue(form.identityNumberEditText, errorMessage);
+        veredict &= validateFieldValue(form.issuingOrgEditText, errorMessage);
+        veredict &= validateFieldValue(form.cpfNumberEditText, errorMessage);
+        veredict &= validateFieldValue(form.birthDateEditText, errorMessage);
+        veredict &= validateFieldValue(form.filiationEditText, errorMessage);
+        veredict &= validateFieldValue(form.goodThruEditText, errorMessage);
+        veredict &= validateFieldValue(form.issuingDateEditText, errorMessage);
+        veredict &= validateFieldValue(form.locationEditText, errorMessage);
         return veredict;
     }
 
-    private boolean validateFieldValue(LabelledMarqueeEditText editTextField) {
+    private boolean validateFieldValue(LabelledMarqueeEditText editTextField, String errorMessage) {
         String value = editTextField.getText();
         if (value == null || value.trim().isEmpty()) {
             editTextField.setErrorEnabled(true);
-            editTextField.setError("Não pode ser vazio!");
+            editTextField.setError(errorMessage);
             return false;
         }
         editTextField.setErrorEnabled(false);
