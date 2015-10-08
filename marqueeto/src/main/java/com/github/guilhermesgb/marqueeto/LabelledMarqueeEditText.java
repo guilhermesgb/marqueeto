@@ -517,7 +517,6 @@ public class LabelledMarqueeEditText extends FrameLayout {
             previousOnFocusChangeListener.onFocusChange(view, hasFocus);
             LabelledMarqueeEditText labelledMarqueeEditText = labelledMarqueeEditTextWeakReference.get();
             if (labelledMarqueeEditText != null) {
-                Log.wtf("TAG", "ON FOCUS CHANGED (hasFocus=" + hasFocus + ") AND TEXT AT THIS POINT IS: " + labelledMarqueeEditText.getText());
                 if (!hasFocus) {
                     labelledMarqueeEditText.tintIconWithIconColor();
                     labelledMarqueeEditText.enableMarqueeMode(labelledMarqueeEditText.getIconCharacter(), false);
@@ -751,8 +750,8 @@ public class LabelledMarqueeEditText extends FrameLayout {
                     mIconKey, String.format("#%06X", (0xFFFFFF & mIconColor)),
                     "@dimen/labelled_marquee_edit_text_default_icon_size_small");
         }
-        mIconChanged = true;
         if (shouldReload) {
+            mIconChanged = true;
             reloadEditAndMarqueeViews();
         }
     }
@@ -793,15 +792,14 @@ public class LabelledMarqueeEditText extends FrameLayout {
         else {
             mError = mErrorCached;
         }
-//TODO figure out why did I need this, as this has the undesired side effect of resetting the current edit text's
-//TODO text to the one previously set and this is annoying to a user that might have new data in Edit mode
-//        if (mErrorEnabled) {
-//            setCustomStyle(mCurrentCustomStyle);
-//        }
-//        else {
+        if (mErrorEnabled) {
+            mText = mEditText.getText().toString();
+            setCustomStyle(mCurrentCustomStyle);
+        }
+        else {
             mErrorChanged = true;
             reloadEditAndMarqueeViews();
-//        }
+        }
     }
 
     public int getPreferredMode() {
