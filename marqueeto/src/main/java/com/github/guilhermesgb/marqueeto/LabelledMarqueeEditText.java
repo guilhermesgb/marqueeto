@@ -665,12 +665,12 @@ public class LabelledMarqueeEditText extends FrameLayout {
         mTextView.setText(String.format("%s%s", mText, iconCharacter));
     }
 
-    public boolean isEmpty(boolean trim) {
+    private boolean isEmpty(boolean trim) {
         return mText == null || (trim ? mText.trim().isEmpty() : mText.isEmpty());
     }
 
     public String getText() {
-        return mText;
+        return mEditText.getText().toString();
     }
 
     public void setText(String text) {
@@ -750,8 +750,8 @@ public class LabelledMarqueeEditText extends FrameLayout {
                     mIconKey, String.format("#%06X", (0xFFFFFF & mIconColor)),
                     "@dimen/labelled_marquee_edit_text_default_icon_size_small");
         }
-        mIconChanged = true;
         if (shouldReload) {
+            mIconChanged = true;
             reloadEditAndMarqueeViews();
         }
     }
@@ -793,6 +793,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
             mError = mErrorCached;
         }
         if (mErrorEnabled) {
+            mText = mEditText.getText().toString();
             setCustomStyle(mCurrentCustomStyle);
         }
         else {

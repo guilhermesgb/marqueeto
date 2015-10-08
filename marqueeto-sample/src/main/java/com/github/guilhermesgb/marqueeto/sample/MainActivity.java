@@ -41,8 +41,10 @@ public class MainActivity extends Activity {
 
     public void onEvent(UpdateLicenseEvent event) {
         int currentPage = mViewPager.getCurrentItem();
-        rebuildViewPager();
-        mViewPager.setCurrentItem(currentPage, false);
+        TabLayout.Tab currentTab = mTabLayout.getTabAt(currentPage);
+        if (currentTab != null) {
+            currentTab.setText(event.getNewTabName());
+        }
     }
 
     public void onEvent(DeleteLicenseEvent event) {
