@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         collapsingToolbarLayout.setTitle(getString(R.string.header_toolbar_national_drivers_license));
-        mViewPager.setAdapter(new LicensesViewPagerAdapter());
+        mViewPager.setAdapter(new LicensesViewPagerAdapter(this));
         mTabLayout.setupWithViewPager(mViewPager);
         if (!Once.beenDone(Once.THIS_APP_INSTALL, TAG_NO_SENSITIVE_DATA_WARNING)) {
             new AlertDialog.Builder(this)
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void rebuildViewPager() {
-        mViewPager.setAdapter(new LicensesViewPagerAdapter());
+        mViewPager.setAdapter(new LicensesViewPagerAdapter(this));
         mTabLayout.setupWithViewPager(mViewPager);
     }
 

@@ -41,11 +41,13 @@ public class LicensesViewPagerAdapter extends PagerAdapter {
 
     }
 
-    private List<DriversLicense> driversLicenses = new ArrayList<>();
+    private final Context context;
+    private final List<DriversLicense> driversLicenses = new ArrayList<>();
 
-    public LicensesViewPagerAdapter() {
+    public LicensesViewPagerAdapter(Context context) {
         super();
-        driversLicenses = fetchAllStoredLicenses();
+        this.context = context;
+        this.driversLicenses.addAll(fetchAllStoredLicenses());
     }
 
     private List<DriversLicense> fetchAllStoredLicenses() {
@@ -54,7 +56,6 @@ public class LicensesViewPagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, final int position) {
-        final Context context = container.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.drivers_license_form, container, false);
         final DriversLicenseForm form = new DriversLicenseForm();
@@ -169,7 +170,7 @@ public class LicensesViewPagerAdapter extends PagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return position == 0 ? "Novo" : driversLicenses.get(position - 1).getCpfNumber();
+        return position == 0 ? context.getString(R.string.tab_layout_new) : driversLicenses.get(position - 1).getCpfNumber();
     }
 
     @Override

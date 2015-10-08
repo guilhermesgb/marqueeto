@@ -30,5 +30,6 @@
     <string name="snackbar_save_failed">Não foi possível salvar, alguns campos estão incorretos.</string>
     <string name="label_error_value_cannot_be_empty">Não pode ser vazio!</string>
     <string name="dialog_understood">Entendi</string>
+    <string name="tab_layout_new">Novo</string>
 
 </resources>
