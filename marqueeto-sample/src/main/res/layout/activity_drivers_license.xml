@@ -22,7 +22,6 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:background="@android:color/holo_red_dark"
                 android:adjustViewBounds="true"
                 android:fitsSystemWindows="true"
                 app:layout_collapseMode="parallax"

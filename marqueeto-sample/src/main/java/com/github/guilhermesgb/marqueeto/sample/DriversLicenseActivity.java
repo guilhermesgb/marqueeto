@@ -8,17 +8,20 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.github.guilhermesgb.marqueeto.sample.event.DeleteLicenseEvent;
 import com.github.guilhermesgb.marqueeto.sample.event.NewLicenseEvent;
 import com.github.guilhermesgb.marqueeto.sample.event.UpdateLicenseEvent;
+import com.joanzapata.iconify.IconDrawable;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 import jonathanfinerty.once.Once;
 
-public class MainActivity extends AppCompatActivity {
+public class DriversLicenseActivity extends AppCompatActivity {
 
     public static final String TAG_NO_SENSITIVE_DATA_WARNING = "noSensitiveDataWarning";
 
@@ -30,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_drivers_license);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         collapsingToolbarLayout.setTitle(getString(R.string.header_toolbar_national_drivers_license));
@@ -50,6 +53,29 @@ public class MainActivity extends AppCompatActivity {
 
                     }).show();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_drivers_license_activity, menu);
+        menu.getItem(0).setIcon(new IconDrawable(this, "md-note-add")
+                .actionBarSize().colorRes(android.R.color.white));
+        menu.getItem(1).setIcon(new IconDrawable(this, "md-settings")
+                .actionBarSize().colorRes(android.R.color.white));
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_add) {
+            mViewPager.setCurrentItem(0, true);
+            return true;
+        }
+        else if (id == R.id.action_settings) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

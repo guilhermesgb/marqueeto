@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Marqueeto Demos</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_add">Adicionar Nova CNH</string>
+    <string name="action_settings">Configurações do App</string>
     <string name="header_toolbar_national_drivers_license">CNH Demo</string>
     <string name="header_national_drivers_license">CNH ─ Carteira Nacional de Habilitação</string>
     <string name="label_button_save">Salvar</string>

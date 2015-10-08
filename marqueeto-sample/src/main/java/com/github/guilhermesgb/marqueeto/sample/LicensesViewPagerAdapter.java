@@ -15,6 +15,8 @@ import com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText;
 import com.github.guilhermesgb.marqueeto.sample.event.DeleteLicenseEvent;
 import com.github.guilhermesgb.marqueeto.sample.event.NewLicenseEvent;
 import com.github.guilhermesgb.marqueeto.sample.event.UpdateLicenseEvent;
+import com.github.guilhermesgb.marqueeto.sample.model.DriversLicense;
+import com.github.guilhermesgb.marqueeto.sample.widget.ColoredSnackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +59,7 @@ public class LicensesViewPagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, final int position) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.drivers_license_form, container, false);
+        View view = inflater.inflate(R.layout.form_drivers_license, container, false);
         final DriversLicenseForm form = new DriversLicenseForm();
         ButterKnife.bind(form, view);
         container.addView(view);
@@ -92,8 +94,8 @@ public class LicensesViewPagerAdapter extends PagerAdapter {
                     license.setIssuingDate(form.issuingDateEditText.getText());
                     license.setLocation(form.locationEditText.getText());
                     license.save();
-                    Snackbar.make(form.saveButton, context.getString(R.string.snackbar_saved_successfully),
-                            Snackbar.LENGTH_SHORT).show();
+                    ColoredSnackbar.alert(Snackbar.make(form.saveButton,
+                            context.getString(R.string.snackbar_saved_successfully), Snackbar.LENGTH_SHORT)).show();
                     if (position == 0) {
                         EventBus.getDefault().post(new NewLicenseEvent());
                     }
@@ -101,8 +103,8 @@ public class LicensesViewPagerAdapter extends PagerAdapter {
                         EventBus.getDefault().post(new UpdateLicenseEvent(license.getCpfNumber()));
                     }
                 } else {
-                    Snackbar.make(form.saveButton, context.getString(R.string.snackbar_save_failed),
-                            Snackbar.LENGTH_SHORT).show();
+                    ColoredSnackbar.alert(Snackbar.make(form.saveButton,
+                            context.getString(R.string.snackbar_save_failed), Snackbar.LENGTH_SHORT)).show();
                 }
             }
 
@@ -119,9 +121,9 @@ public class LicensesViewPagerAdapter extends PagerAdapter {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 license.delete();
-                                Snackbar.make(form.deleteButton,
+                                ColoredSnackbar.alert(Snackbar.make(form.deleteButton,
                                         context.getString(R.string.snackbar_removed_successfully),
-                                        Snackbar.LENGTH_SHORT).show();
+                                        Snackbar.LENGTH_SHORT)).show();
                                 EventBus.getDefault().post(new DeleteLicenseEvent());
                             }
 

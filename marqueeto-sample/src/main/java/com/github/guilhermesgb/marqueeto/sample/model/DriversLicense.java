@@ -1,4 +1,4 @@
-package com.github.guilhermesgb.marqueeto.sample;
+package com.github.guilhermesgb.marqueeto.sample.model;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
