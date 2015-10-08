@@ -15,21 +15,19 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="20sp"
-            android:text="CNH ─ Carteira Nacional de Habilitação"
+            android:text="@string/header_national_drivers_license"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            tools:ignore="HardcodedText"/>
+            android:layout_marginBottom="20dp"/>
 
         <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
             android:id="@+id/name_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/doc_name_text_view"
-            android:hint="Nome"
+            android:hint="@string/label_edit_text_owner"
             marqueeto:iconKey="md-account-circle"
-            marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
-            tools:ignore="HardcodedText"/>
+            marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"/>
 
         <LinearLayout
             android:id="@+id/doc_identify_linear_layout"
@@ -42,19 +40,17 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.55"
-                android:hint="Doc.Identidade"
-                marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
-                tools:ignore="HardcodedText"/>
+                android:hint="@string/label_edit_text_identity_num"
+                marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"/>
 
             <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
                 android:id="@+id/issuing_org_edit_text"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.45"
-                android:hint="Org.Emissor ─ UF"
+                android:hint="@string/label_edit_text_issuing_org"
                 marqueeto:iconKey="md-store"
-                marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
-                tools:ignore="HardcodedText"/>
+                marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"/>
 
         </LinearLayout>
 
@@ -69,20 +65,18 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.55"
-                android:hint="CPF"
+                android:hint="@string/label_edit_text_cpf_num"
                 marqueeto:iconKey="md-confirmation-number"
-                marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
-                tools:ignore="HardcodedText"/>
+                marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"/>
 
             <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
                 android:id="@+id/birth_date_edit_text"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.45"
-                android:hint="Data Nascimento"
+                android:hint="@string/label_edit_text_birth_date"
                 marqueeto:iconKey="md-nature"
-                marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
-                tools:ignore="HardcodedText"/>
+                marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"/>
 
         </LinearLayout>
 
@@ -91,10 +85,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/person_identify_linear_layout"
-            android:hint="Filiação"
+            android:hint="@string/label_edit_text_filiation"
             marqueeto:iconKey="md-supervisor-account"
-            marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
-            tools:ignore="HardcodedText"/>
+            marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"/>
 
         <LinearLayout
             android:id="@+id/doc_dates_linear_layout"
@@ -107,20 +100,18 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.55"
-                android:hint="Validade"
+                android:hint="@string/label_edit_text_good_thru"
                 marqueeto:iconKey="md-done"
-                marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
-                tools:ignore="HardcodedText"/>
+                marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"/>
 
             <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
                 android:id="@+id/issuing_date_edit_text"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.45"
-                android:hint="Data Emissão"
+                android:hint="@string/label_edit_text_issuing_date"
                 marqueeto:iconKey="md-receipt"
-                marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
-                tools:ignore="HardcodedText"/>
+                marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"/>
 
         </LinearLayout>
 
@@ -129,10 +120,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/doc_dates_linear_layout"
-            android:hint="Local"
+            android:hint="@string/label_edit_text_location"
             marqueeto:iconKey="md-location-on"
-            marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
-            tools:ignore="HardcodedText"/>
+            marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -146,15 +136,15 @@
                 android:id="@+id/save_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Salvar"
-                tools:ignore="ButtonStyle,HardcodedText"/>
+                android:text="@string/label_button_save"
+                tools:ignore="ButtonStyle"/>
 
             <Button
                 android:id="@+id/delete_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Remover"
-                tools:ignore="ButtonStyle,HardcodedText"/>
+                android:text="@string/label_button_delete"
+                tools:ignore="ButtonStyle"/>
 
         </LinearLayout>
 

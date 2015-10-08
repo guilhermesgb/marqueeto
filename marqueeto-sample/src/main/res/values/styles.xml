@@ -3,10 +3,13 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:textColor">@android:color/darker_gray</item>
+        <item name="colorPrimary">@android:color/holo_green_dark</item>
+        <item name="colorPrimaryDark">#ee558800</item>
+        <item name="colorAccent">#FF3AAD73</item>
     </style>
 
     <style name="LabelledMarqueeEditTextCustomStyle">
-        <item name="baseColor">@android:color/holo_green_dark</item>
+        <item name="baseColor">#FF3AAD73</item>
         <item name="highlightColor">@android:color/holo_green_light</item>
         <item name="errorColor">@android:color/holo_red_dark</item>
     </style>

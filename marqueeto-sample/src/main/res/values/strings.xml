@@ -1,6 +1,20 @@
 <resources>
-    <string name="app_name">Marqueeto Demo App</string>
+    <string name="app_name">Marqueeto Demos</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="header_toolbar_national_drivers_license">CNH Demo</string>
+    <string name="header_national_drivers_license">CNH ─ Carteira Nacional de Habilitação</string>
+    <string name="label_button_save">Salvar</string>
+    <string name="label_button_delete">Remover</string>
+    <string name="label_edit_text_owner">Nome</string>
+    <string name="label_edit_text_identity_num">Doc.Identidade</string>
+    <string name="label_edit_text_issuing_org">Org.Emissor ─ UF</string>
+    <string name="label_edit_text_cpf_num">CPF</string>
+    <string name="label_edit_text_birth_date">Data Nascimento</string>
+    <string name="label_edit_text_filiation">Filiação</string>
+    <string name="label_edit_text_good_thru">Validade</string>
+    <string name="label_edit_text_issuing_date">Data Emissão</string>
+    <string name="label_edit_text_location">Local</string>
+
 </resources>

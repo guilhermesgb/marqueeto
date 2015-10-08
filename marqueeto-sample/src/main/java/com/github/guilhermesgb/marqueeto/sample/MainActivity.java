@@ -1,10 +1,11 @@
 package com.github.guilhermesgb.marqueeto.sample;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 import com.github.guilhermesgb.marqueeto.sample.event.DeleteLicenseEvent;
 import com.github.guilhermesgb.marqueeto.sample.event.NewLicenseEvent;
@@ -14,8 +15,10 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
+    @Bind(R.id.toolbar) Toolbar toolbar;
+    @Bind(R.id.collapsingToolbarLayout) CollapsingToolbarLayout collapsingToolbarLayout;
     @Bind(R.id.tabLayout) TabLayout mTabLayout;
     @Bind(R.id.viewPager) ViewPager mViewPager;
 
@@ -24,6 +27,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
+        collapsingToolbarLayout.setTitle(getString(R.string.header_toolbar_national_drivers_license));
         mViewPager.setAdapter(new LicensesViewPagerAdapter());
         mTabLayout.setupWithViewPager(mViewPager);
     }
