@@ -514,7 +514,9 @@ public class LabelledMarqueeEditText extends FrameLayout {
 
         @Override
         public void onFocusChange(View view, boolean hasFocus) {
-            previousOnFocusChangeListener.onFocusChange(view, hasFocus);
+            if (previousOnFocusChangeListener != null) {
+                previousOnFocusChangeListener.onFocusChange(view, hasFocus);
+            }
             LabelledMarqueeEditText labelledMarqueeEditText = labelledMarqueeEditTextWeakReference.get();
             if (labelledMarqueeEditText != null) {
                 if (!hasFocus) {
