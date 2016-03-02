@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.widget.AppCompatEditText;
@@ -208,13 +209,13 @@ public class LabelledMarqueeEditText extends FrameLayout {
             mBaseColor = typedValue.data;
         }
         else {
-            mBaseColor = ContextCompat.getColor(getContext(), android.R.color.black);
+            mBaseColor = getResources().getColor(android.R.color.black);
         }
         if (themeAttributes.getValue(themeAttributes.getIndex(1), typedValue)) {
             mHighlightColor = typedValue.data;
         }
         else {
-            mHighlightColor = ContextCompat.getColor(getContext(), android.R.color.black);
+            mHighlightColor = getResources().getColor(android.R.color.black);
         }
         if (themeAttributes.getValue(themeAttributes.getIndex(2), typedValue)) {
             mIconColor = typedValue.data;
