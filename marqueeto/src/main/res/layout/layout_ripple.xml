@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<com.github.guilhermesgb.marqueeto.RippleView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ripple="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/labelled_marquee_edit_text_layout_ripple"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    ripple:rv_rippleDuration="200"
-    ripple:rv_color="?attr/highlightColor"/>

@@ -95,7 +95,6 @@ public class LabelledMarqueeEditText extends FrameLayout {
     private TextInputLayout mTextInputLayout;
     private AppCompatEditText mEditText;
     private IconTextView mTextView;
-    private RippleView mRippleView;
 
     private String mText;
     private int mTextColor;
@@ -209,13 +208,13 @@ public class LabelledMarqueeEditText extends FrameLayout {
             mBaseColor = typedValue.data;
         }
         else {
-            mBaseColor = getResources().getColor(android.R.color.black);
+            mBaseColor = ContextCompat.getColor(getContext(), android.R.color.black);
         }
         if (themeAttributes.getValue(themeAttributes.getIndex(1), typedValue)) {
             mHighlightColor = typedValue.data;
         }
         else {
-            mHighlightColor = getResources().getColor(android.R.color.black);
+            mHighlightColor = ContextCompat.getColor(getContext(), android.R.color.black);
         }
         if (themeAttributes.getValue(themeAttributes.getIndex(2), typedValue)) {
             mIconColor = typedValue.data;
@@ -285,10 +284,6 @@ public class LabelledMarqueeEditText extends FrameLayout {
     }
 
     private void buildEditAndMarqueeViews(Context context) {
-        View rippleViewSource = LayoutInflater.from(context).inflate(R.layout.layout_ripple, this, false);
-        mRippleView = (RippleView) rippleViewSource.findViewById(R.id.labelled_marquee_edit_text_layout_ripple);
-        mRippleView.setId(doGenerateViewId());
-        addView(mRippleView);
         View editViewSource = LayoutInflater.from(context).inflate(R.layout.layout_edit, this, false);
         mTextInputLayout = (TextInputLayout) editViewSource.findViewById(R.id.labelled_marquee_edit_text_layout_label_wrapper);
         mTextInputLayout.setId(doGenerateViewId());
@@ -524,24 +519,10 @@ public class LabelledMarqueeEditText extends FrameLayout {
                     labelledMarqueeEditText.enableMarqueeMode(labelledMarqueeEditText.getIconCharacter(), false);
                     labelledMarqueeEditText.invalidate();
                     labelledMarqueeEditText.requestLayout();
-                    labelledMarqueeEditText.mRippleView
-                            .setRippleColor(labelledMarqueeEditText.mBaseColor);
                 }
                 else {
                     labelledMarqueeEditText.tintIconWithHighlightColorIfApplicable();
                     labelledMarqueeEditText.tintSelectorDrawableWithHighlightColor();
-                    if (labelledMarqueeEditText.mEditText.getCompoundDrawables()[2] != null) {
-                        labelledMarqueeEditText.mRippleView.clearAnimation();
-                        labelledMarqueeEditText.mRippleView
-                                .setRippleColor(labelledMarqueeEditText.mHighlightColor);
-                        int x = labelledMarqueeEditText.mRippleView.getWidth() -
-                                (labelledMarqueeEditText.mEditText.getCompoundPaddingRight() / 2);
-                        int y = labelledMarqueeEditText.mRippleView.getHeight() -
-                                (labelledMarqueeEditText.mEditText.getBaseline() +
-                                        (labelledMarqueeEditText.mEditText
-                                                .getCompoundDrawables()[2].getIntrinsicHeight() / 2));
-                        labelledMarqueeEditText.mRippleView.animateRipple(x, y);
-                    }
                 }
             }
         }
@@ -621,13 +602,6 @@ public class LabelledMarqueeEditText extends FrameLayout {
         mCurrentMode = MODE_EDIT;
         mEditText.setVisibility(View.VISIBLE);
         mEditText.setEnabled(true);
-        if (mEditText.getCompoundDrawables()[2] != null) {
-            mRippleView.clearAnimation();
-            int x = mRippleView.getWidth() - (mEditText.getCompoundPaddingRight() / 2);
-            int y = mRippleView.getHeight() - (mEditText.getBaseline() +
-                    (mEditText.getCompoundDrawables()[2].getIntrinsicHeight() / 2));
-            mRippleView.animateRipple(x, y);
-        }
     }
 
     private void enableMarqueeMode(final CharSequence iconCharacter, boolean animate) {
