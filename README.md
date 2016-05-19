@@ -9,7 +9,7 @@ EditTexts with floating labels and marquee ellipsize.
 Just add the following line to the dependencies section of your `build.gradle`:
 
 ``` gradle
-compile 'com.github.guilhermesgb:marqueeto:1.1.6'
+compile 'com.github.guilhermesgb:marqueeto:1.1.7'
 ```
 
 ## LabelledMarqueeEditText
@@ -62,6 +62,7 @@ You can use the following attributes:
 just as you would normally; Additionally you can use:
 
 * `marqueeto:iconKey` via XML or `setIconKey()` programatically to set the [Iconify Material](https://github.com/JoanZapata/android-iconify/blob/master/android-iconify-material/src/main/java/com/joanzapata/iconify/fonts/MaterialIcons.java) icon key to be used in the widget, e.g. `md-account-balance`;
+* `marqueeto:iconGravity` (new!) via XML only to set the icon gravity - either left or right is allowed;
 * `marqueeto:mode` via XML or `setMode()` programatically to set the preferred mode (a.k.a the initial state of the widget upon creation), e.g. `edit` or `marquee`.
 **Important**: if the widget has no text, it will always be in `edit` mode no matter what - even if `marqueeto:mode="marquee"`.
 

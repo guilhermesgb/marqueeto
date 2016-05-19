@@ -11,7 +11,7 @@
     <string name="label_edit_text_identity_num">Doc.Identidade</string>
     <string name="label_edit_text_issuing_org">Org.Emissor ─ UF</string>
     <string name="label_edit_text_cpf_num">CPF</string>
-    <string name="label_edit_text_birth_date">Data Nascimento</string>
+    <string name="label_edit_text_birth_date">Data de Nascimento</string>
     <string name="label_edit_text_filiation">Filiação</string>
     <string name="label_edit_text_good_thru">Validade</string>
     <string name="label_edit_text_issuing_date">Data Emissão</string>

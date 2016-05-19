@@ -27,6 +27,7 @@
             android:layout_below="@id/doc_name_text_view"
             android:hint="@string/label_edit_text_owner"
             marqueeto:iconKey="md-account-circle"
+            marqueeto:iconGravity="left"
             marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"/>
 
         <LinearLayout
@@ -65,6 +66,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.55"
+                android:inputType="textPassword"
                 android:hint="@string/label_edit_text_cpf_num"
                 marqueeto:iconKey="md-confirmation-number"
                 marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"/>
@@ -109,7 +111,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.45"
+                android:inputType="textPassword"
                 android:hint="@string/label_edit_text_issuing_date"
+                marqueeto:iconGravity="left"
                 marqueeto:iconKey="md-receipt"
                 marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"/>
 

@@ -10,11 +10,11 @@ import android.os.Build;
 import android.os.Handler;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.InputFilter;
+import android.text.InputType;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
@@ -41,6 +41,7 @@ import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static android.util.TypedValue.COMPLEX_UNIT_DIP;
@@ -50,6 +51,8 @@ public class LabelledMarqueeEditText extends FrameLayout {
     private static final String TAG = LabelledMarqueeEditText.class.getSimpleName();
     public static final int MODE_EDIT = 0;
     public static final int MODE_MARQUEE = 1;
+    public static final int ICON_GRAVITY_RIGHT = 0;
+    public static final int ICON_GRAVITY_LEFT = 1;
 
     private static final int ICON_CHARACTER_SECTION_LENGHT = 4;
 
@@ -108,6 +111,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
     private String mIconKey;
     private IconDrawable mIconDrawable;
     private CharSequence mIconCharacter;
+    private int mIconGravity;
     private int mErrorColor;
     private String mError;
     private boolean mErrorEnabled;
@@ -141,31 +145,35 @@ public class LabelledMarqueeEditText extends FrameLayout {
 
     public LabelledMarqueeEditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        mNullIconDrawable = new IconDrawable(getContext(), sNullIcon) {
+        if (isInEditMode()) {
+            mNullIconDrawable = null;
+        } else {
+            mNullIconDrawable = new IconDrawable(getContext(), sNullIcon) {
 
-            private int width, height;
+                private int width, height;
 
-            public IconDrawable adjustBounds() {
-                this.width = (int) TypedValue.applyDimension(COMPLEX_UNIT_DIP, 5,
-                        getContext().getResources().getDisplayMetrics());
-                height = getContext().getResources().getDimensionPixelSize(R.dimen
-                        .labelled_marquee_edit_text_default_icon_size_big);
-                setBounds(0, 0, width, height);
-                invalidateSelf();
-                return this;
-            }
+                public IconDrawable adjustBounds() {
+                    this.width = (int) TypedValue.applyDimension(COMPLEX_UNIT_DIP, 5,
+                            getContext().getResources().getDisplayMetrics());
+                    height = getContext().getResources().getDimensionPixelSize(R.dimen
+                            .labelled_marquee_edit_text_default_icon_size_big);
+                    setBounds(0, 0, width, height);
+                    invalidateSelf();
+                    return this;
+                }
 
-            @Override
-            public int getIntrinsicWidth() {
-                return this.width;
-            }
+                @Override
+                public int getIntrinsicWidth() {
+                    return this.width;
+                }
 
-            @Override
-            public int getIntrinsicHeight() {
-                return this.height;
-            }
+                @Override
+                public int getIntrinsicHeight() {
+                    return this.height;
+                }
 
-        }.adjustBounds();
+            }.adjustBounds();
+        }
         mAttrs = attrs;
         TypedArray customAttributes = context.obtainStyledAttributes(mAttrs,
                 R.styleable.LabelledMarqueeEditText);
@@ -209,13 +217,13 @@ public class LabelledMarqueeEditText extends FrameLayout {
             mBaseColor = typedValue.data;
         }
         else {
-            mBaseColor = getResources().getColor(android.R.color.black);
+            mBaseColor = ContextCompat.getColor(getContext(), android.R.color.black);
         }
         if (themeAttributes.getValue(themeAttributes.getIndex(1), typedValue)) {
             mHighlightColor = typedValue.data;
         }
         else {
-            mHighlightColor = getResources().getColor(android.R.color.black);
+            mHighlightColor = ContextCompat.getColor(getContext(), android.R.color.black);
         }
         if (themeAttributes.getValue(themeAttributes.getIndex(2), typedValue)) {
             mIconColor = typedValue.data;
@@ -235,7 +243,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
     private void retrieveCustomAttributeValues(TypedArray customAttributes) {
         mText = customAttributes.getString(R.styleable.LabelledMarqueeEditText_android_text);
         mTextColor = customAttributes.getColor(R.styleable.LabelledMarqueeEditText_android_textColor,
-                getResources().getColor(android.R.color.black));
+                ContextCompat.getColor(getContext(), android.R.color.black));
         mTextStyle = customAttributes.getInt(R.styleable.LabelledMarqueeEditText_android_textStyle, Typeface.NORMAL);
         float maxSize = getResources().getDimension(R.dimen.labelled_marquee_edit_text_max_text_size);
         float maxSizeConverted = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, maxSize,
@@ -249,17 +257,23 @@ public class LabelledMarqueeEditText extends FrameLayout {
         }
         mHint = customAttributes.getString(R.styleable.LabelledMarqueeEditText_android_hint);
         mIconKey = customAttributes.getString(R.styleable.LabelledMarqueeEditText_iconKey);
-        if (mIconKey == null) {
+        mIconGravity = customAttributes.getInt(R.styleable.LabelledMarqueeEditText_iconGravity, ICON_GRAVITY_RIGHT);
+        if (mIconKey == null || isInEditMode()) {
             mIconDrawable = mNullIconDrawable;
             mIconCharacter = "";
         }
         else {
             mIconDrawable = new IconDrawable(getContext(), mIconKey)
                     .color(mIconColor).sizeRes(R.dimen.labelled_marquee_edit_text_default_icon_size_big);
-            mIconCharacter = "   " + String.format(getResources()
-                            .getString(R.string.labelled_marquee_edit_text_layout_icon_definition_template),
+            mIconCharacter = String.format(getResources()
+                    .getString(R.string.labelled_marquee_edit_text_layout_icon_definition_template),
                     mIconKey, String.format("#%06X", (0xFFFFFF & mIconColor)),
                     "@dimen/labelled_marquee_edit_text_default_icon_size_small");
+            if (mIconGravity == ICON_GRAVITY_RIGHT) {
+                mIconCharacter = "   " + mIconCharacter;
+            } else if (mIconGravity == ICON_GRAVITY_LEFT) {
+                mIconCharacter = "  " + mIconCharacter + "   ";
+            }
         }
         mErrorEnabled = customAttributes.getBoolean(R.styleable.LabelledMarqueeEditText_errorEnabled, true);
         String error = customAttributes.getString(R.styleable.LabelledMarqueeEditText_error);
@@ -285,7 +299,12 @@ public class LabelledMarqueeEditText extends FrameLayout {
     }
 
     private void buildEditAndMarqueeViews(Context context) {
-        View editViewSource = LayoutInflater.from(context).inflate(R.layout.layout_edit, this, false);
+        View editViewSource;
+        if (isInEditMode()) {
+            editViewSource = LayoutInflater.from(context).inflate(R.layout.layout_editable_edit_mode, this, false);
+        } else {
+            editViewSource = LayoutInflater.from(context).inflate(R.layout.layout_editable, this, false);
+        }
         mTextInputLayout = (TextInputLayout) editViewSource.findViewById(R.id.labelled_marquee_edit_text_layout_label_wrapper);
         mTextInputLayout.setId(doGenerateViewId());
         mEditText = (AppCompatEditText) editViewSource.findViewById(R.id.labelled_marquee_edit_text_layout_edit_text);
@@ -315,7 +334,13 @@ public class LabelledMarqueeEditText extends FrameLayout {
 
     private void initEditAndMarqueeViews(final boolean animate) {
         if (mTextChanged || mIconChanged || mTextFiltersChanged || mStyleColorsChanged) {
-            mEditText.setCompoundDrawablesWithIntrinsicBounds(null, null, mIconDrawable, null);
+            if (mIconGravity == ICON_GRAVITY_RIGHT) {
+                mEditText.setCompoundDrawablesWithIntrinsicBounds(null, null, mIconDrawable, null);
+                mEditText.setCompoundDrawablePadding(0);
+            } else if (mIconGravity == ICON_GRAVITY_LEFT) {
+                mEditText.setCompoundDrawablesWithIntrinsicBounds(mIconDrawable, null, null, null);
+                mEditText.setCompoundDrawablePadding(4);
+            }
             setTextFilters();
             setText();
             setTextSize();
@@ -408,7 +433,28 @@ public class LabelledMarqueeEditText extends FrameLayout {
             text = text.substring(0, mTextMaxLength - ICON_CHARACTER_SECTION_LENGHT);
         }
         mEditText.setText(text);
-        mTextView.setText(String.format("%s%s", text == null ? "" : text, mIconCharacter));
+        if (isInputTypePassword()) {
+            if (text != null) {
+                text = String.format(Locale.US, "%0" + text.length() + "d", 0).replace('0', '•');
+            }
+        }
+        if (mIconGravity == ICON_GRAVITY_RIGHT) {
+            mTextView.setText(String.format("%s%s", text == null ? "" : text, mIconCharacter));
+        } else if (mIconGravity == ICON_GRAVITY_LEFT) {
+            mTextView.setText(String.format("%s%s", mIconCharacter, text == null ? "" : text));
+        }
+    }
+
+    private boolean isInputTypePassword() {
+        switch (mInputType) {
+            case InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD:
+            case InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD:
+            case InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD:
+            case InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD:
+                return true;
+            default:
+                return false;
+        }
     }
 
     private void setTextSize() {
@@ -544,7 +590,13 @@ public class LabelledMarqueeEditText extends FrameLayout {
         final int oldIconColor = mIconColor;
         mIconColor = color;
         setIcon(mIconKey, false);
-        mEditText.setCompoundDrawablesWithIntrinsicBounds(null, null, mIconDrawable, null);
+        if (mIconGravity == ICON_GRAVITY_RIGHT) {
+            mEditText.setCompoundDrawablesWithIntrinsicBounds(null, null, mIconDrawable, null);
+            mEditText.setCompoundDrawablePadding(0);
+        } else if (mIconGravity == ICON_GRAVITY_LEFT) {
+            mEditText.setCompoundDrawablesWithIntrinsicBounds(mIconDrawable, null, null, null);
+            mEditText.setCompoundDrawablePadding(4);
+        }
         mIconColor = oldIconColor;
     }
 
@@ -573,7 +625,11 @@ public class LabelledMarqueeEditText extends FrameLayout {
         if (animate && !isEmpty(true)) {
             mTextInputLayout.clearAnimation();
             mTextView.clearAnimation();
-            mTextView.setText(mEditText.getText().toString());
+            String text = mEditText.getText().toString();
+            if (isInputTypePassword()) {
+                text = String.format(Locale.US, "%0" + text.length() + "d", 0).replace('0', '•');
+            }
+            mTextView.setText(text);
             mTextView.setVisibility(View.VISIBLE);
             final AnimationSet fadeIn = new AnimationSet(true);
             fadeIn.setDuration(500);
@@ -639,7 +695,18 @@ public class LabelledMarqueeEditText extends FrameLayout {
         mTextView.setVisibility(View.VISIBLE);
         mTextView.setSelected(true);
         mText = mEditText.getText().toString();
-        mTextView.setText(String.format("%s%s", mText, iconCharacter));
+        String text = mText;
+        Log.wtf("TAG", "INPUT TYPE: " + mInputType + ", VS PASSWORD: "
+                + InputType.TYPE_TEXT_VARIATION_PASSWORD + ", VS WEB_PASS: "
+                + InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD);
+        if (isInputTypePassword()) {
+            text = String.format(Locale.US, "%0" + text.length() + "d", 0).replace('0', '•');
+        }
+        if (mIconGravity == ICON_GRAVITY_RIGHT) {
+            mTextView.setText(String.format("%s%s", text, iconCharacter));
+        } else if (mIconGravity == ICON_GRAVITY_LEFT) {
+            mTextView.setText(String.format("%s%s", iconCharacter, text));
+        }
     }
 
     private boolean isEmpty(boolean trim) {
@@ -661,7 +728,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
     }
 
     public void setTextColor(int color) {
-        mTextColor = getResources().getColor(color);
+        mTextColor = ContextCompat.getColor(getContext(), color);
         mTextColorChanged = true;
         reloadEditAndMarqueeViews();
     }
@@ -716,16 +783,21 @@ public class LabelledMarqueeEditText extends FrameLayout {
 
     private void setIcon(String iconKey, boolean shouldReload) {
         mIconKey = iconKey;
-        if (mIconKey == null) {
+        if (mIconKey == null || isInEditMode()) {
             mIconDrawable = mNullIconDrawable;
             mIconCharacter = "";
         } else {
             mIconDrawable = new IconDrawable(getContext(), mIconKey)
                     .color(mIconColor).sizeRes(R.dimen.labelled_marquee_edit_text_default_icon_size_big);
-            mIconCharacter = "   " + String.format(getResources()
+            mIconCharacter = String.format(getResources()
                             .getString(R.string.labelled_marquee_edit_text_layout_icon_definition_template),
                     mIconKey, String.format("#%06X", (0xFFFFFF & mIconColor)),
                     "@dimen/labelled_marquee_edit_text_default_icon_size_small");
+            if (mIconGravity == ICON_GRAVITY_RIGHT) {
+                mIconCharacter = "   " + mIconCharacter;
+            } else if (mIconGravity == ICON_GRAVITY_LEFT) {
+                mIconCharacter = "  " + mIconCharacter + "   ";
+            }
         }
         if (shouldReload) {
             mIconChanged = true;
@@ -792,8 +864,8 @@ public class LabelledMarqueeEditText extends FrameLayout {
                 mPreferredMode = MODE_MARQUEE;
                 break;
             default:
-                throw new IllegalArgumentException(String
-                        .format("LabelledMarqueeEditText doesn't support this mode (%d).", mode));
+                throw new IllegalArgumentException(String.format(Locale.US,
+                        "LabelledMarqueeEditText doesn't support this mode (%d).", mode));
         }
         reloadEditAndMarqueeViews();
     }
