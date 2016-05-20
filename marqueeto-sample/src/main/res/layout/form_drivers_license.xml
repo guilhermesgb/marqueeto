@@ -89,6 +89,9 @@
             android:layout_below="@id/person_identify_linear_layout"
             android:hint="@string/label_edit_text_filiation"
             marqueeto:iconKey="md-supervisor-account"
+            marqueeto:errorEnabled="true"
+            marqueeto:errorColor="@android:color/holo_red_dark"
+            marqueeto:error="Hey this is an error!"
             marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"/>
 
         <LinearLayout

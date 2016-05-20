@@ -434,7 +434,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
         }
         mEditText.setText(text);
         if (isInputTypePassword()) {
-            if (text != null) {
+            if (text != null && text.length() > 0) {
                 text = String.format(Locale.US, "%0" + text.length() + "d", 0).replace('0', '•');
             }
         }
@@ -626,7 +626,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
             mTextInputLayout.clearAnimation();
             mTextView.clearAnimation();
             String text = mEditText.getText().toString();
-            if (isInputTypePassword()) {
+            if (isInputTypePassword() && text.length() > 0) {
                 text = String.format(Locale.US, "%0" + text.length() + "d", 0).replace('0', '•');
             }
             mTextView.setText(text);
@@ -696,9 +696,6 @@ public class LabelledMarqueeEditText extends FrameLayout {
         mTextView.setSelected(true);
         mText = mEditText.getText().toString();
         String text = mText;
-        Log.wtf("TAG", "INPUT TYPE: " + mInputType + ", VS PASSWORD: "
-                + InputType.TYPE_TEXT_VARIATION_PASSWORD + ", VS WEB_PASS: "
-                + InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD);
         if (isInputTypePassword()) {
             text = String.format(Locale.US, "%0" + text.length() + "d", 0).replace('0', '•');
         }
