@@ -838,14 +838,14 @@ public class LabelledMarqueeEditText extends FrameLayout {
         else {
             mError = mErrorCached;
         }
-        if (mErrorEnabled) {
+//        if (mErrorEnabled) {
             mText = mEditText.getText().toString();
             setCustomStyle(mCurrentCustomStyle);
-        }
-        else {
-            mErrorChanged = true;
-            reloadEditAndMarqueeViews();
-        }
+//        }
+//        else {
+//            mErrorChanged = true;
+//            reloadEditAndMarqueeViews();
+//        }
     }
 
     public int getPreferredMode() {
