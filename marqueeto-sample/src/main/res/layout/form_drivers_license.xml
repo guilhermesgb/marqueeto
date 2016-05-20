@@ -107,6 +107,7 @@
                 android:layout_weight="0.55"
                 android:hint="@string/label_edit_text_good_thru"
                 marqueeto:iconKey="md-done"
+                marqueeto:iconGravity="left"
                 marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"/>
 
             <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText

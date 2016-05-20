@@ -157,10 +157,12 @@ public class LicensesViewPagerAdapter extends PagerAdapter {
     private boolean validateFieldValue(LabelledMarqueeEditText editTextField, String errorMessage) {
         String value = editTextField.getText();
         if (value == null || value.trim().isEmpty()) {
+            editTextField.setCustomStyle(R.style.LabelledMarqueeEditTextCustomStyleError);
             editTextField.setErrorEnabled(true);
             editTextField.setError(errorMessage);
             return false;
         }
+        editTextField.setCustomStyle(R.style.LabelledMarqueeEditTextCustomStyle);
         editTextField.setErrorEnabled(false);
         return true;
     }

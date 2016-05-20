@@ -14,6 +14,12 @@
         <item name="errorColor">@android:color/holo_red_dark</item>
     </style>
 
+    <style name="LabelledMarqueeEditTextCustomStyleError">
+        <item name="baseColor">@android:color/holo_red_dark</item>
+        <item name="highlightColor">@android:color/holo_red_dark</item>
+        <item name="errorColor">@android:color/holo_red_dark</item>
+    </style>
+
     <style name="LabelledMarqueeEditTextCustomStyle2">
         <item name="baseColor">@android:color/holo_purple</item>
         <item name="highlightColor">@android:color/holo_orange_dark</item>
