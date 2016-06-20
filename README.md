@@ -9,7 +9,7 @@ EditTexts with floating labels and marquee ellipsize.
 Just add the following line to the dependencies section of your `build.gradle`:
 
 ``` gradle
-compile 'com.github.guilhermesgb:marqueeto:1.1.9'
+compile 'com.github.guilhermesgb:marqueeto:1.1.10'
 ```
 
 ## LabelledMarqueeEditText
