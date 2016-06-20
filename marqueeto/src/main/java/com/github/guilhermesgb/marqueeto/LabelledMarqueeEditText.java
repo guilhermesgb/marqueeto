@@ -15,6 +15,7 @@ import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
@@ -134,6 +135,8 @@ public class LabelledMarqueeEditText extends FrameLayout {
     private boolean mStyleColorsChanged = true;
 
     private boolean mAnimationEnded = false;
+
+    private TextWatcher mTextWatcher;
 
     public LabelledMarqueeEditText(Context context) {
         this(context, null);
@@ -314,6 +317,9 @@ public class LabelledMarqueeEditText extends FrameLayout {
         mTextView = (IconTextView) marqueeViewSource.findViewById(R.id.labelled_marquee_edit_text_layout_marquee_text);
         mTextView.setId(doGenerateViewId());
         addView(mTextView, new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        if (mTextWatcher != null) {
+            mEditText.addTextChangedListener(mTextWatcher);
+        }
     }
 
     private static synchronized int doGenerateViewId() {
@@ -927,6 +933,15 @@ public class LabelledMarqueeEditText extends FrameLayout {
         resetContextTheme(theme);
         invalidate();
         requestLayout();
+    }
+
+    public void setTextChangedListener(TextWatcher textWatcher) {
+        if (textWatcher != null) {
+            mEditText.addTextChangedListener(textWatcher);
+        } else if (mTextWatcher != null) {
+            mEditText.removeTextChangedListener(mTextWatcher);
+        }
+        mTextWatcher = textWatcher;
     }
 
     public void reloadEditAndMarqueeViews() {
