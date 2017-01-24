@@ -123,6 +123,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
     private int mTextMaxLength;
     private boolean mTextAllCaps;
     private int mCurrentCustomStyle;
+    private boolean mEditViaLongPress;
 
     private boolean mTextChanged = true;
     private boolean mTextColorChanged = true;
@@ -298,6 +299,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
             mTextMaxLength += ICON_CHARACTER_SECTION_LENGHT;
         }
         mTextAllCaps = customAttributes.getBoolean(R.styleable.LabelledMarqueeEditText_android_textAllCaps, false);
+        mEditViaLongPress = customAttributes.getBoolean(R.styleable.LabelledMarqueeEditText_editViaLongPress, false);
         customAttributes.recycle();
     }
 
@@ -398,6 +400,9 @@ public class LabelledMarqueeEditText extends FrameLayout {
 
             @Override
             public boolean onSingleTapUp(MotionEvent e) {
+                if (!mEditViaLongPress) {
+                    enableEditMode(false);
+                }
                 return false;
             }
 
@@ -408,7 +413,9 @@ public class LabelledMarqueeEditText extends FrameLayout {
 
             @Override
             public void onLongPress(MotionEvent e) {
-                enableEditMode(false);
+                if (mEditViaLongPress) {
+                    enableEditMode(false);
+                }
             }
 
             @Override

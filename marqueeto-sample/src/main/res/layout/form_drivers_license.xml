@@ -42,7 +42,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.55"
                 android:hint="@string/label_edit_text_identity_num"
-                marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"/>
+                marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"
+                marqueeto:editViaLongPress="true"/>
 
             <com.github.guilhermesgb.marqueeto.LabelledMarqueeEditText
                 android:id="@+id/issuing_org_edit_text"
@@ -92,6 +93,7 @@
             marqueeto:errorEnabled="true"
             marqueeto:errorColor="@android:color/holo_red_dark"
             marqueeto:error="Hey this is an error!"
+            marqueeto:editViaLongPress="true"
             marqueeto:labelledMarqueeEditTextStyle="@style/LabelledMarqueeEditTextCustomStyle"/>
 
         <LinearLayout

@@ -27,6 +27,7 @@
         <attr name="android:maxLength"/>
         <attr name="android:textAllCaps"/>
         <attr name="labelledMarqueeEditTextStyle" format="reference"/>
+        <attr name="editViaLongPress" format="boolean"/>
 
     </declare-styleable>
 
