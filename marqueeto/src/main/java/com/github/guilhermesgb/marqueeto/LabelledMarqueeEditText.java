@@ -446,6 +446,9 @@ public class LabelledMarqueeEditText extends FrameLayout {
             text = text.substring(0, mTextMaxLength - ICON_CHARACTER_SECTION_LENGHT);
         }
         mEditText.setText(text);
+        if (text != null) {
+            mEditText.setSelection(text.length());
+        }
         if (isInputTypePassword()) {
             if (text != null && text.length() > 0) {
                 text = String.format(Locale.US, "%0" + text.length() + "d", 0).replace('0', '•');
@@ -949,6 +952,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
             mEditText.removeTextChangedListener(mTextWatcher);
         }
         mTextWatcher = textWatcher;
+        mPreferredMode = MODE_EDIT;
     }
 
     public void reloadEditAndMarqueeViews() {

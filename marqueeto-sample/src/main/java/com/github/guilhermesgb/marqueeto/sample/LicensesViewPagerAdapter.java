@@ -5,6 +5,9 @@ import android.content.DialogInterface;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.AlertDialog;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,6 +77,50 @@ public class LicensesViewPagerAdapter extends PagerAdapter {
         form.identityNumberEditText.setText(license.getIdentityNumber());
         form.issuingOrgEditText.setText(license.getIssuingOrg());
         form.cpfNumberEditText.setText(license.getCpfNumber());
+        form.cpfNumberEditText.setTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence sequence, int start, int count, int after) {}
+
+            private boolean isUpdating;
+            private String old = "";
+
+            private String unmask(String s) {
+                return s.replaceAll("[.]", "").replaceAll("[-]", "")
+                        .replaceAll("[/]", "").replaceAll("[(]", "")
+                        .replaceAll("[)]", "");
+            }
+
+            @Override
+            public void onTextChanged(CharSequence sequence, int start, int before, int count) {
+                String string = unmask(sequence.toString());
+                String mask = "";
+                if (isUpdating) {
+                    old = string;
+                    isUpdating = false;
+                    return;
+                }
+                int i = 0;
+                for (char m : "###.###.###-##".toCharArray()) {
+                    if (m != '#' && string.length() > old.length()) {
+                        mask += m;
+                        continue;
+                    }
+                    try {
+                        mask += string.charAt(i);
+                    } catch (Exception e) {
+                        break;
+                    }
+                    i++;
+                }
+                isUpdating = true;
+                form.cpfNumberEditText.setText(mask);
+            }
+
+            @Override
+            public void afterTextChanged(Editable sequence) {}
+
+        });
         form.birthDateEditText.setText(license.getBirthDate());
         form.filiationEditText.setText(license.getFiliation());
         form.goodThruEditText.setText(license.getGoodThru());
