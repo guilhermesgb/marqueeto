@@ -447,11 +447,13 @@ public class LabelledMarqueeEditText extends FrameLayout {
         }
         mEditText.setText(text);
         if (text != null) {
-            mEditText.setSelection(text.length());
+            try {
+                mEditText.setSelection(text.length());
+            } catch (Throwable ignore) {}
         }
         if (isInputTypePassword()) {
             if (text != null && text.length() > 0) {
-                text = String.format(Locale.US, "%0" + text.length() + "d", 0).replace('0', '•');
+                text = String.format(Locale.US, "%0" + text.length() + "d", 0).replace('0', '*');
             }
         }
         if (mIconGravity == ICON_GRAVITY_RIGHT) {
@@ -643,7 +645,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
             mTextView.clearAnimation();
             String text = mEditText.getText().toString();
             if (isInputTypePassword() && text.length() > 0) {
-                text = String.format(Locale.US, "%0" + text.length() + "d", 0).replace('0', '•');
+                text = String.format(Locale.US, "%0" + text.length() + "d", 0).replace('0', '*');
             }
             mTextView.setText(text);
             mTextView.setVisibility(View.VISIBLE);
@@ -713,7 +715,7 @@ public class LabelledMarqueeEditText extends FrameLayout {
         mText = mEditText.getText().toString();
         String text = mText;
         if (isInputTypePassword()) {
-            text = String.format(Locale.US, "%0" + text.length() + "d", 0).replace('0', '•');
+            text = String.format(Locale.US, "%0" + text.length() + "d", 0).replace('0', '*');
         }
         if (mIconGravity == ICON_GRAVITY_RIGHT) {
             mTextView.setText(String.format("%s%s", text, iconCharacter));
