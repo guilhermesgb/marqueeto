@@ -322,6 +322,8 @@ public class LabelledMarqueeEditText extends FrameLayout {
         if (mTextWatcher != null) {
             mEditText.addTextChangedListener(mTextWatcher);
         }
+        mEditText.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        mEditText.setSingleLine();
     }
 
     private static synchronized int doGenerateViewId() {
